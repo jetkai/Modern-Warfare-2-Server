@@ -53,7 +53,7 @@ FreeSentry() {
 			if(self.pers["freeSentryTimer"] == 0) {
 				giveSentry();
 			} else {
-				self iPrintlnBold("You must wait " + self.pers["freeSentryTimer"] + " seconds to spawn another free ^2Sentrty Gun.");
+				self iPrintlnBold("You must wait " + self.pers["freeSentryTimer"] + " seconds to spawn another free ^2Sentry Gun.");
 			}
 		}
 	}
