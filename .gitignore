@@ -18,7 +18,10 @@
 !/userraw
 !/main/
 /main/*
-!/main/server.cfg
+!/main/server-killhouse.cfg
+!/main/server-rust.cfg
+!/main/server-rust-long.cfg
+!/main/server-shipment-long.cfg
 !/main/pvbrust.cfg
 !/main/pvbvote.cfg
 !/README.md
