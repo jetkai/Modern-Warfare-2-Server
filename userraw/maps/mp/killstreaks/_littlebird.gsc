@@ -19,8 +19,8 @@ init()
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND_NEAR_YOUR_POSITION" );
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND" );
 	
-	precacheTurret( "minigun_littlebird_mp" );
-	precacheItem("ac130_40mm_mp");
+	precacheTurret( "sentry_minigun_mp" );
+	precacheItem("cobra_FFAR_mp");
 	precacheModel( "vehicle_little_bird_minigun_left" );
 	precacheModel( "vehicle_little_bird_minigun_right" );
 	
@@ -202,7 +202,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb setVehWeapon( "harrier_FFAR_mp" );
+	lb setVehWeapon( "cobra_FFAR_mp" );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
