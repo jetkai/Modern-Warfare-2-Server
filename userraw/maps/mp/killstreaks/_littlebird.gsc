@@ -19,7 +19,8 @@ init()
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND_NEAR_YOUR_POSITION" );
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND" );
 	
-	precacheTurret( "weapon_cobra_mk19_mp" );
+	precacheTurret( "minigun_littlebird_mp" );
+	precacheTurret( "minigun_littlebird_spinnup" );
 	precacheModel( "vehicle_little_bird_minigun_left" );
 	precacheModel( "vehicle_little_bird_minigun_right" );
 	
@@ -201,19 +202,20 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
-	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "weapon_cobra_mk19_mp" );
+	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "minigun_littlebird_spinnup" );
 	mgTurret1 linkTo( lb, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
 	mgTurret1 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret1.angles = lb.angles; 
 	mgTurret1.owner = lb.owner;
 	mgTurret1.team = mgTurret1.owner.team;
+	mgTurret1 thread maps\_mgturret::burst_fire_unmanned();
 	
 	mgTurret1 SetPlayerSpread( .65 );
 	mgTurret1 makeTurretInoperable();
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
 	
-	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "weapon_cobra_mk19_mp" );
+	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "minigun_littlebird_spinnup" );
 	mgTurret2 linkTo( lb, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
 	mgTurret2 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret2 SetPlayerSpread( .65 );
@@ -221,6 +223,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret2.owner = lb.owner;
 	mgTurret2.team = mgTurret2.owner.team;
 	
+	mgTurret2 thread maps\_mgturret::burst_fire_unmanned();
 	mgTurret2 makeTurretInoperable();
 	
 	lb.mgTurret2 = mgTurret2; 
