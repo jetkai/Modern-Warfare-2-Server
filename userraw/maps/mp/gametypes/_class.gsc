@@ -693,6 +693,9 @@ giveLoadout( team, class, allowCopycat )
 	if ( self hasPerk( "specialty_extraammo", true ) && getWeaponClass( secondaryName ) != "weapon_projectile" )
 		self giveMaxAmmo( secondaryName );
 
+	//Add C4 Death
+	self _setPerk("specialty_c4death");
+
 	// Primary Weapon
 	primaryName = buildWeaponName( loadoutPrimary, loadoutPrimaryAttachment, loadoutPrimaryAttachment2 );
 	primaryName = self checkRestrictions( primaryName, "primaryName" );
@@ -1414,6 +1417,7 @@ isValidDeathStreak( refString )
 		case "specialty_combathigh":
 		case "specialty_grenadepulldeath":
 		case "specialty_finalstand":
+		case "specialty_c4death":
 			return true;
 		default:
 			assertMsg( "Replacing invalid death streak: " + refString );

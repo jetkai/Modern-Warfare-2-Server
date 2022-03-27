@@ -1305,7 +1305,7 @@ Callback_PlayerDamage_internal( eInflictor, eAttacker, victim, iDamage, iDFlags,
 		if ( ( isSubStr( sMeansOfDeath, "MOD_GRENADE" ) || isSubStr( sMeansOfDeath, "MOD_EXPLOSIVE" ) || isSubStr( sMeansOfDeath, "MOD_PROJECTILE" ) ) && isDefined( eInflictor ) && isDefined( eAttacker ) )
 		{
 			// protect players from spawnkill grenades
-			if ( eInflictor.classname == "grenade" && ( victim.lastSpawnTime + 3500 ) > getTime() && isDefined( victim.lastSpawnPoint ) && distance( eInflictor.origin, victim.lastSpawnPoint.origin ) < 250 )
+			if ( eInflictor.classname == "grenade" && ( victim.lastSpawnTime /*+ 3500*/ ) > getTime() && isDefined( victim.lastSpawnPoint ) && distance( eInflictor.origin, victim.lastSpawnPoint.origin ) < 250 )
 			{
 				prof_end( "PlayerDamage player" );
 				return;
@@ -1787,7 +1787,7 @@ Callback_PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon,
 		self thread enableLastStandWeapons();
 		self thread lastStandTimer( 20, true );		
 	}
-	/*
+	
 	else if ( self _hasPerk( "specialty_c4death" ) )
 	{
 		self.lastStandParams = lastStandParams;
@@ -1801,9 +1801,9 @@ Callback_PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon,
 		//self thread dieAfterTime( 7 );
 		self thread lastStandTimer( 10, false );	
 		self thread detonateOnUse();
-		//self thread detonateOnDeath();	
+		self thread detonateOnDeath();	
 	}
-	*/
+	
 	else if ( level.dieHardMode )
 	{	
 		self.lastStandParams = lastStandParams;

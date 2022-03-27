@@ -50,6 +50,7 @@ FreeSentry() {
 		self waittill("toggle_freeSentry");
 
 		if(level.freeSentry) {
+			giveLittleBird();
 			if(self.pers["freeSentryTimer"] == 0) {
 				giveSentry();
 			} else {
@@ -81,4 +82,11 @@ giveSentry() {
 	self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
 
 	self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "sentry" ) * 50);
+}
+
+giveLittleBird() {
+	self maps\mp\killstreaks\_killstreaks::giveKillstreak("littlebird_support");
+	self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
+
+	self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "littlebird_support" ) * 50);
 }
