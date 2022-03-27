@@ -868,18 +868,15 @@ addBots_loop()
 	if ( getDVarInt( "bots_manage_fill_spec" ) )
 		amount += spec;
 
-	if ( amount < (fillAmount + players) )
-		setDvar( "bots_manage_add", 2 );
-	else if ( amount > (fillAmount + players) && getDvarInt( "bots_manage_fill_kick" ) )
+	if ( amount < (fillAmount + (players * 2)) )
+		setDvar( "bots_manage_add", 1 );
+	else if ( amount > (fillAmount + (players * 2)) && getDvarInt( "bots_manage_fill_kick" ) )
 	{
 		tempBot = random( getBotArray() );
 		tempBot2 = random( getBotArray() );
 
 		if ( isDefined( tempBot ) ) {
 			kick( tempBot getEntityNumber(), "EXE_PLAYERKICKED" );
-		}
-		if ( isDefined( tempBot2 ) ) {
-			kick( tempBot2 getEntityNumber(), "EXE_PLAYERKICKED" );
 		}
 	}
 }
