@@ -148,6 +148,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb SetMaxPitchRoll( 200, 200 );	
 	wait ( 5 );	
 	lb thread startLbFiring();
+	lb thread startLbMissileFiring();
 	wait ( 7 );
 	
 	//stops firing and turns around
@@ -163,6 +164,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	//slows down firing opposite direction
 	lb Vehicle_SetSpeed( 45, 60 );
 	lb thread startLbFiring();
+	lb thread startLbMissileFiring();
 	wait ( 6 );
 	
 	//off into the sunset
@@ -200,11 +202,11 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	//lb setVehWeapon( "ac130_40mm_mp" );
+	lb setVehWeapon( "harrier_FFAR_mp" );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
-	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "ac130_40mm_mp" );
+	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
 	mgTurret1 linkTo( lb, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
 	mgTurret1 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret1.angles = lb.angles; 
@@ -218,7 +220,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
 	
-	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "ac130_40mm_mp" );
+	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
 	mgTurret2 linkTo( lb, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
 	mgTurret2 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret2 SetPlayerSpread( .65 );
@@ -249,12 +251,29 @@ startLbFiring( )
 	
 	for( ;; )
 	{
-		//self FireWeapon();
+		self FireWeapon();
 
 		//self shootTurret();
-		self.mgTurret1 FireWeapon();
-		self.mgTurret2 FireWeapon();
+		self.mgTurret1 shootTurret();
+		self.mgTurret2 shootTurret();
 		wait ( 0.05 );	
+	}	
+}
+
+startLbMissileFiring( )
+{
+	self endon( "gone" );
+	self endon( "death" );
+	self endon( "stopFiring" );
+
+	PrintConsole("Attempting to fire the missile gun.");
+	
+	i = 0;
+	
+	for( ;; )
+	{
+		self FireWeapon();
+		wait ( 0.3 );	
 	}	
 }
 
