@@ -25,7 +25,7 @@ init()
 	initScoreBoard();
 
 	level.teamBalance = getDvarInt("scr_teambalance");
-	level.maxClients = getDvarInt( "sv_maxclients" );
+	level.maxClients = 24;//getDvarInt( "sv_maxclients" );
 
 	level._effect["thermal_beacon"] = loadFx("misc/thermal_beacon_inverted");	
 	effect = level._effect["thermal_beacon"];
