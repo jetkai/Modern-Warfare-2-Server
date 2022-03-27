@@ -1397,7 +1397,6 @@ Callback_StartGameType()
 	setDvarIfUninitialized( "scr_killstreaks_increase_killstreak", true );
 	setDvarIfUninitialized( "scr_postDeathDelayMod", 1.0 );
 
-	level.maxClients = 24;
 	level.extraDamageFeedback = getDvarInt("scr_extraDamageFeedback");
 	level.allowPrintDamage = getDvarInt("scr_printDamage");
 	level.disableKnife = getDvarInt("scr_disableKnife");

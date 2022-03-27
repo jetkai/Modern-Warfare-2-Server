@@ -21,13 +21,13 @@ onPlayerConnect() {
 onPlayerGiveloadout() {
 	self endon("disconnect");
 
-	self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 15);
 	self.pers["freeSentry"] = false;
 	_onetime = false;
 
 	for(;;) {
 		self waittill("giveLoadout");
 		if(!_onetime && level.freeSentry) {
+			self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 			giveSentry();
 			_onetime = true;
 
@@ -53,7 +53,7 @@ FreeSentry() {
 			if(self.pers["freeSentryTimer"] == 0) {
 				giveSentry();
 			} else {
-				self iPrintlnBold("You must wait " + self.pers["freeSentryTimer"] + " seconds to spawn another free ^2Sentry Gun." + level.maxClients);
+				self iPrintlnBold("You must wait " + self.pers["freeSentryTimer"] + " seconds to spawn another free ^2Sentry Gun.");
 			}
 		}
 	}
@@ -75,7 +75,7 @@ sentryTick() {
 }
 
 giveSentry() {
-	self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 15);
+	self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 
 	self maps\mp\killstreaks\_killstreaks::giveKillstreak("sentry");
 	self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
