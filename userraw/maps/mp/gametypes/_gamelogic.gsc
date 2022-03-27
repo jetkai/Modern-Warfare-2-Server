@@ -1396,7 +1396,9 @@ Callback_StartGameType()
 	setDvarIfUninitialized( "headshot_detach_head", false );
 	setDvarIfUninitialized( "scr_killstreaks_increase_killstreak", true );
 	setDvarIfUninitialized( "scr_postDeathDelayMod", 1.0 );
-	
+	setDvar("sv_maxclients", 24)
+
+	level.maxClients = 24;
 	level.extraDamageFeedback = getDvarInt("scr_extraDamageFeedback");
 	level.allowPrintDamage = getDvarInt("scr_printDamage");
 	level.disableKnife = getDvarInt("scr_disableKnife");
