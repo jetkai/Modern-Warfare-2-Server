@@ -868,9 +868,9 @@ addBots_loop()
 	if ( getDVarInt( "bots_manage_fill_spec" ) )
 		amount += spec;
 
-	if ( amount < fillAmount )
+	if ( amount < (fillAmount + players) )
 		setDvar( "bots_manage_add", 1 );
-	else if ( amount > fillAmount && getDvarInt( "bots_manage_fill_kick" ) )
+	else if ( amount > (fillAmount + players) && getDvarInt( "bots_manage_fill_kick" ) )
 	{
 		tempBot = random( getBotArray() );
 
