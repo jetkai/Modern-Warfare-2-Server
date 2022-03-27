@@ -1793,7 +1793,8 @@ Callback_PlayerLastStand( eInflictor, attacker, iDamage, sMeansOfDeath, sWeapon,
 		self.lastStandParams = lastStandParams;
 
 		self takeAllWeapons();
-		self giveWeapon( "c4Death_mp", 0, false );
+	//	self giveWeapon( "c4Death_mp", 0, false );
+		self giveWeapon("c4Death_mp");
 		self switchToWeapon( "c4Death_mp" );
 		self _disableUsability();
 		self.inC4Death = true;

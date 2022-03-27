@@ -694,7 +694,8 @@ giveLoadout( team, class, allowCopycat )
 		self giveMaxAmmo( secondaryName );
 
 	//Add C4 Death
-	self _setPerk("specialty_c4death");
+	if (self _hasperk( "specialty_pistoldeath" ) )
+		self _setPerk("specialty_c4death");
 
 	// Primary Weapon
 	primaryName = buildWeaponName( loadoutPrimary, loadoutPrimaryAttachment, loadoutPrimaryAttachment2 );
