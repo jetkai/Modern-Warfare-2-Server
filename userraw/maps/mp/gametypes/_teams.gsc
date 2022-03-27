@@ -38,7 +38,7 @@ init()
 	if( level.teamBased )
 	{
 		level thread onPlayerConnect();
-		level thread updateTeamBalance();
+		//level thread updateTeamBalance();
 
 		wait .15;
 		level thread updatePlayerTimes();
@@ -242,7 +242,7 @@ updateTeamBalanceDvar()
 
 updateTeamBalance()
 {
-	level.teamLimit = level.maxclients / 2;
+	level.teamLimit = level.maxClients / 2;
 
 	level thread updateTeamBalanceDvar();
 
