@@ -250,6 +250,7 @@ init()
 	level.killStreakSpecialCaseWeapons["artillery_mp"] = true;
 	level.killStreakSpecialCaseWeapons["stealth_bomb_mp"] = true;
 	level.killStreakSpecialCaseWeapons["pavelow_minigun_mp"] = true;
+	level.killStreakSpecialCaseWeapons["minigun_littlebird_mp"] = true;
 	level.killStreakSpecialCaseWeapons["sentry_minigun_mp"] = true;
 	level.killStreakSpecialCaseWeapons["harrier_20mm_mp"] = true;
 	level.killStreakSpecialCaseWeapons["ac130_105mm_mp"] = true;

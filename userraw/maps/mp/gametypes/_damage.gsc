@@ -285,6 +285,7 @@ handleNormalDeath( lifeId, attacker, eInflictor, sWeapon, sMeansOfDeath )
 					case "harrier_20mm_mp":
 					case "pavelow_minigun_mp":
 					case "nuke_mp":
+					case "minigun_littlebird_mp":
 						if ( isDefined( eInflictor ) && isDefined( eInflictor.lifeId ) )
 							killstreakLifeId = eInflictor.lifeId;
 						else
@@ -991,7 +992,7 @@ getKillcamEntity( attacker, eInflictor, sWeapon, sMeansOfDeath )
 	if ( sWeapon == "cobra_player_minigun_mp" )
 		return undefined;
 	
-	if ( sWeapon == "artillery_mp" || sWeapon == "stealth_bomb_mp" || sWeapon == "pavelow_minigun_mp" )
+	if ( sWeapon == "artillery_mp" || sWeapon == "stealth_bomb_mp" || sWeapon == "pavelow_minigun_mp" || sWeapon == "minigun_littlebird_mp" )
 		return eInflictor.killCamEnt;
 	
 	if ( isDefined( eInflictor.script_gameobjectname ) && eInflictor.script_gameobjectname == "bombzone" )
