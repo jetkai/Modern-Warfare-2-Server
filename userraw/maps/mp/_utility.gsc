@@ -2148,6 +2148,7 @@ isKillstreakWeapon( weapon )
 		case "remotemissile_projectile_mp":	// Hellfire
 		case "cobra_20mm_mp":			// Attack Helicopter
 		case "nuke_mp":					// Nuke			
+		case "minigun_littlebird_mp":	// Little Bird
 			return true;
 		default:
 			return false;

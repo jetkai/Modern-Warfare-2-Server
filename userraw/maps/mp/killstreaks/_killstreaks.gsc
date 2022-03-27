@@ -279,7 +279,7 @@ deadlyKillstreak( streakName )
 		//case "helicopter":
 		//case "helicopter_flares":
 		case "stealth_airstrike":
-		//case "helicopter_minigun":
+		case "helicopter_minigun":
 		case "ac130":
 			return true;
 	}
