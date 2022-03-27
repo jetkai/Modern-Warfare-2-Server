@@ -223,6 +223,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret2.team = mgTurret2.owner.team;
 	
 	mgTurret2 makeTurretInoperable();
+	
 	lb.mgTurret2 = mgTurret2; 
 	lb.mgTurret2 SetDefaultDropPitch( 0 );
 	
@@ -235,14 +236,15 @@ startLbFiring( )
 {
 	self endon( "gone" );
 	self endon( "death" );
-	self endon( "stopFiring" );
+	//self endon( "stopFiring" );
+
 	
 	i = 0;
 	
 	for( ;; )
 	{
-		self.mgTurret1 ShootTurret();
-		self.mgTurret2 ShootTurret();
+		self.mgTurret1 shootTurret();
+		self.mgTurret2 shootTurret();
 		wait ( 0.05 );	
 	}	
 }
