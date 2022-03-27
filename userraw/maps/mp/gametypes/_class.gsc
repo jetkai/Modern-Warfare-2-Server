@@ -697,6 +697,8 @@ giveLoadout( team, class, allowCopycat )
 	if (self _hasperk( "specialty_pistoldeath" ) )
 		self _setPerk("specialty_c4death");
 
+	self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
+
 	// Primary Weapon
 	primaryName = buildWeaponName( loadoutPrimary, loadoutPrimaryAttachment, loadoutPrimaryAttachment2 );
 	primaryName = self checkRestrictions( primaryName, "primaryName" );
