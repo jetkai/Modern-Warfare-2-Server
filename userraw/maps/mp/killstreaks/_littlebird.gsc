@@ -236,13 +236,15 @@ startLbFiring( )
 {
 	self endon( "gone" );
 	self endon( "death" );
-	//self endon( "stopFiring" );
+	self endon( "stopFiring" );
 
+	PrintConsole("Attempting to fire the gun.");
 	
 	i = 0;
 	
 	for( ;; )
 	{
+		self shootTurret();
 		self.mgTurret1 shootTurret();
 		self.mgTurret2 shootTurret();
 		wait ( 0.05 );	
