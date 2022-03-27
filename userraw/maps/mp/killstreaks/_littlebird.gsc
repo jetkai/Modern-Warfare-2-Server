@@ -20,7 +20,7 @@ init()
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND" );
 	
 	precacheTurret( "minigun_littlebird_mp" );
-	precacheTurret( "50cal_technical_megadamage" );
+	precacheItem("ac130_40mm_mp");
 	precacheModel( "vehicle_little_bird_minigun_left" );
 	precacheModel( "vehicle_little_bird_minigun_right" );
 	
@@ -199,10 +199,12 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.team = owner.team;
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
+
+	lb setVehWeapon( "ac130_40mm_mp" );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
-	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "50cal_technical_megadamage" );
+	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "ac130_40mm_mp" );
 	mgTurret1 linkTo( lb, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
 	mgTurret1 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret1.angles = lb.angles; 
@@ -216,7 +218,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
 	
-	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "50cal_technical_megadamage" );
+	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "ac130_40mm_mp" );
 	mgTurret2 linkTo( lb, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
 	mgTurret2 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret2 SetPlayerSpread( .65 );
