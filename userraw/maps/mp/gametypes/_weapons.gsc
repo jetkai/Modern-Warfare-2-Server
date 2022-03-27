@@ -2495,6 +2495,7 @@ onWeaponDamage( eInflictor, sWeapon, meansOfDeath, damage, eAttacker )
 		break;
 
 		case "weapon_cobra_mk19_mp":
+			maps\mp\gametypes\_shellshock::shellshockOnDamage( meansOfDeath, damage );
 			// mk19 is too powerful with shellshock slowdown
 		break;
 
