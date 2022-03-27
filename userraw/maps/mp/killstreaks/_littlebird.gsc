@@ -200,7 +200,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb setVehWeapon( "ac130_40mm_mp" );
+	//lb setVehWeapon( "ac130_40mm_mp" );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
@@ -249,10 +249,11 @@ startLbFiring( )
 	
 	for( ;; )
 	{
-		self FireWeapon();
-		self shootTurret();
-		self.mgTurret1 shootTurret();
-		self.mgTurret2 shootTurret();
+		//self FireWeapon();
+
+		//self shootTurret();
+		self.mgTurret1 FireWeapon();
+		self.mgTurret2 FireWeapon();
 		wait ( 0.05 );	
 	}	
 }
