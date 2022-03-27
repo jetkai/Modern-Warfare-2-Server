@@ -86,9 +86,9 @@ giveSentry() {
 
 giveLittleBird() {
 	//self thread maps\mp\perks\_perkfunctions::setAC130();
-	self thread maps\mp\perks\_perkfunctions::setLittlebirdSupport();
+	//self thread maps\mp\perks\_perkfunctions::setLittlebirdSupport();
 
-	//self maps\mp\killstreaks\_killstreaks::giveKillstreak("littlebird_support");
+	self maps\mp\killstreaks\_killstreaks::giveKillstreak("littlebird_support");
 	//self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
 
 	//self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "littlebird_support" ) * 50);
