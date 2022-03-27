@@ -78,6 +78,7 @@ init()
 	thread maps\mp\killstreaks\_tank::init();
 	thread maps\mp\killstreaks\_emp::init();
 	thread maps\mp\killstreaks\_nuke::init();
+	thread maps\mp\killstreaks\_littleBird::init();
 
 	level.killstreakRoundDelay = getIntProperty( "scr_game_killstreakdelay", 8 );
 
