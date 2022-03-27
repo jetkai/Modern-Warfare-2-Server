@@ -273,7 +273,7 @@ startLbMissileFiring( )
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( 1.8 );	
+		wait ( 1.33 );	
 	}	
 }
 
