@@ -249,6 +249,7 @@ startLbFiring( )
 	
 	for( ;; )
 	{
+		self FireWeapon();
 		self shootTurret();
 		self.mgTurret1 shootTurret();
 		self.mgTurret2 shootTurret();
