@@ -1,0 +1,22 @@
+{
+	menuDef
+	{
+		name "gamemessages"
+		rect 6 10 0 0 8 8
+		visible 1
+		forecolor 1 1 1 1
+		fadeCycle 1
+		fadeClamp 1
+		fadeAmount 0.1
+		visible when ( 1 )
+		itemDef
+		{
+			rect 0 0 0 0 0 0
+			visible 1
+			forecolor 1 1 1 1
+			type 19
+			textalign 4
+			textscale 0.36
+		}
+	}
+}

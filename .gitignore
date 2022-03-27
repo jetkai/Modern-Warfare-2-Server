@@ -16,6 +16,7 @@
 
 # Folder to not ignore
 !/userraw
+!/game_source
 !/main/
 /main/*
 !/main/server-killhouse.cfg
