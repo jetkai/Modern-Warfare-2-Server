@@ -202,7 +202,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb setVehWeapon( "cobra_FFAR_mp" );
+	lb setVehWeapon( "javelin_mp" );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
@@ -251,7 +251,7 @@ startLbFiring( )
 	
 	for( ;; )
 	{
-		self FireWeapon();
+		//self FireWeapon();
 
 		//self shootTurret();
 		self.mgTurret1 shootTurret();
