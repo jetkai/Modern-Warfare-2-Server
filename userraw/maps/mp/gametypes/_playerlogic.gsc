@@ -1081,7 +1081,6 @@ initClientDvars()
 
 Callback_PlayerConnect()
 {
-	PrintConsole( "Notifying Connection!!!" );
 	thread notifyConnecting();
 
 	self.statusicon = "hud_status_connecting";
