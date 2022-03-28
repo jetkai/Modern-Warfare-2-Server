@@ -1098,6 +1098,16 @@ setLittlebirdSupport()
 	self thread killstreakThink( "littlebird_support", 6, "end_littlebird_support_think" );
 }
 
+setSuperAirstrike()
+{
+	self thread killstreakThink( "super_airstrike", 10, "end_super_airstrike_think" );
+}
+
+setBlackBoxHeli()
+{
+	self thread killstreakThink( "helicopter_blackbox", 13, "end_helicopter_blackbox_think" );
+}
+
 unsetLittlebirdSupport()
 {
 	self notify ( "end_littlebird_support_think" );

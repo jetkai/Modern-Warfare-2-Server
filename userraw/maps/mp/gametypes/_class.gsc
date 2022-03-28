@@ -698,6 +698,8 @@ giveLoadout( team, class, allowCopycat )
 		self _setPerk("specialty_c4death");
 
 	self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
+	self maps\mp\perks\_perkfunctions::setSuperAirstrike();
+	self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
 
 	// Primary Weapon
 	primaryName = buildWeaponName( loadoutPrimary, loadoutPrimaryAttachment, loadoutPrimaryAttachment2 );

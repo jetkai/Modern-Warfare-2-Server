@@ -44,7 +44,7 @@ tryUseLbStrike( lifeId )
 		return false;
 	}
 	
-	if ( level.lbStrike >= 2 )
+	if ( level.lbStrike >= 1 )
 	{
 		self iPrintLnBold( &"MP_AIR_SPACE_TOO_CROWDED" );
 		return false;	
@@ -273,7 +273,7 @@ startLbMissileFiring( )
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( 0.927 );	
+		wait ( 0.827 );	
 	}	
 }
 
