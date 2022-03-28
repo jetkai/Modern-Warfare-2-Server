@@ -26,7 +26,7 @@
 !/out
 
 !/.astylerc
-!/z_deploy.bat
+!/z_*.bat
 !/deploy.bat
 !/deploy.js
 
