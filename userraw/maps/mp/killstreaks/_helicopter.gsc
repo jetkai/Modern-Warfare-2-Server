@@ -359,13 +359,9 @@ startHelicopter( lifeId, heliType )
 			eventType = "helicopter_flares";
 			break;
 		case "minigun":
+		case "blackbox":
+		case "mk19":
 			eventType = "helicopter_minigun";
-			break;
-			case "mk19":
-			eventType = "helicopter_mk19";
-			break;
-			case "blackbox":
-			eventType = "helicopter_blackbox";
 			break;
 		default:
 			eventType = "helicopter";
@@ -777,11 +773,11 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			break;
 		case "blackbox":
 			vehicleType = "cobra_minigun_m";
-			vehicleModel = "vehicle_apache_mp";
+			vehicleModel = "vehicle_blackhawk_low_thermal";
 			break;
 		case "mk19":
 			vehicleType = "cobra_minigun_m";
-			vehicleModel = "vehicle_mi-28_mp";
+			vehicleModel = "vehicle_blackhawk_hero_sas_night";
 			break;
 		default:	
 			vehicleType = "cobra_mp";

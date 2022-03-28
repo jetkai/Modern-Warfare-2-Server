@@ -703,7 +703,7 @@ giveLoadout( team, class, allowCopycat )
 	//self maps\mp\perks\_perkfunctions::setSentryGl();
 	self maps\mp\perks\_perkfunctions::setHelicopterMk19();
 	//self maps\mp\perks\_perkfunctions::setPredator();
-	self maps\mp\perks\_perkfunctions::setTank();
+	//self maps\mp\perks\_perkfunctions::setTank();
 
 
 	// Primary Weapon
