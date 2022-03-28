@@ -775,13 +775,15 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			else
 				vehicleModel = "vehicle_pavelow_opfor";
 			break;
-			case "blackbox":
-				vehicleModel = "vehicle_blackhawk_low";
+		case "blackbox":
+			vehicleType = "cobra_minigun_mp";
+			vehicleModel = "vehicle_blackhawk_low";
 			break;
-			case "mk19":
-				vehicleModel = "vehicle_blackhawk_hero_sas_night";
+		case "mk19":
+			vehicleType = "cobra_minigun_mp";
+			vehicleModel = "vehicle_blackhawk_hero_sas_night";
 			break;
-		default:
+		default:	
 			vehicleType = "cobra_mp";
 			if ( owner.team == "allies" )
 				vehicleModel = "vehicle_cobra_helicopter_fly_low";
