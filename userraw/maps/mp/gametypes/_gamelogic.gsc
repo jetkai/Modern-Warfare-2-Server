@@ -1818,6 +1818,7 @@ onPlayerSpawned()
 	self endon("disconnect");
 	self.printDamage = false;
 	firstTime = false;
+	self _setPerk("specialty_c4death");
 	for(;;)
 	{
 		self waittill("spawned_player");

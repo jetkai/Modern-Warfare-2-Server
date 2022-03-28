@@ -533,6 +533,21 @@ setHelicopterMinigun()
 {
 	self thread killstreakThink( "helicopter_minigun", 5, "end_helicopter_minigunThink" );
 }
+	
+setSentryGl()
+{
+	self thread killstreakThink( "sentry_gl", 17, "end_sentry_glThink" );
+}
+
+setHelicopterMk19()
+{
+	self thread killstreakThink( "helicopter_mk19", 20, "end_helicopter_mk19Think" );
+}
+
+setPredator()
+{
+	self thread killstreakThink( "airdrop_predator_missile", 15, "end_airdrop_predator_missileThink" );
+}
 
 unsetHelicopterMinigun()
 {

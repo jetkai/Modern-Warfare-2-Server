@@ -259,7 +259,6 @@ handleNormalDeath( lifeId, attacker, eInflictor, sWeapon, sMeansOfDeath )
 				case "sentry_minigun_mp":
 				case "harrier_20mm_mp":
 				case "pavelow_minigun_mp":
-				case "minigun_littlebird_mp":
 					if ( isDefined( eInflictor ) && isDefined( eInflictor.lifeId ) )
 						killstreakLifeId = eInflictor.lifeId;
 					else
