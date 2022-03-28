@@ -776,12 +776,12 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 				vehicleModel = "vehicle_pavelow_opfor";
 			break;
 		case "blackbox":
-			vehicleType = "cobra_minigun_mp";
-			vehicleModel = "vehicle_blackhawk_low";
+			vehicleType = "cobra_minigun_m";
+			vehicleModel = "vehicle_apache_mp";
 			break;
 		case "mk19":
-			vehicleType = "cobra_minigun_mp";
-			vehicleModel = "vehicle_blackhawk_hero_sas_night";
+			vehicleType = "cobra_minigun_m";
+			vehicleModel = "vehicle_mi-28_mp";
 			break;
 		default:	
 			vehicleType = "cobra_mp";
