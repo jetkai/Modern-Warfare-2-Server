@@ -5,9 +5,9 @@
 init()
 {
 	//tank support cut
-	return;
+	//return;
 	//tank support cut
-	/*
+	
 	PrecacheVehicle( "bmp_mp" );
 	PrecacheVehicle( "m1a1_mp" );
 	PrecacheVehicle( "bradley_mp" );
@@ -59,7 +59,7 @@ init()
 	
 	level setupPaths();
 	
-	*/
+	
 }
 
 

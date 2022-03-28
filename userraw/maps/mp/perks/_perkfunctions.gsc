@@ -533,10 +533,20 @@ setHelicopterMinigun()
 {
 	self thread killstreakThink( "helicopter_minigun", 5, "end_helicopter_minigunThink" );
 }
+
+unsetHelicopterMinigun()
+{
+	self notify ( "end_helicopter_minigunThink" );
+}
 	
 setSentryGl()
 {
 	self thread killstreakThink( "sentry_gl", 17, "end_sentry_glThink" );
+}
+
+unsetSentryGl()
+{
+	self notify ( "end_sentry_glThink" );
 }
 
 setHelicopterMk19()
@@ -544,14 +554,19 @@ setHelicopterMk19()
 	self thread killstreakThink( "helicopter_mk19", 20, "end_helicopter_mk19Think" );
 }
 
+unsetHelicopterMk19()
+{
+	self notify ( "end_helicopter_mk19Think" );
+}
+
 setPredator()
 {
 	self thread killstreakThink( "airdrop_predator_missile", 15, "end_airdrop_predator_missileThink" );
 }
 
-unsetHelicopterMinigun()
+unsetPredator()
 {
-	self notify ( "end_helicopter_minigunThink" );
+	self notify ( "end_airdrop_predator_missileThink" );
 }
 
 
@@ -1113,9 +1128,19 @@ setLittlebirdSupport()
 	self thread killstreakThink( "littlebird_support", 6, "end_littlebird_support_think" );
 }
 
+unsetLittlebirdSupport()
+{
+	self notify ( "end_littlebird_support_think" );
+}
+
 setSuperAirstrike()
 {
 	self thread killstreakThink( "super_airstrike", 10, "end_super_airstrike_think" );
+}
+
+unsetSuperAirstrike()
+{
+	self notify ( "end_super_airstrike_think" );
 }
 
 setBlackBoxHeli()
@@ -1123,9 +1148,9 @@ setBlackBoxHeli()
 	self thread killstreakThink( "helicopter_blackbox", 13, "end_helicopter_blackbox_think" );
 }
 
-unsetLittlebirdSupport()
+unsetBlackBoxHeli()
 {
-	self notify ( "end_littlebird_support_think" );
+		self notify ( "end_helicopter_blackbox_think" );
 }
 
 setC4Death()

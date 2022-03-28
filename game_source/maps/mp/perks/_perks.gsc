@@ -171,6 +171,24 @@ init()
 	
 	level.perkSetFuncs["specialty_littlebird_support"] = ::setLittlebirdSupport;
 	level.perkUnsetFuncs["specialty_littlebird_support"] = ::unsetLittlebirdSupport;
+
+	level.perkSetFuncs["specialty_super_airstrike"] = ::setSuperAirstrike;
+	level.perkUnsetFuncs["specialty_super_airstrike"] = ::unsetSuperAirstrike;
+
+	level.perkSetFuncs["specialty_blackbox_heli"] = ::setBlackBoxHeli;
+	level.perkUnsetFuncs["specialty_blackbox_heli"] = ::unsetBlackBoxHeli;
+
+	level.perkSetFuncs["specialty_helicoptor_mk19"] = ::setHelicopterMk19;
+	level.perkUnsetFuncs["specialty_helicoptor_mk19"] = ::unsetHelicopterMk19;
+
+	level.perkSetFuncs["specialty_airdrop_sentry_minigun"] = ::setSentryGl;
+	level.perkUnsetFuncs["specialty_airdrop_sentry_minigun"] = ::unsetSentryGl;
+
+	level.perkSetFuncs["compass_objpoint_airstrike"] = ::setPredator;
+	level.perkUnsetFuncs["compass_objpoint_airstrike"] = ::unsetPredator;
+
+	level.perkSetFuncs["compass_objpoint_airstrike"] = ::setPredator;
+	level.perkUnsetFuncs["compass_objpoint_airstrike"] = ::unsetPredator;
 	
 	level.perkSetFuncs["specialty_c4death"] = ::setC4Death;
 	level.perkUnsetFuncs["specialty_c4death"] = ::unsetC4Death;
