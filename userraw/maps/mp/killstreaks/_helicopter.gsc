@@ -778,7 +778,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			case "blackbox":
 				vehicleModel = "vehicle_blackhawk_low";
 			break;
-			case "mk19"
+			case "mk19":
 				vehicleModel = "vehicle_blackhawk_hero_sas_night";
 			break;
 		default:
