@@ -19,11 +19,7 @@
 !/game_source
 !/main/
 /main/*
-!/main/server-killhouse.cfg
-!/main/server-rust.cfg
-!/main/server-rust-long.cfg
-!/main/server-shipment-long.cfg
-!/main/server-highrise.cfg
+!/main/server-*.cfg
 !/main/pvbrust.cfg
 !/main/pvbvote.cfg
 !/README.md

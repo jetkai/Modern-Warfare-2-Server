@@ -55,6 +55,7 @@ main()
 	maps\mp\gametypes\_callbacksetup::SetupCallbacks();
 	maps\mp\gametypes\_globallogic::SetupCallbacks();
 
+	registerRoundSwitchDvar( level.gameType, 0, 0, 9 );	
 	registerTimeLimitDvar( level.gameType, 30, 0, 1440 );
 	registerScoreLimitDvar( level.gameType, 300, 0, 1000 );
 	registerRoundLimitDvar( level.gameType, 1, 0, 10 );
@@ -118,6 +119,9 @@ onPrecacheGameType()
 
 onStartGameType()
 {	
+	if ( !isdefined( game["switchedsides"] ) )
+		game["switchedsides"] = false;
+
 	setObjectiveText( "allies", &"OBJECTIVES_DOM" );
 	setObjectiveText( "axis", &"OBJECTIVES_DOM" );
 
@@ -180,6 +184,10 @@ onStartGameType()
 getSpawnPoint()
 {
 	spawnpoint = undefined;
+
+	spawnteam = self.pers["team"];
+	if ( game["switchedsides"] )
+		spawnteam = getOtherTeam( spawnteam )
 	
 	if ( !level.useStartSpawns )
 	{
