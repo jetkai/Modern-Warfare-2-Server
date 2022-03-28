@@ -699,9 +699,9 @@ giveLoadout( team, class, allowCopycat )
 
 	self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
 	self maps\mp\perks\_perkfunctions::setSuperAirstrike();
-	self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
+	//self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
 	//self maps\mp\perks\_perkfunctions::setSentryGl();
-	self maps\mp\perks\_perkfunctions::setHelicopterMk19();
+	//self maps\mp\perks\_perkfunctions::setHelicopterMk19();
 	//self maps\mp\perks\_perkfunctions::setPredator();
 	//self maps\mp\perks\_perkfunctions::setTank();
 
