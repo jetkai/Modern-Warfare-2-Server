@@ -187,7 +187,7 @@ getSpawnPoint()
 
 	spawnteam = self.pers["team"];
 	if ( game["switchedsides"] )
-		spawnteam = getOtherTeam( spawnteam )
+		spawnteam = getOtherTeam( spawnteam );
 	
 	if ( !level.useStartSpawns )
 	{
