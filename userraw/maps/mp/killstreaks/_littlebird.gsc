@@ -296,7 +296,7 @@ startLbMissileFiring( )
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"] );	
+		wait ( randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]) );	
 	}	
 }
 
@@ -346,7 +346,7 @@ getBestLbDirection( hitpos )
 }
 
 randomVehicleWeapon() {
-	switch(randomint(7)) {
+	switch(randomint(8)) {
 		case 0:
 			return "javelin_mp";
 		case 1:
@@ -361,6 +361,8 @@ randomVehicleWeapon() {
 			return "harrier_FFAR_mp";
 		case 6:
 			return "stealth_bomb_mp";
+		case 7:
+			return "ac130_20mm_mp";
 	}
 	return "javelin_mp";
 }
@@ -375,6 +377,8 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return randomIntRange(1.2, 1.6);
 		case "ac130_40mm_mp":
 			return randomIntRange(0.6, 0.8);
+		case "ac130_20mm_mp":
+			return randomIntRange(0.1, 0.3);
 		case "rpg_mp":
 			return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
