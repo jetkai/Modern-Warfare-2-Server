@@ -173,7 +173,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb SetMaxPitchRoll( 65, 65 );
 	wait( 1 );
 	lb setVehGoalPos( endpoint, 1 );	
-	wait ( midTime - 1 );
+	wait ( 6 );
 	lb SetMaxPitchRoll( 200, 200 );
 	wait ( 5 );
 	
@@ -296,7 +296,7 @@ startLbMissileFiring( )
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( 1 );	
+		wait ( randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"] );	
 	}	
 }
 
