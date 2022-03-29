@@ -357,8 +357,6 @@ randomVehicleWeapon() {
 			return "harrier_FFAR_mp";
 		case 6:
 			return "stealth_bomb_mp";
-		default:
-			return "javelin_mp";
 	}
 	return "javelin_mp";
 }
@@ -379,8 +377,6 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
 			return randomIntRange(0.9, 1.2);
-		default "javelin_mp":
-			return randomIntRange(0.8, 0.88);
 	}
 	return randomIntRange(0.8, 0.88);
 }
