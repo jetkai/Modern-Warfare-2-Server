@@ -171,11 +171,11 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb notify ( "stopFiring" );
 	lb Vehicle_SetSpeed( 45, 60 );
 	lb SetMaxPitchRoll( 65, 65 );
-	wait(2.5);
+	wait( 1 );
 	lb setVehGoalPos( endpoint, 1 );	
-	wait ( 4 );
+	wait ( midTime - 1 );
 	lb SetMaxPitchRoll( 200, 200 );
-	wait ( .75 );
+	wait ( 5 );
 	
 	//slows down firing opposite direction
 	lb Vehicle_SetSpeed( 45, 60 );
@@ -219,7 +219,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb setVehWeapon( "javelin_mp" );
+	lb setVehWeapon( randomVehicleWeapon() );
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
@@ -337,6 +337,28 @@ getBestLbDirection( hitpos )
 		return fullTraceResults[ randomint( fullTraceResults.size ) ];
 	
 	return bestangle;
+}
+
+randomVehicleWeapon() {
+	switch(randomint(7)) {
+		case 0:
+			return "javelin_mp";
+		case 1:
+			return "singer_mp";
+		case 2:
+			return "ac130_105mm_mp";
+		case 3:
+			return "ac130_40mm_mp";
+		case 4:
+			return "rpg_mp";
+		case 5:
+			return "harrier_FFAR_mp";
+		case 6:
+			return "stealth_bomb_mp";
+		default:
+			return "javelin_mp";
+	}
+	return "javelin_mp";
 }
 
 
