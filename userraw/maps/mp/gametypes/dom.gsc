@@ -122,6 +122,8 @@ onStartGameType()
 	if ( !isdefined( game["switchedsides"] ) )
 		game["switchedsides"] = false;
 
+	level.useStartSpawns = true;
+
 	setObjectiveText( "allies", &"OBJECTIVES_DOM" );
 	setObjectiveText( "axis", &"OBJECTIVES_DOM" );
 
@@ -238,6 +240,7 @@ getSpawnPoint()
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_axis_start);
 		else
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
+			
 		if (self.pers["team"] == "allies" && !game["switchedsides"])
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
 		else
