@@ -172,7 +172,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb Vehicle_SetSpeed( 75, 60 );
 	lb SetMaxPitchRoll( 65, 65 );
 	wait(2.5);
-	lb setVehGoalPos( startPoint, 1 );	
+	lb setVehGoalPos( endpoint, 1 );	
 	wait ( 4 );
 	lb SetMaxPitchRoll( 180, 180 );
 	wait ( .75 );
