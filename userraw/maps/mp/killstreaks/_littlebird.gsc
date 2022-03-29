@@ -219,7 +219,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb.randomVehicleWeapon = randomVehicleWeapon();
+	lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	lb setVehWeapon( lb.randomVehicleWeapon );
 
 	PrintConsole("Attempting to use " +lb.randomVehicleWeapon);
@@ -291,12 +291,12 @@ startLbMissileFiring( )
 	
 	i = 0;
 	
-	PrintConsole("Attempting to use " +self.randomVehicleWeapon + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.randomVehicleWeapon));
+	PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( randomVehicleWeaponAttackSpeed(self.randomVehicleWeapon) );	
+		wait ( randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]) );	
 	}	
 }
 
