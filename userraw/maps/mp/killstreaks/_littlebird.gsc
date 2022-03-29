@@ -168,20 +168,20 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	wait ( 6 );
 
 	//stops firing and turns around one last time
-	lb notify ( "stopFiring" );
-	lb Vehicle_SetSpeed( 45, 60 );
+		lb notify ( "stopFiring" );
+	lb Vehicle_SetSpeed( 75, 60 );
 	lb SetMaxPitchRoll( 65, 65 );
-	wait( 1 );
-	lb setVehGoalPos( endpoint, 1 );	
-	wait ( 6 );
+	wait(2.5);
+	lb setVehGoalPos( endPoint, 1 );	
+	wait ( 4 );
 	lb SetMaxPitchRoll( 200, 200 );
-	wait ( 5 );
+	wait ( .75 );
 	
 	//slows down firing opposite direction
 	lb Vehicle_SetSpeed( 45, 60 );
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
-	wait ( 7 );
+	wait ( 6 );
 	
 	
 	//off into the sunset
@@ -349,8 +349,8 @@ randomVehicleWeapon() {
 	switch(randomint(8)) {
 		case 0:
 			return "javelin_mp";
-		case 1:
-			return "singer_mp";
+		//case 1:
+		//	return "singer_mp";
 		case 2:
 			return "ac130_105mm_mp";
 		case 3:
@@ -359,8 +359,8 @@ randomVehicleWeapon() {
 			return "rpg_mp";
 		case 5:
 			return "harrier_FFAR_mp";
-		case 6:
-			return "stealth_bomb_mp";
+	//case	case 6:
+		//	return "stealth_bomb_mp";
 		case 7:
 			return "ac130_20mm_mp";
 	}
@@ -376,19 +376,19 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return 0.35;
 			//return randomIntRange(0.3, 0.6);
 		case "ac130_105mm_mp":
-			return 1.6;
+			return 1.8;
 			//return randomIntRange(1.2, 1.6);
 		case "ac130_40mm_mp":
 			return 0.62;
 			//return randomIntRange(0.6, 0.8);
 		case "ac130_20mm_mp":
-			return 0.23;
+			return 0.33;
 			//return randomIntRange(0.1, 0.3);
 		case "rpg_mp":
-			return 0.45;
+			return 0.23;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
-			return 0.58;
+			return 0.38;
 			//return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
 			return 0.95;
