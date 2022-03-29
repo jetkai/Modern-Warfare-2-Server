@@ -241,7 +241,7 @@ getSpawnPoint()
 		else
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
 			
-		if (self.pers["team"] == "allies" && !game["switchedsides"])
+		if (self.pers["team"] != "axis" && !game["switchedsides"])
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
 		else
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_axis_start);
