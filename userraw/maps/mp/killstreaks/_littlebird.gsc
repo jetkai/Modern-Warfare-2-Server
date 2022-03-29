@@ -346,23 +346,23 @@ getBestLbDirection( hitpos )
 }
 
 randomVehicleWeapon() {
-	switch(randomint(8)) {
+	switch(randomint(3)) {
 		case 0:
 			return "javelin_mp";
 		//case 1:
 		//	return "singer_mp";
-		case 2:
-			return "ac130_105mm_mp";
-		case 3:
-			return "ac130_40mm_mp";
-		case 4:
+	//	case 2:
+	//		return "ac130_105mm_mp";
+	//	case 3:
+	//		return "ac130_40mm_mp";
+		case 1:
 			return "rpg_mp";
-		case 5:
+		case 2:
 			return "harrier_FFAR_mp";
 	//case	case 6:
 		//	return "stealth_bomb_mp";
-		case 7:
-			return "ac130_20mm_mp";
+		//case 7:
+		//	return "ac130_20mm_mp";
 	}
 	return "javelin_mp";
 }
