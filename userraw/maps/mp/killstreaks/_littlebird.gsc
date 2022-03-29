@@ -165,23 +165,23 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb Vehicle_SetSpeed( 45, 60 );
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
-	wait ( 7 );
+	wait ( 6 );
 
 	//stops firing and turns around one last time
 	lb notify ( "stopFiring" );
-	lb Vehicle_SetSpeed( 75, 60 );
+	lb Vehicle_SetSpeed( 45, 60 );
 	lb SetMaxPitchRoll( 65, 65 );
-	wait(1.5);
+	wait(2.5);
 	lb setVehGoalPos( endpoint, 1 );	
-	wait ( 2 );
-	lb SetMaxPitchRoll( 180, 180 );
+	wait ( 4 );
+	lb SetMaxPitchRoll( 200, 200 );
 	wait ( .75 );
 	
 	//slows down firing opposite direction
-	lb Vehicle_SetSpeed( 25, 40 );
+	lb Vehicle_SetSpeed( 45, 60 );
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
-	wait ( 10 );
+	wait ( 7 );
 	
 	
 	//off into the sunset
