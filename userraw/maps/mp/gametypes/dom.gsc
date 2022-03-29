@@ -184,10 +184,6 @@ onStartGameType()
 getSpawnPoint()
 {
 	spawnpoint = undefined;
-
-	spawnteam = self.pers["team"];
-	if ( game["switchedsides"] )
-		spawnteam = getOtherTeam( spawnteam );
 	
 	if ( !level.useStartSpawns )
 	{
@@ -238,10 +234,14 @@ getSpawnPoint()
 	
 	if ( !isdefined( spawnpoint ) )
 	{
-		if (self.pers["team"] == "axis")
+		if (self.pers["team"] == "axis" && !game["switchedsides"])
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_axis_start);
 		else
 			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
+		if (self.pers["team"] == "allies" && !game["switchedsides"])
+			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_allies_start);
+		else
+			spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_Random(level.spawn_axis_start);
 	}
 	
 	//spawnpoint = maps\mp\gametypes\_spawnlogic::getSpawnpoint_NearTeam( level.spawn_all );

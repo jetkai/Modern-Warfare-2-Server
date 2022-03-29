@@ -166,6 +166,23 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
 	wait ( 6 );
+
+	//stops firing and turns around one last time
+	lb notify ( "stopFiring" );
+	lb Vehicle_SetSpeed( 75, 60 );
+	lb SetMaxPitchRoll( 65, 65 );
+	wait(2.5);
+	lb setVehGoalPos( startPoint, 1 );	
+	wait ( 4 );
+	lb SetMaxPitchRoll( 180, 180 );
+	wait ( .75 );
+	
+	//slows down firing opposite direction
+	lb Vehicle_SetSpeed( 20, 60 );
+	lb thread startLbFiring();
+	lb thread startLbMissileFiring();
+	wait ( 6 );
+	
 	
 	//off into the sunset
 	lb Vehicle_SetSpeed( lb.speed, 60 );
@@ -245,7 +262,7 @@ startLbFiring( )
 	self endon( "death" );
 	self endon( "stopFiring" );
 
-	PrintConsole("Attempting to fire the gun.");
+	//PrintConsole("Attempting to fire the gun.");
 	
 	i = 0;
 	
@@ -266,7 +283,7 @@ startLbMissileFiring( )
 	self endon( "death" );
 	self endon( "stopFiring" );
 
-	PrintConsole("Attempting to fire the missile gun.");
+	//PrintConsole("Attempting to fire the missile gun.");
 	
 	i = 0;
 	
