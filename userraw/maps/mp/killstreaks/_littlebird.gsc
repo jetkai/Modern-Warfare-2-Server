@@ -219,7 +219,9 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb setVehWeapon( randomVehicleWeapon() );
+	lb.randomVehicleWeapon = randomVehicleWeapon();
+	lb setVehWeapon( lb.randomVehicleWeapon );
+	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
@@ -290,7 +292,7 @@ startLbMissileFiring( )
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( 0.827 );	
+		wait ( randomVehicleWeaponAttackSpeed(self.randomVehicleWeapon) );	
 	}	
 }
 
@@ -359,6 +361,28 @@ randomVehicleWeapon() {
 			return "javelin_mp";
 	}
 	return "javelin_mp";
+}
+
+randomVehicleWeaponAttackSpeed(weapon) {
+	switch(weapon) {
+		case "javelin_mp":
+			return randomIntRange(0.8, 0.88);
+		case "singer_mp":
+			return randomIntRange(0.3, 0.6);
+		case "ac130_105mm_mp":
+			return randomIntRange(1.2, 1.6);
+		case "ac130_40mm_mp":
+			return randomIntRange(0.6, 0.8);
+		case "rpg_mp":
+			return randomIntRange(0.3, 0.6);
+		case "harrier_FFAR_mp":
+			return randomIntRange(0.5, 0.8);
+		case "stealth_bomb_mp":
+			return randomIntRange(0.9, 1.2);
+		default "javelin_mp":
+			return randomIntRange(0.8, 0.88);
+	}
+	return randomIntRange(0.8, 0.88);
 }
 
 
