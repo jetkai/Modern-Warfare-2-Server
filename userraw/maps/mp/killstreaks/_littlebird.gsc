@@ -370,23 +370,32 @@ randomVehicleWeapon() {
 randomVehicleWeaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
-			return randomIntRange(0.8, 0.88);
+			return 0.86;
+			//return randomIntRange(0.8, 0.88);
 		case "singer_mp":
-			return randomIntRange(0.3, 0.6);
+			return 0.35;
+			//return randomIntRange(0.3, 0.6);
 		case "ac130_105mm_mp":
-			return randomIntRange(1.2, 1.6);
+			return 1.6;
+			//return randomIntRange(1.2, 1.6);
 		case "ac130_40mm_mp":
-			return randomIntRange(0.6, 0.8);
+			return 0.62;
+			//return randomIntRange(0.6, 0.8);
 		case "ac130_20mm_mp":
-			return randomIntRange(0.1, 0.3);
+			return 0.23;
+			//return randomIntRange(0.1, 0.3);
 		case "rpg_mp":
-			return randomIntRange(0.3, 0.6);
+			return 0.45;
+		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
-			return randomIntRange(0.5, 0.8);
+			return 0.58;
+			//return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
-			return randomIntRange(0.9, 1.2);
+			return 0.95;
+			//return randomIntRange(0.9, 1.2);
 	}
-	return randomIntRange(0.8, 0.88);
+	return 0.88;
+	//return randomIntRange(0.8, 0.88);
 }
 
 
