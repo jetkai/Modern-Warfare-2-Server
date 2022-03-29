@@ -181,7 +181,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb Vehicle_SetSpeed( 20, 60 );
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
-	wait ( 6 );
+	wait ( 10 );
 	
 	
 	//off into the sunset
