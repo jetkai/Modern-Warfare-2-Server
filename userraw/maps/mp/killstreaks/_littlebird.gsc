@@ -296,7 +296,7 @@ startLbMissileFiring( )
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 	for( ;; )
 	{
-		self FireWeapon();
+		//self FireWeapon();
 
 		targetPos = targets[ randomint( targets.size ) ];
 		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
@@ -308,26 +308,33 @@ startLbMissileFiring( )
 		rocket thread maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
 		rocket thread maps\mp\killstreaks\_remotemissile::handleDamage();
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
-		self FireWeapon(rocket);
+		//self FireWeapon(rocket);
 		wait ( 2 );	
 	}	
 }
 
 getEnemyTargets() {
-	enemyPlayers = undefined;
+	/*enemyBots = undefined;
 	if ( level.teambased ) {
-		players = level.players;
+		bots = level.bots;
 		
-		for ( i = 0; i < level.players.size; i++ ) {
-			player = level.players[i];
-			playerteam = player.pers["team"];
-			if ( isdefined( playerteam ) ) {
-				if ( playerteam != self.team )
-					enemyPlayers += player;
+		for ( i = 0; i < level.bots.size; i++ ) {
+			bot = level.bots[i];
+			botTeam = bot.pers["team"];
+			if ( isdefined( botTeam ) ) {
+				if ( botTeam != self.team )
+					enemyBots += bot;
 			}
 		}
 	}
-	return enemyPlayers;
+	return enemyBots;*/
+	enemies = undefined;
+	if(self.team == "allies") {
+		enemies = level.bots;
+	} else {
+		enemies = level.players;
+	}
+	return enemies;
 }
 
 getBestLbDirection( hitpos )
