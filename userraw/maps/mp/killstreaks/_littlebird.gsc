@@ -221,7 +221,8 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 
 	lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	//lb setVehWeapon( lb.pers["randomVehicleWeapon"] );
-	lb setVehWeapon( "stealth_bomb_mp" );
+	lb.defaultWeapon = "remotemissile_projectile_mp"
+	lb setVehWeapon( defaultWeapon );
 
 	PrintConsole("Attempting to use " +lb.pers["randomVehicleWeapon"]);
 	
@@ -300,9 +301,9 @@ startLbMissileFiring( )
 		targetPos = targets[ randomint( targets.size ) ];
 		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
 		targetOrigin = targetPos.origin;
-		rocket = MagicBullet( "remotemissile_projectile_mp", self.origin, targetPos, self );
+		rocket = MagicBullet( self.defaultWeapon, self.origin, targetPos, self );
 		//rocket.lifeId = lifeId;
-		rocket.type = "remote";
+		//rocket.type = "remote";
 
 		rocket thread maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
 		rocket thread maps\mp\killstreaks\_remotemissile::handleDamage();
