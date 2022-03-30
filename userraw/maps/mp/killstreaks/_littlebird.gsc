@@ -361,19 +361,19 @@ getEnemyTargets() {
 		}
 	}
 	return enemyBots;*/
-	enemies = [];
+	enemies = struct_arrayspawn();
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				array_add(enemies, bot);
+				structarray_add(enemies, bot);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				array_add(enemies, player);
+				structarray_add(enemies, player);
 			}
 		}
 	}
