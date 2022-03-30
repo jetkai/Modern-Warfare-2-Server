@@ -365,7 +365,7 @@ getRandomTarget() {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				enemiesToTarget[enemiesToTarget.size, bot];
+				enemiesToTarget[enemiesToTarget.size] = bot;
 				//array_add(level.enemiesToTarget["bots"], bot);
 			}
 		}
@@ -373,7 +373,7 @@ getRandomTarget() {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				enemiesToTarget[enemiesToTarget.size, player];
+				enemiesToTarget[enemiesToTarget.size] = player;
 				//array_add(enemiesToTarget["players"], player);
 			}
 		}
