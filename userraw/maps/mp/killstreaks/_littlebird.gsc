@@ -377,9 +377,9 @@ getRandomTarget() {
 		}
 	}
 	if(self.team == "allies") {
-		return level.bots[enemies[randomint(enemies.size)]]
+		return level.bots[enemies[randomint(enemies.size)]];
 	}
-	return level.players[enemies[randomint(enemies.size)]]
+	return level.players[enemies[randomint(enemies.size)]];
 }
 
 getBestLbDirection( hitpos )
