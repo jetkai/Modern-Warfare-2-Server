@@ -322,7 +322,7 @@ startLbMissileFiring( )
 }
 
 isEnemyInfront( target ) {
-	forwardvec = anglestoforward( flat_angle( self.origin ) );
+	forwardvec = anglestoforward( flat_angle( self.angles ) );
 	normalvec = vectorNormalize( flat_origin( target.origin ) - self.origin );
 	dot = vectordot( forwardvec, normalvec );
 	if ( dot > 0 )
