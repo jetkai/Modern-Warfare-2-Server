@@ -296,19 +296,19 @@ startLbMissileFiring( )
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 	for( ;; )
 	{
-		//self FireWeapon();
+		self FireWeapon();
 
 		targetPos = targets[ randomint( targets.size ) ];
 		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
 		targetOrigin = targetPos.origin;
 		rocket = MagicBullet( self.defaultWeapon, self.origin, targetPos, self );
-		//rocket.lifeId = lifeId;
-		//rocket.type = "remote";
+		rocket.lifeId = -1;
+		rocket.type = "remote";
 
 		rocket thread maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
 		rocket thread maps\mp\killstreaks\_remotemissile::handleDamage();
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
-		//self FireWeapon(rocket);
+		self FireWeapon(rocket);
 		wait ( 2 );	
 	}	
 }
