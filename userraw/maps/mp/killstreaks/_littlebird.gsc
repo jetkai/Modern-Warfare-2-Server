@@ -360,19 +360,19 @@ getRandomTarget() {
 		}
 	}
 	return enemyBots;*/
-	enemies = [];
+	level.enemiesToTarget = [];
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				array_add(enemies, i);
+				array_add(level.enemiesToTarget, i);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				array_add(enemies, i);
+				array_add(level.enemiesToTarget, i);
 			}
 		}
 	}
