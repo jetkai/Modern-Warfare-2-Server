@@ -312,12 +312,22 @@ startLbMissileFiring( )
 		self FireWeapon(rocket);*/
 	
 		self SetTurretTargetEnt( targetPos );
-		self setVehWeapon( "harrier_FFAR_mp" );
+		//self setVehWeapon( "" );
 		eMissile = self FireWeapon();
 		eMissile Missile_SetFlightmodeDirect();
 		eMissile Missile_SetTargetEnt( targetPos );
 		wait ( 2 );	
 	}	
+}
+
+isEnemyInfront( other ) {
+	forwardvec = anglestoforward( flat_angle( other.angles ) );
+	normalvec = vectorNormalize( flat_origin( self.origin ) - other.origin );
+	dot = vectordot( forwardvec, normalvec );
+	if ( dot > 0 )
+		return true;
+	else
+		return false;
 }
 
 getEnemyTargets() {
@@ -337,9 +347,19 @@ getEnemyTargets() {
 	return enemyBots;*/
 	enemies = undefined;
 	if(self.team == "allies") {
-		enemies = level.bots;
+		for ( i = 0; i < level.bots.size; i++ ) {
+			bot = level.bots[i];
+			if(isEnemyInfront(bot)) {
+				enemies += bot;
+			}
+		}
 	} else {
-		enemies = level.players;
+		for ( i = 0; i < level.player.size; i++ ) {
+			player = level.player[i];
+			if(isEnemyInfront(bot)) {
+				enemies += player;
+			}
+		}
 	}
 	return enemies;
 }
@@ -414,7 +434,7 @@ randomVehicleWeapon() {
 randomVehicleWeaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
-			return 0.86;
+			return 0.88;
 			//return randomIntRange(0.8, 0.88);
 		case "singer_mp":
 			return 0.35;
