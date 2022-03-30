@@ -341,8 +341,8 @@ isEnemyInfront( target ) {
 		
 		//vecdot > 0 means in 180 in front
 		if( vecdot < 0 )// player is behind my goal dir
-			return true;
-		return false;
+			return false;
+		return true;
 }
 
 getRandomTarget() {
@@ -445,8 +445,8 @@ randomVehicleWeapon() {
 			return "harrier_FFAR_mp";
 	//case	case 6:
 		//	return "stealth_bomb_mp";
-		//case 7:
-		//	return "ac130_20mm_mp";
+	case 3:
+			return "ac130_20mm_mp";
 	}
 	return "javelin_mp";
 }
@@ -469,7 +469,7 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return 0.33;
 			//return randomIntRange(0.1, 0.3);
 		case "remotemissile_projectile_mp":
-			return 1.23;
+			return 0.77;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
 			return 0.38;
