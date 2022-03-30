@@ -381,7 +381,7 @@ getRandomTarget() {
 	if(self.team == "allies") {
 		return enemiesToTarget[randomint(enemiesToTarget.size)];
 	}
-	return lenemiesToTarget[randomint(enemiesToTarget.size)];
+	return enemiesToTarget[randomint(enemiesToTarget.size)];
 }
 
 getBestLbDirection( hitpos )
