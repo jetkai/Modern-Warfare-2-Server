@@ -295,8 +295,6 @@ startLbMissileFiring( )
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 	for( ;; ) {
 		//self FireWeapon();
-		targets = getEnemyTargets();
-		target = targets[randomint(targets.size)];
 	//	targetOrigin = target.origin;
 		/*rocket = MagicBullet( self.defaultWeapon, self.origin, target, self );
 		rocket.lifeId = -1;
@@ -307,7 +305,8 @@ startLbMissileFiring( )
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
-	
+
+		target = getRandomTarget();
 		if(isDefined(target)) {
 			PrintConsole("Attempting to attack " +target.name+ " - " + targets.size + ".\n");
 			self SetTurretTargetEnt(target);
@@ -346,7 +345,7 @@ isEnemyInfront( target ) {
 		return true;
 }
 
-getEnemyTargets() {
+getRandomTarget() {
 	/*enemyBots = undefined;
 	if ( level.teambased ) {
 		bots = level.bots;
@@ -361,23 +360,26 @@ getEnemyTargets() {
 		}
 	}
 	return enemyBots;*/
-	enemies = struct_arrayspawn();
+	enemies = [];
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				structarray_add(enemies, bot);
+				enemies += i;
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				structarray_add(enemies, player);
+				enemies += i;
 			}
 		}
 	}
-	return enemies;
+	if(self.team == "allies") {
+		return level.bots[enemies[randomint(enemies.size)]]
+	}
+	return level.players[enemies[randomint(enemies.size)]]
 }
 
 getBestLbDirection( hitpos )
