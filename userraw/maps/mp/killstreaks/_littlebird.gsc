@@ -220,7 +220,8 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
 	lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
-	lb setVehWeapon( lb.pers["randomVehicleWeapon"] );
+	//lb setVehWeapon( lb.pers["randomVehicleWeapon"] );
+	lb setVehWeapon( "remotemissile_projectile_mp" );
 
 	PrintConsole("Attempting to use " +lb.pers["randomVehicleWeapon"]);
 	
