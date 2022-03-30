@@ -310,7 +310,11 @@ startLbMissileFiring( )
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
-		self fireWeapon("tag_store_r_2", targetPos);
+	
+
+		eMissile = self fireWeapon( "tag_store_r_2", targetPos );
+		eMissile Missile_SetFlightmodeDirect();
+		eMissile Missile_SetTargetEnt( targetPos );
 		wait ( 2 );	
 	}	
 }
@@ -395,7 +399,7 @@ randomVehicleWeapon() {
 	//	case 3:
 	//		return "ac130_40mm_mp";
 		case 1:
-			return "rpg_mp";
+			return "remotemissile_projectile_mp";
 		case 2:
 			return "harrier_FFAR_mp";
 	//case	case 6:
@@ -423,8 +427,8 @@ randomVehicleWeaponAttackSpeed(weapon) {
 		case "ac130_20mm_mp":
 			return 0.33;
 			//return randomIntRange(0.1, 0.3);
-		case "rpg_mp":
-			return 0.23;
+		case "remotemissile_projectile_mp":
+			return 1.23;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
 			return 0.38;
