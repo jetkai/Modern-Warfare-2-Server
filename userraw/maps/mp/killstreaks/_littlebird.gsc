@@ -219,12 +219,12 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
-	//lb setVehWeapon( lb.pers["randomVehicleWeapon"] );
-	lb.defaultWeapon = "remotemissile_projectile_mp";
+	//lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
+	//lb.defaultWeapon = "remotemissile_projectile_mp";
+	lb.defaultWeapon = randomVehicleWeapon();
 	lb setVehWeapon( lb.defaultWeapon );
 
-	PrintConsole("Attempting to use " +lb.pers["randomVehicleWeapon"]);
+	PrintConsole("Attempting to use " +lb.defaultWeapon);
 	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
@@ -300,7 +300,7 @@ startLbMissileFiring( )
 
 		targetPos = targets[ randomint( targets.size ) ];
 		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
-		targetOrigin = targetPos.origin;
+	//	targetOrigin = targetPos.origin;
 		/*rocket = MagicBullet( self.defaultWeapon, self.origin, targetPos, self );
 		rocket.lifeId = -1;
 		rocket.type = "remote";
@@ -310,7 +310,7 @@ startLbMissileFiring( )
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
-		self FireWeapon(self.defaultWeapon, targetPos);
+		self fireWeapon("tag_store_r_2", targetPos);
 		wait ( 2 );	
 	}	
 }
