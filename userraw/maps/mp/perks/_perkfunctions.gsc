@@ -1125,7 +1125,7 @@ GlowStickEnemyUseListener( owner )
 
 setLittlebirdSupport()
 {
-	self thread killstreakThink( "littlebird_support", 13, "end_littlebird_support_think" );
+	self thread killstreakThink( "littlebird_support", 8, "end_littlebird_support_think" );
 }
 
 unsetLittlebirdSupport()
