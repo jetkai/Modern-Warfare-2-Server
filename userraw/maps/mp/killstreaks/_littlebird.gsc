@@ -360,26 +360,28 @@ getRandomTarget() {
 		}
 	}
 	return enemyBots;*/
-	level.enemiesToTarget = [];
+	enemiesToTarget = [];
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				array_add(level.enemiesToTarget["bots"], bot);
+				enemiesToTarget[enemiesToTarget.size, bot];
+				//array_add(level.enemiesToTarget["bots"], bot);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				array_add(level.enemiesToTarget["players"], player);
+				enemiesToTarget[enemiesToTarget.size, player];
+				//array_add(enemiesToTarget["players"], player);
 			}
 		}
 	}
 	if(self.team == "allies") {
-		return level.enemiesToTarget["bots"][randomint(level.enemiesToTarget.size)];
+		return enemiesToTarget[randomint(enemiesToTarget.size)];
 	}
-	return level.enemiesToTarget["players"][randomint(level.enemiesToTarget.size)];
+	return lenemiesToTarget[randomint(enemiesToTarget.size)];
 }
 
 getBestLbDirection( hitpos )
