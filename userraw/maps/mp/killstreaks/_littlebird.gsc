@@ -292,12 +292,11 @@ startLbMissileFiring( )
 	//PrintConsole("Attempting to fire the missile gun.");
 	
 	i = 0;
-	targets = getEnemyTargets();
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 	for( ;; )
 	{
 		//self FireWeapon();
-
+		targets = getEnemyTargets();
 		targetPos = targets[ randomint( targets.size ) ];
 		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
 	//	targetOrigin = targetPos.origin;
@@ -316,7 +315,7 @@ startLbMissileFiring( )
 		eMissile = self FireWeapon();
 		eMissile Missile_SetFlightmodeDirect();
 		eMissile Missile_SetTargetEnt( targetPos );
-		wait ( 2 );	
+		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
 	}	
 }
 
