@@ -27,7 +27,8 @@ init()
 {
 	level.sentryType = [];
 	level.sentryType[ "sentry_minigun" ] 	= "sentry";
-	
+
+	//if ( isDefined( self.owner ) && self.owner.guid )
 	level.killStreakFuncs[ level.sentryType[ "sentry_minigun" ] ] 	= ::tryUseAutoSentry;
 	
 	level.sentrySettings = [];
@@ -117,6 +118,11 @@ setCarryingSentry( sentryGun, allowCancel )
 {
 	self endon ( "death" );
 	self endon ( "disconnect" );
+
+	if(level.turrets.size > 24) {
+		self iPrintlnBold("You must wait before placing a Sentry, there are too many at the moment.");
+		return false;
+	}
 	
 	assert( isReallyAlive( self ) );
 	
@@ -352,6 +358,11 @@ sentry_setOwner( owner )
 
 sentry_setPlaced()
 {
+
+	if(level.turrets.size > 22) {
+		self iPrintlnBold("You must wait before placing a Sentry, there are too many at the moment.");
+		return false;
+	}
 	self setModel( level.sentrySettings[ self.sentryType ].modelBase );
 
 	self setSentryCarried( false );

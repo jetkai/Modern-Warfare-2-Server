@@ -271,6 +271,7 @@ startLbFiring( )
 	//PrintConsole("Attempting to fire the gun.");
 	
 	i = 0;
+	assignRandomTarget();
 	
 	for( ;; )
 	{
@@ -281,6 +282,19 @@ startLbFiring( )
 		self.mgTurret2 shootTurret();
 		wait ( 0.05 );	
 	}	
+}
+
+assignRandomTarget() {
+	self endon( "gone" );
+	self endon( "death" );
+	self endon( "stopFiring" );
+
+	for(;;) {
+		randomEnemy = getRandomTarget();
+		self.mgTurret1 setTurretTargetEnt(randomEnemy, ( 0,0,50 );
+		self.mgTurret2 setTurretTargetEnt(randomEnemy, ( 0,0,50 );
+		wait(0.7);
+	}
 }
 
 startLbMissileFiring( )
