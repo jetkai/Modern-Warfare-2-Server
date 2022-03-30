@@ -293,14 +293,12 @@ startLbMissileFiring( )
 	
 	i = 0;
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
-	for( ;; )
-	{
+	for( ;; ) {
 		//self FireWeapon();
 		targets = getEnemyTargets();
-		targetPos = targets[ randomint( targets.size ) ];
-		PrintConsole("Attempting to attack " +targetPos.name+ " - " + targets.size + ".\n");
-	//	targetOrigin = targetPos.origin;
-		/*rocket = MagicBullet( self.defaultWeapon, self.origin, targetPos, self );
+		target = targets[randomint(targets.size)];
+	//	targetOrigin = target.origin;
+		/*rocket = MagicBullet( self.defaultWeapon, self.origin, target, self );
 		rocket.lifeId = -1;
 		rocket.type = "remote";
 
@@ -310,18 +308,22 @@ startLbMissileFiring( )
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
 	
-		self SetTurretTargetEnt( targetPos );
-		//self setVehWeapon( "" );
-		eMissile = self FireWeapon();
-		eMissile Missile_SetFlightmodeDirect();
-		eMissile Missile_SetTargetEnt( targetPos );
+		if(isDefined(target)) {
+			PrintConsole("Attempting to attack " +target.name+ " - " + targets.size + ".\n");
+			self SetTurretTargetEnt(target);
+			eMissile = self FireWeapon();
+			eMissile Missile_SetFlightmodeDirect();
+			eMissile Missile_SetTargetEnt(target);
+		} else {
+			PrintConsole("Target not defined.");
+		}
 		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
 	}	
 }
 
-isEnemyInfront( other ) {
-	forwardvec = anglestoforward( flat_angle( other.angles ) );
-	normalvec = vectorNormalize( flat_origin( self.origin ) - other.origin );
+isEnemyInfront( target ) {
+	forwardvec = anglestoforward( flat_angle( self.origin ) );
+	normalvec = vectorNormalize( flat_origin( target.origin ) - self.origin );
 	dot = vectordot( forwardvec, normalvec );
 	if ( dot > 0 )
 		return true;
