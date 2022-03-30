@@ -319,7 +319,7 @@ getEnemyTargets() {
 			player = level.players[i];
 			playerteam = player.pers["team"];
 			if ( isdefined( playerteam ) ) {
-				if ( playerteam != team )
+				if ( playerteam != self.team )
 					enemyPlayers += player;
 			}
 		}
