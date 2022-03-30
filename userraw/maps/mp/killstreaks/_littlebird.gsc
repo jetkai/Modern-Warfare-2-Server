@@ -361,7 +361,7 @@ getEnemyTargets() {
 		}
 	}
 	return enemyBots;*/
-	enemies = undefined;
+	enemies = [];
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
