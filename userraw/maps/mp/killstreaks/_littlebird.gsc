@@ -221,7 +221,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 
 	lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	//lb setVehWeapon( lb.pers["randomVehicleWeapon"] );
-	lb setVehWeapon( "remotemissile_projectile_mp" );
+	lb setVehWeapon( "stealth_bomb_mp" );
 
 	PrintConsole("Attempting to use " +lb.pers["randomVehicleWeapon"]);
 	
@@ -291,14 +291,40 @@ startLbMissileFiring( )
 	//PrintConsole("Attempting to fire the missile gun.");
 	
 	i = 0;
-	
+	targets = getEnemyTargets();
 	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
-
 	for( ;; )
 	{
 		self FireWeapon();
-		wait ( randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]) );	
+
+		targetPos = targets[ randomint( targets.size ) ];
+		targetOrigin = targetPos.origin;
+		rocket = MagicBullet( "remotemissile_projectile_mp", self.origin, targetPos, self );
+		rocket.lifeId = lifeId;
+		rocket.type = "remote";
+
+		rocket maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
+		rocket maps\mp\killstreaks\_remotemissile::handleDamage();
+			// maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
+		wait ( 2 );	
 	}	
+}
+
+getEnemyTargets() {
+	enemyPlayers = undefined;
+	if ( level.teambased ) {
+		players = level.players;
+		
+		for ( i = 0; i < level.players.size; i++ ) {
+			player = level.players[i];
+			playerteam = player.pers["team"];
+			if ( isdefined( playerteam ) ) {
+				if ( playerteam != team )
+					enemyPlayers += player;
+			}
+		}
+	}
+	return enemyPlayers;
 }
 
 getBestLbDirection( hitpos )
