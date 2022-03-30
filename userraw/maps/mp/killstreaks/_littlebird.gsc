@@ -308,7 +308,7 @@ startLbMissileFiring( )
 
 		target = getRandomTarget();
 		if(isDefined(target)) {
-			PrintConsole("Attempting to attack " +target.name+ " - " + targets.size + ".\n");
+			PrintConsole("Attempting to attack " +target.name+ " .\n");
 			self SetTurretTargetEnt(target);
 			eMissile = self FireWeapon();
 			eMissile Missile_SetFlightmodeDirect();
