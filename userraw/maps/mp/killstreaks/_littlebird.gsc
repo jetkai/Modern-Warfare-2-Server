@@ -365,14 +365,14 @@ getRandomTarget() {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				enemies += i;
+				array_add(enemies, i);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				enemies += i;
+				array_add(enemies, i);
 			}
 		}
 	}
