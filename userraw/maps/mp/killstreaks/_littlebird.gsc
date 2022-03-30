@@ -365,21 +365,21 @@ getRandomTarget() {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
 			if(isEnemyInfront(bot)) {
-				array_add(level.enemiesToTarget, i);
+				array_add(level.enemiesToTarget["bots"], bot);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
 			if(isEnemyInfront(player)) {
-				array_add(level.enemiesToTarget, i);
+				array_add(level.enemiesToTarget["players"], player);
 			}
 		}
 	}
 	if(self.team == "allies") {
-		return level.bots[enemies[randomint(enemies.size)]];
+		return level.enemiesToTarget["bots"][randomint(level.enemiesToTarget.size)];
 	}
-	return level.players[enemies[randomint(enemies.size)]];
+	return level.enemiesToTarget["players"][randomint(level.enemiesToTarget.size)];
 }
 
 getBestLbDirection( hitpos )
