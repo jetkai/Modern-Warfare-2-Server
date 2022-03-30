@@ -222,7 +222,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	//lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	//lb.defaultWeapon = "remotemissile_projectile_mp";
 	lb.defaultWeapon = randomVehicleWeapon();
-	lb setVehWeapon( lb.defaultWeapon );
+	lb setVehWeapon( "ac130_20mm_mp" );
 
 	PrintConsole("Attempting to use " +lb.defaultWeapon);
 	
@@ -430,7 +430,7 @@ getBestLbDirection( hitpos )
 }
 
 randomVehicleWeapon() {
-	switch(randomint(3)) {
+	switch(randomint(4)) {
 		case 0:
 			return "javelin_mp";
 		//case 1:
@@ -454,7 +454,7 @@ randomVehicleWeapon() {
 randomVehicleWeaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
-			return 0.88;
+			return 1.12;
 			//return randomIntRange(0.8, 0.88);
 		case "singer_mp":
 			return 0.35;
@@ -472,7 +472,7 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return 0.77;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
-			return 0.38;
+			return 0.48;
 			//return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
 			return 0.95;
