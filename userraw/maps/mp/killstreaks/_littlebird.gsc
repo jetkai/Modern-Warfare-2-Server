@@ -310,7 +310,7 @@ startLbMissileFiring( )
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
-		self FireWeapon(self.defaultWeapon, targetPos)
+		self FireWeapon(self.defaultWeapon, targetPos);
 		wait ( 2 );	
 	}	
 }
