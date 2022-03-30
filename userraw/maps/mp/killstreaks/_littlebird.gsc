@@ -332,7 +332,7 @@ startLbMissileFiring( )
 }*/
 
 isEnemyInfront( target ) {
-	vec2 = VectorNormalize( ( target.origin - self.origin) );
+		vec2 = VectorNormalize( ( target.origin - self.origin) );
 		
 		//vec_goal = VectorNormalize( ( level.price.goalpos - level.price.origin ) );//angle of where I'm supposed to go
 		//vecdot = vectordot( vec_goal, vec2 );//dot my my goal dir vs player position
@@ -343,7 +343,7 @@ isEnemyInfront( target ) {
 		//vecdot > 0 means in 180 in front
 		if( vecdot < 0 )// player is behind my goal dir
 			return true;
-		return false;
+		return true;
 }
 
 getEnemyTargets() {
