@@ -354,9 +354,9 @@ getEnemyTargets() {
 			}
 		}
 	} else {
-		for ( i = 0; i < level.player.size; i++ ) {
-			player = level.player[i];
-			if(isEnemyInfront(bot)) {
+		for ( i = 0; i < level.players.size; i++ ) {
+			player = level.players[i];
+			if(isEnemyInfront(player)) {
 				enemies += player;
 			}
 		}
