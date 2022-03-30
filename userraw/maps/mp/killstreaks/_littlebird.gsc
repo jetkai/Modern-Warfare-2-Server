@@ -308,7 +308,7 @@ startLbMissileFiring( )
 		rocket thread maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
 		rocket thread maps\mp\killstreaks\_remotemissile::handleDamage();
 		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
-		self FireWeapon();
+		self FireWeapon(rocket);
 		wait ( 2 );	
 	}	
 }
