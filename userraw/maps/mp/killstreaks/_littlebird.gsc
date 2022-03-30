@@ -342,7 +342,7 @@ isEnemyInfront( target ) {
 		//vecdot > 0 means in 180 in front
 		if( vecdot < 0 )// player is behind my goal dir
 			return true;
-		return true;
+		return false;
 }
 
 getRandomTarget() {
