@@ -300,7 +300,7 @@ startLbMissileFiring( )
 		targetPos = targets[ randomint( targets.size ) ];
 		targetOrigin = targetPos.origin;
 		rocket = MagicBullet( "remotemissile_projectile_mp", self.origin, targetPos, self );
-		rocket.lifeId = lifeId;
+		//rocket.lifeId = lifeId;
 		rocket.type = "remote";
 
 		rocket maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
