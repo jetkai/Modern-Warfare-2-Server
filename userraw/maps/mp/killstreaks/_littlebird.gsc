@@ -311,8 +311,8 @@ startLbMissileFiring( )
 		rocket thread Rocket_CleanupOnDeath();
 		self FireWeapon(rocket);*/
 	
-
-		eMissile = self fireWeapon( "tag_store_r_2", targetPos );
+		self SetTurretTargetEnt( targetPos );
+		eMissile = self fireWeapon( targetPos );
 		eMissile Missile_SetFlightmodeDirect();
 		eMissile Missile_SetTargetEnt( targetPos );
 		wait ( 2 );	
