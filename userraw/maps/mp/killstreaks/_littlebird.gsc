@@ -312,6 +312,7 @@ startLbMissileFiring( )
 		self FireWeapon(rocket);*/
 	
 		self SetTurretTargetEnt( targetPos );
+		self setVehWeapon( "harrier_FFAR_mp" );
 		eMissile = self fireWeapon( targetPos );
 		eMissile Missile_SetFlightmodeDirect();
 		eMissile Missile_SetTargetEnt( targetPos );
