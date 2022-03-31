@@ -318,7 +318,7 @@ startLbMissileFiring( )
 			self SetTurretTargetEnt(target);
 			eMissile = self FireWeapon();
 			eMissile Missile_SetFlightmodeDirect();
-			eMissile Missile_SetTargetEnt(target.origin);
+			eMissile Missile_SetTargetEnt(target);
 		} else {
 			//PrintConsole("Target not defined.");
 		}
