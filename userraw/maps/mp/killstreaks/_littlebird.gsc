@@ -224,7 +224,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.defaultWeapon = randomVehicleWeapon();
 	lb setVehWeapon( lb.defaultWeapon );
 
-	PrintConsole("Attempting to use " +lb.defaultWeapon);
+	//PrintConsole("Attempting to use " +lb.defaultWeapon);
 	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
@@ -271,7 +271,7 @@ startLbFiring( )
 	//PrintConsole("Attempting to fire the gun.");
 	
 	i = 0;
-	assignRandomTarget();
+	self thread assignRandomTarget();
 	
 	for( ;; )
 	{
@@ -293,7 +293,7 @@ assignRandomTarget() {
 		randomEnemy = getRandomTarget();
 		self.mgTurret1 setTurretTargetEnt(randomEnemy, ( 0,0,50 ));
 		self.mgTurret2 setTurretTargetEnt(randomEnemy, ( 0,0,50 ));
-		wait(0.7);
+		wait(1.2);
 	}
 }
 
@@ -302,33 +302,19 @@ startLbMissileFiring( )
 	self endon( "gone" );
 	self endon( "death" );
 	self endon( "stopFiring" );
-
-	//PrintConsole("Attempting to fire the missile gun.");
 	
 	i = 0;
-	//PrintConsole("Attempting to use " +self.pers["randomVehicleWeapon"] + " with attack speed of " +randomVehicleWeaponAttackSpeed(self.pers["randomVehicleWeapon"]));
 	for( ;; ) {
-		//self FireWeapon();
-	//	targetOrigin = target.origin;
-		/*rocket = MagicBullet( self.defaultWeapon, self.origin, target, self );
-		rocket.lifeId = -1;
-		rocket.type = "remote";
-
-		rocket thread maps\mp\gametypes\_weapons::AddMissileToSightTraces( self.pers["team"] );
-		rocket thread maps\mp\killstreaks\_remotemissile::handleDamage();
-		//maps\mp\killstreaks\_remotemissile::MissileEyes( self, rocket );
-		rocket thread Rocket_CleanupOnDeath();
-		self FireWeapon(rocket);*/
 
 		target = getRandomTarget();
 		if(isDefined(target)) {
-			PrintConsole("Attempting to attack " +target.name+ " .\n");
+			//PrintConsole("Attempting to attack " +target.name+ " .\n");
 			self SetTurretTargetEnt(target);
 			eMissile = self FireWeapon();
 			eMissile Missile_SetFlightmodeDirect();
-			eMissile Missile_SetTargetEnt(target);
+			eMissile Missile_SetTargetEnt(target.origin);
 		} else {
-			PrintConsole("Target not defined.");
+			//PrintConsole("Target not defined.");
 		}
 		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
 	}	
@@ -360,35 +346,19 @@ isEnemyInfront( target ) {
 }
 
 getRandomTarget() {
-	/*enemyBots = undefined;
-	if ( level.teambased ) {
-		bots = level.bots;
-		
-		for ( i = 0; i < level.bots.size; i++ ) {
-			bot = level.bots[i];
-			botTeam = bot.pers["team"];
-			if ( isdefined( botTeam ) ) {
-				if ( botTeam != self.team )
-					enemyBots += bot;
-			}
-		}
-	}
-	return enemyBots;*/
 	enemiesToTarget = [];
 	if(self.team == "allies") {
 		for ( i = 0; i < level.bots.size; i++ ) {
 			bot = level.bots[i];
-			if(isEnemyInfront(bot)) {
+			if(isEnemyInfront(bot) && isAlive(bot)) {
 				enemiesToTarget[enemiesToTarget.size] = bot;
-				//array_add(level.enemiesToTarget["bots"], bot);
 			}
 		}
 	} else {
 		for ( i = 0; i < level.players.size; i++ ) {
 			player = level.players[i];
-			if(isEnemyInfront(player)) {
+			if(isEnemyInfront(player) && isAlive(player)) {
 				enemiesToTarget[enemiesToTarget.size] = player;
-				//array_add(enemiesToTarget["players"], player);
 			}
 		}
 	}
@@ -468,7 +438,7 @@ randomVehicleWeapon() {
 randomVehicleWeaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
-			return 1.12;
+			return 1.32;
 			//return randomIntRange(0.8, 0.88);
 		case "singer_mp":
 			return 0.35;
@@ -483,16 +453,16 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return 0.33;
 			//return randomIntRange(0.1, 0.3);
 		case "remotemissile_projectile_mp":
-			return 0.77;
+			return 1.11;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
-			return 0.48;
+			return 0.88;
 			//return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
 			return 0.95;
 			//return randomIntRange(0.9, 1.2);
 	}
-	return 0.88;
+	return 1.32;
 	//return randomIntRange(0.8, 0.88);
 }
 
