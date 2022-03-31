@@ -297,10 +297,15 @@ assignRandomTarget() {
 
 	for(;;) {
 		randomEnemy = getRandomTarget();
-		self.mgTurret1 setTurretTargetEnt(randomEnemy, ( 0,0,50 ));
-		self.mgTurret1 SetTargetEntity(randomEnemy, ( 0,0,50 ));
-		self.mgTurret2 setTurretTargetEnt(randomEnemy, ( 0,0,50 ));
-		self.mgTurret2 SetTargetEntity(randomEnemy, ( 0,0,50 ));
+		if(isDefined( randomEnemy ) && isAlive( randomEnemy)) {
+			PrintConsole("Setting Enemy as: " + randomEnemy);
+			self.mgTurret1 setTurretTargetEnt(randomEnemy);
+			self.mgTurret1 SetTargetEntity(randomEnemy);
+			self.mgTurret2 setTurretTargetEnt(randomEnemy);
+			self.mgTurret2 SetTargetEntity(randomEnemy);
+		} else {
+			PrintConsole("Unable to set Enemy, not defined or alive.");
+		}
 		wait(1.2);
 	}
 }
