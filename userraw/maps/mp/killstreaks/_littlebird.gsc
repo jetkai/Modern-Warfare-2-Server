@@ -19,8 +19,8 @@ init()
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND_NEAR_YOUR_POSITION" );
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND" );
 	
-	precacheTurret( "sentry_gun_mp" );
-	//precacheItem("cobra_FFAR_mp");
+	precacheTurret( "sentry_minigun_mp" );
+	precacheItem("cobra_FFAR_mp");
 	precacheModel( "vehicle_little_bird_minigun_left" );
 	precacheModel( "vehicle_little_bird_minigun_right" );
 	
@@ -225,14 +225,14 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	//lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	//lb.defaultWeapon = "remotemissile_projectile_mp";
 	lb.defaultWeapon = randomVehicleWeapon();
-	lb setVehWeapon( "sentry_gun_mp" );
+	lb setVehWeapon( lb.defaultWeapon );
 
 	//PrintConsole("Attempting to use " +lb.defaultWeapon);
 	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
-	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "sentry_gun_mp" );
+	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
 	mgTurret1 linkTo( lb, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
 	mgTurret1 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret1.angles = lb.angles; 
@@ -246,7 +246,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
 	
-	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "sentry_gun_mp" );
+	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
 	mgTurret2 linkTo( lb, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
 	mgTurret2 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret2 SetPlayerSpread( .65 );
@@ -295,18 +295,20 @@ assignRandomTarget() {
 	self endon( "death" );
 	self endon( "stopFiring" );
 
+	self.nextTarget = getRandomTarget();
+
 	for(;;) {
-		randomEnemy = getRandomTarget();
-		if(isDefined( randomEnemy ) && isAlive( randomEnemy)) {
-			PrintConsole("Setting Enemy as: " + randomEnemy);
-			self.mgTurret1 setTurretTargetEnt(randomEnemy);
-			self.mgTurret1 SetTargetEntity(randomEnemy);
-			self.mgTurret2 setTurretTargetEnt(randomEnemy);
-			self.mgTurret2 SetTargetEntity(randomEnemy);
+		if(isAlive(self.nextTarget)) {
+			PrintConsole("Setting Enemy as: " + self.nextTarget);
+			self.mgTurret1 setTurretTargetEnt(self.nextTarget);
+			self.mgTurret1 SetTargetEntity(self.nextTarget);
+			self.mgTurret2 setTurretTargetEnt(self.nextTarget);
+			self.mgTurret2 SetTargetEntity(self.nextTarget);
 		} else {
-			PrintConsole("Unable to set Enemy, not defined or alive.");
+			self.nextTarget = getRandomTarget();
+			//PrintConsole("Unable to set Enemy, not defined or alive.");
 		}
-		wait(1.2);
+		wait(0.2);
 	}
 }
 
@@ -329,7 +331,7 @@ startLbMissileFiring( )
 		} else {
 			//PrintConsole("Target not defined.");
 		}
-		wait ( 0.5 );	
+		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
 	}	
 }
 
