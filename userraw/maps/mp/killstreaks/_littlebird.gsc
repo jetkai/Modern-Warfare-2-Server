@@ -147,6 +147,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	wait( 1 );
 	lb SetMaxPitchRoll( 200, 200 );	
 	wait ( 5 );	
+	lb thread assignRandomTarget();
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
 	wait ( 7 );
@@ -163,6 +164,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	
 	//slows down firing opposite direction
 	lb Vehicle_SetSpeed( 45, 60 );
+	lb thread assignRandomTarget();
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
 	wait ( 6 );
@@ -179,6 +181,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	
 	//slows down firing opposite direction
 	lb Vehicle_SetSpeed( 45, 60 );
+	lb thread assignRandomTarget();
 	lb thread startLbFiring();
 	lb thread startLbMissileFiring();
 	wait ( 6 );
@@ -237,8 +240,8 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret1.team = mgTurret1.owner.team;
 	
 	mgTurret1 SetPlayerSpread( .65 );
-	mgTurret1 makeUsable();
-	//mgTurret1 makeTurretInoperable();
+	//mgTurret1 makeUsable();
+	mgTurret1 makeTurretInoperable();
 
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
@@ -251,8 +254,8 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret2.owner = lb.owner;
 	mgTurret2.team = mgTurret2.owner.team;
 	
-	mgTurret2 makeUsable();
-	//mgTurret2 makeTurretInoperable();
+	//mgTurret2 makeUsable();
+	mgTurret2 makeTurretInoperable();
 	
 	lb.mgTurret2 = mgTurret2; 
 	lb.mgTurret2 SetDefaultDropPitch( 0 );
@@ -271,15 +274,18 @@ startLbFiring( )
 	//PrintConsole("Attempting to fire the gun.");
 	
 	i = 0;
-	self thread assignRandomTarget();
 	
 	for( ;; )
 	{
 		//self FireWeapon();
 
 		//self shootTurret();
-		self.mgTurret1 shootTurret();
-		self.mgTurret2 shootTurret();
+		targetEnt = self.mgTurret1 getTurretTarget( false );
+		if(isDefined( targetEnt ) && isAlive(targetEnt)) {
+			self.mgTurret1 shootTurret();
+			self.mgTurret2 shootTurret();
+		}
+
 		wait ( 0.05 );	
 	}	
 }
