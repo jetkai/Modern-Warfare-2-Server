@@ -19,8 +19,8 @@ init()
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND_NEAR_YOUR_POSITION" );
 	precacheString( &"MP_WAR_AIRSTRIKE_INBOUND" );
 	
-	precacheTurret( "sentry_minigun_mp" );
-	precacheItem("cobra_FFAR_mp");
+	precacheTurret( "sentry_gun_mp" );
+	//precacheItem("cobra_FFAR_mp");
 	precacheModel( "vehicle_little_bird_minigun_left" );
 	precacheModel( "vehicle_little_bird_minigun_right" );
 	
@@ -225,14 +225,14 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	//lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
 	//lb.defaultWeapon = "remotemissile_projectile_mp";
 	lb.defaultWeapon = randomVehicleWeapon();
-	lb setVehWeapon( lb.defaultWeapon );
+	lb setVehWeapon( "sentry_gun_mp" );
 
 	//PrintConsole("Attempting to use " +lb.defaultWeapon);
 	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
-	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
+	mgTurret1 = spawnTurret( "misc_turret", lb.origin, "sentry_gun_mp" );
 	mgTurret1 linkTo( lb, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
 	mgTurret1 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret1.angles = lb.angles; 
@@ -246,7 +246,7 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb.mgTurret1 = mgTurret1; 
 	lb.mgTurret1 SetDefaultDropPitch( 0 );
 	
-	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "sentry_minigun_mp" );
+	mgTurret2 = spawnTurret( "misc_turret", lb.origin, "sentry_gun_mp" );
 	mgTurret2 linkTo( lb, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
 	mgTurret2 setModel( "vehicle_little_bird_minigun_right" );
 	mgTurret2 SetPlayerSpread( .65 );
@@ -329,7 +329,7 @@ startLbMissileFiring( )
 		} else {
 			//PrintConsole("Target not defined.");
 		}
-		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
+		wait ( 0.5 );	
 	}	
 }
 
@@ -451,7 +451,7 @@ randomVehicleWeapon() {
 randomVehicleWeaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
-			return 1.32;
+			return 1.12;
 			//return randomIntRange(0.8, 0.88);
 		case "singer_mp":
 			return 0.35;
@@ -466,10 +466,10 @@ randomVehicleWeaponAttackSpeed(weapon) {
 			return 0.33;
 			//return randomIntRange(0.1, 0.3);
 		case "remotemissile_projectile_mp":
-			return 1.11;
+			return 0.91;
 		//	return randomIntRange(0.3, 0.6);
 		case "harrier_FFAR_mp":
-			return 0.88;
+			return 0.68;
 			//return randomIntRange(0.5, 0.8);
 		case "stealth_bomb_mp":
 			return 0.95;
