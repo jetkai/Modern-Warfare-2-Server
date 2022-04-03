@@ -348,9 +348,6 @@ startLbMissileFiring( )
 isEnemyInfront( target ) {
 		vec2 = VectorNormalize( ( target.origin - self.origin) );
 		
-		//vec_goal = VectorNormalize( ( level.price.goalpos - level.price.origin ) );//angle of where I'm supposed to go
-		//vecdot = vectordot( vec_goal, vec2 );//dot my my goal dir vs player position
-		
 		vec = anglestoforward( self.angles );
 		vecdot = vectordot( vec, vec2 );//dot of my angle vs player position
 		
