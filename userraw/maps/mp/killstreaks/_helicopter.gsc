@@ -55,6 +55,8 @@ init()
 	precacheHelicopter( "vehicle_cobra_helicopter_fly_low", "cobra" );
 	precacheHelicopter( "vehicle_mi24p_hind_mp", "hind" );
 	precacheHelicopter( "vehicle_mi-28_mp", "mi28" );
+	precacheHelicopter( "vehicle_blackhawk_hero_sas_night", "mk19" );
+	precacheHelicopter( "vehicle_blackhawk_low_thermal", "blackbox" );
 	precacheHelicopter( "vehicle_apache_mp", "apache" );
 	precacheHelicopter( "vehicle_pavelow", "pavelow" );
 	precacheHelicopter( "vehicle_pavelow_opfor", "pavelow" );
@@ -312,7 +314,7 @@ tryUseHelicopter( lifeId, heliType )
 		return false;
 	}		
 
-	if ( isDefined( heliType ) && heliType == "minigun" )
+	if ( isDefined( heliType ) && (heliType == "minigun" || heliType == "mk19"))
 	{
 		self setUsingRemote( "helicopter_" + heliType );
 		result = self maps\mp\killstreaks\_killstreaks::initRideKillstreak();
@@ -356,10 +358,10 @@ startHelicopter( lifeId, heliType )
 	switch ( heliType )
 	{
 		case "flares":
+		case "blackbox":
 			eventType = "helicopter_flares";
 			break;
 		case "minigun":
-		case "blackbox":
 		case "mk19":
 			eventType = "helicopter_minigun";
 			break;
@@ -835,7 +837,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 	chopper endon ( "death" );
 
 	// initial fight into play space	
-	if ( heliType == "minigun" )
+	if ( heliType == "minigun" || heliType == "mk19")
 	{
 		owner thread heliRide( lifeId, chopper );
 		chopper thread heli_leave_on_spawned( owner );
@@ -849,6 +851,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 	switch ( heliType )
 	{
 		case "minigun":
+		case "mk19":
 			chopper thread heli_targeting();
 			chopper heli_fly_simple_path( startNode );
 			chopper thread heli_leave_on_timeout( level.apache_duration );
@@ -858,6 +861,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 				chopper thread heli_fly_loop_path( loopNode );
 			break;
 		case "flares":
+		case "blackbox":
 			chopper thread makeGunShip();
 			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
 			chopper heli_fly_simple_path( startNode );

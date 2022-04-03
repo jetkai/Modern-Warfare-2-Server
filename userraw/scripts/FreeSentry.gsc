@@ -85,6 +85,7 @@ giveSentry() {
 }
 
 giveLittleBird() {
+	PrintConsole("My Guid: " + self.owner.guid);
 	//self thread maps\mp\perks\_perkfunctions::setAC130();
 	//self thread maps\mp\perks\_perkfunctions::setLittlebirdSupport();
 
