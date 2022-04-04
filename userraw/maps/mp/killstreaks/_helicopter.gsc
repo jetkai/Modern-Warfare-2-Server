@@ -881,7 +881,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			chopper thread attack_targets();
 			chopper thread heli_targeting();
 			chopper thread makeGunShip();
-			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
+			thread teamPlayerCardSplash( "used_helicopter_littlebird", owner );
 			chopper heli_fly_simple_path( startNode );
 			chopper thread heli_leave_on_timeout( chopperTime(65) );
 			chopper thread heli_fly_loop_path( loopNode );
