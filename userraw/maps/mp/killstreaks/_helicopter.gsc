@@ -511,14 +511,14 @@ thermalVision( chopper )
 		if ( !inverted )
 		{
 			self visionSetThermalForPlayer( "missilecam", 0.62 );
-		//	chopper setVehWeapon("harrier_FFAR_mp");
+			chopper setVehWeapon("harrier_FFAR_mp");
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_BHOT" );
 		}
 		else
 		{
 			self visionSetThermalForPlayer( game["thermal_vision"], 0.51 );
-		//	chopper setVehWeapon("cobra_player_minigun_mp");
+			chopper setVehWeapon("cobra_player_minigun_mp");
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_WHOT" );
 		}
