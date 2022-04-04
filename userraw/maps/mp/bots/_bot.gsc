@@ -794,7 +794,7 @@ addBots_loop()
 		for ( ; botsToAdd > 0; botsToAdd-- )
 		{
 			if(isServerFull())
-				continue;
+				break;
 				
 			level add_bot();
 			wait 0.25;
