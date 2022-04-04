@@ -773,7 +773,7 @@ teamBots()
 }
 
 isServerFull() {
-	if((level.bots.size + level.players.size) >= level.maxClients)
+	if(level.players.size >= level.maxClients)
 		return true;
 	return false;
 }
@@ -789,8 +789,8 @@ addBots_loop()
 	{
 		SetDvar( "bots_manage_add", 0 );
 
-		if ( botsToAdd > 18 )
-			botsToAdd = 18;
+		if ( botsToAdd > 64 )
+			botsToAdd = 64;
 
 		for ( ; botsToAdd > 0; botsToAdd-- )
 		{
