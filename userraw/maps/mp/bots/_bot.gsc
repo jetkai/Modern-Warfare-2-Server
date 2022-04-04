@@ -785,9 +785,6 @@ addBots_loop()
 {
 	botsToAdd = GetDvarInt( "bots_manage_add" );
 
-	//if(isServerFull())
-	//	return;
-
 	if ( botsToAdd > 0 )
 	{
 		SetDvar( "bots_manage_add", 0 );
@@ -797,8 +794,6 @@ addBots_loop()
 
 		for ( ; botsToAdd > 0; botsToAdd-- )
 		{
-			//if(isServerFull())
-				//break;
 				
 			level add_bot();
 			wait 0.25;
