@@ -912,11 +912,11 @@ chopperTime(duration) {
 		duration = duration / division;
 
 	if(duration < minTime)
-		return minTime;
+		duration = minTime;
 
 	if(duration > maxTime)
-		return maxTime;
-		
+		duration = maxTime;
+
 	self.owner iprintln( "Heli active for " + duration + " seconds", self.owner );
 
 	return duration;
