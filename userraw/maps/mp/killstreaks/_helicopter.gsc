@@ -906,8 +906,8 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 chopperTime(duration) {
 	minTime = 30;
 	maxTime = 65;
-	division = (level.players.size - 1 * 0.6);
-
+	division = (level.players.size * 0.6);
+	
 	if(division > 1)
 		duration = duration / division;
 
@@ -917,7 +917,7 @@ chopperTime(duration) {
 	if(duration > maxTime)
 		duration = maxTime;
 
-	self iPrintLnBold( "Heli active for " + duration + " seconds.");
+	self iPrintLnBold( "^6Heli active for " + duration + " seconds.");
 
 	return duration;
 }

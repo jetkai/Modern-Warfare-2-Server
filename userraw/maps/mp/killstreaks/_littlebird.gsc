@@ -129,6 +129,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb.lifeId = lifeId;
 	
 	lb thread watchDeath();
+	lb thread deleteTurretsWhenDone();
 	lb thread waitTillGone();
 	
 	lb endon( "death" );
@@ -195,6 +196,8 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	
 	lb waittill ( "goal" );
 	lb notify( "gone" );
+	lb.mgTurret1 delete();
+	lb.mgTurret2 delete();
 	lb delete();
 
 }
@@ -202,6 +205,9 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 waitTillGone()
 {
 	self waittill( "gone" );
+
+	self.mgTurret1 delete();
+ 	self.mgTurret2 delete();
 	clearProgress( 0 );
 }
 
@@ -241,7 +247,6 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret1.team = mgTurret1.owner.team;
 	
 	mgTurret1 SetPlayerSpread( .65 );
-	//mgTurret1 makeUsable();
 	mgTurret1 makeTurretInoperable();
 
 	lb.mgTurret1 = mgTurret1; 
@@ -255,7 +260,6 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	mgTurret2.owner = lb.owner;
 	mgTurret2.team = mgTurret2.owner.team;
 	
-	//mgTurret2 makeUsable();
 	mgTurret2 makeTurretInoperable();
 	
 	lb.mgTurret2 = mgTurret2; 
