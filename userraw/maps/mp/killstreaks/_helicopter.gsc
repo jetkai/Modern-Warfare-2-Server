@@ -478,7 +478,7 @@ heliRide( lifeId, chopper )
 	{
 		chopper waittill( "turret_fire" );
 		chopper fireWeapon();
-		PrintConsole("Weapon: " + chopper.weapon);
+		//PrintConsole("Weapon: " + chopper.weapon);
 		//PrintConsole("Weapon2: " + chopper getVehWeaponName());
 		//chopper FireWeapon( "tag_minigun_attach_left");
 	//	chopper FireWeapon( "tag_minigun_attach_right");
@@ -917,7 +917,7 @@ chopperTime(duration) {
 	if(duration > maxTime)
 		duration = maxTime;
 
-	self.owner iPrintLnBold( "Heli active for " + duration + " seconds");
+	self iPrintLnBold( "Heli active for " + duration + " seconds.");
 
 	return duration;
 }
