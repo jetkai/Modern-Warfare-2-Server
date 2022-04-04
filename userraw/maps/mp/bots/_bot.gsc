@@ -192,7 +192,7 @@ init()
 
 	level thread handleBots();
 
-	level thread maps\mp\bots\_bot_http::doVersionCheck();
+	//level thread maps\mp\bots\_bot_http::doVersionCheck();
 }
 
 /*
@@ -768,6 +768,12 @@ teamBots()
 	}
 }
 
+isServerFull() {
+	if(level.bots.size + level.players.size >= level.maxClients)
+		return true;
+	return false;
+}
+
 /*
 	A server thread for monitoring all bot's in game. Will add and kick bots according to server settings.
 */
@@ -775,15 +781,21 @@ addBots_loop()
 {
 	botsToAdd = GetDvarInt( "bots_manage_add" );
 
+	if(isServerFull())
+		return;
+
 	if ( botsToAdd > 0 )
 	{
 		SetDvar( "bots_manage_add", 0 );
 
-		if ( botsToAdd > 64 )
-			botsToAdd = 64;
+		if ( botsToAdd > 18 )
+			botsToAdd = 18;
 
 		for ( ; botsToAdd > 0; botsToAdd-- )
 		{
+			if(isServerFull())
+				continue;
+				
 			level add_bot();
 			wait 0.25;
 		}
