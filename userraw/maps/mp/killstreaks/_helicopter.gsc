@@ -883,24 +883,41 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			chopper thread makeGunShip();
 			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
 			chopper heli_fly_simple_path( startNode );
-			chopper thread heli_leave_on_timeout( 90 );
+			chopper thread heli_leave_on_timeout( chopperTime(65) );
 			chopper thread heli_fly_loop_path( loopNode );
 			break;
 		case "flares":
 			chopper thread makeGunShip();
 			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
 			chopper heli_fly_simple_path( startNode );
-			chopper thread heli_leave_on_timeout( level.pavelow_duration );
+			chopper thread heli_leave_on_timeout( chopperTime(level.pavelow_duration) );
 			chopper thread heli_fly_loop_path( loopNode );
 			break;
 		default:
 			chopper thread attack_targets();
 			chopper thread heli_targeting();
 			chopper heli_fly_simple_path( startNode );
-			chopper thread heli_leave_on_timeout( level.cobra_duration );
+			chopper thread heli_leave_on_timeout( chopperTime(level.cobra_duration) );
 			chopper thread heli_fly_loop_path( loopNode );
 			break;
 	}
+}
+
+chopperTime(duration) {
+	minTime = 30;
+	maxTime = 65;
+	division = (level.players.size - 1 * 0.6);
+
+	if(division > 1)
+		duration = duration / division;
+
+	if(duration < minTime)
+		return minTime;
+
+	if(duration > maxTime)
+		return maxTime;
+
+	return duration;
 }
 
 
