@@ -773,7 +773,7 @@ teamBots()
 }
 
 isServerFull() {
-	if(level.players.size >= (level.maxClients - 1))
+	if(level.players.size >= (level.maxClients))
 		return true;
 	return false;
 }
