@@ -12,6 +12,7 @@
 
 init()
 {
+	precacheVehicle( "littlebird_mp" );
 	precacheString( &"MP_CIVILIAN_AIR_TRAFFIC" );
 	precacheString( &"MP_AIR_SPACE_TOO_CROWDED" );
 	

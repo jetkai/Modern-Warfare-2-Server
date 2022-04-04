@@ -699,7 +699,7 @@ giveLoadout( team, class, allowCopycat )
 
 	self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
 	self maps\mp\perks\_perkfunctions::setSuperAirstrike();
-	//self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
+	self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
 	//self maps\mp\perks\_perkfunctions::setSentryGl();
 	//self maps\mp\perks\_perkfunctions::setHelicopterMk19();
 	//self maps\mp\perks\_perkfunctions::setPredator();
@@ -711,6 +711,7 @@ giveLoadout( team, class, allowCopycat )
 	primaryName = self checkRestrictions( primaryName, "primaryName" );
 	
 	self _giveWeapon( primaryName, self.loadoutPrimaryCamo );
+	//PrintConsole( "Primary Camo: "+self.loadoutPrimaryCamo);
 	
 	// fix changing from a riotshield class to a riotshield class during grace period not giving a shield
 	if ( primaryName == "riotshield_mp" && level.inGracePeriod )
@@ -1330,7 +1331,10 @@ isValidCamo( refString )
 		case "red_tiger":
 		case "blue_tiger":
 		case "orange_fall":
+		case "gold":
+		case "prestige":
 			return true;
+
 		default:
 			assertMsg( "Replacing invalid camo: " + refString );
 			return false;

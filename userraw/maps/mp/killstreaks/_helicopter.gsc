@@ -61,14 +61,22 @@ init()
 	precacheHelicopter( "vehicle_pavelow", "pavelow" );
 	precacheHelicopter( "vehicle_pavelow_opfor", "pavelow" );
 	precacheHelicopter( "vehicle_little_bird_armed", "cobra" );
+
+
+	precacheTurret( "sentry_minigun_mp" );
+	precacheModel( "vehicle_little_bird_minigun_left" );
+	precacheModel( "vehicle_little_bird_minigun_right" );
 	
 	precacheitem( "cobra_FFAR_mp" );
 	precacheitem( "cobra_20mm_mp" );
 	precacheitem( "cobra_player_minigun_mp" );
 	precacheitem( "heli_remote_mp" );
+	
+	precacheVehicle( "littlebird_mp" );
 	precacheVehicle( "cobra_mp" );
 	precacheVehicle( "cobra_minigun_mp" );
 	precacheVehicle( "pavelow_mp" );
+
 	precacheTurret( "pavelow_minigun_mp" );
 	precacheString( &"MP_CIVILIAN_AIR_TRAFFIC" );
 	
@@ -313,7 +321,6 @@ tryUseHelicopter( lifeId, heliType )
 		self iPrintLnBold( &"MP_AIR_SPACE_TOO_CROWDED" );
 		return false;
 	}		
-
 	if ( isDefined( heliType ) && (heliType == "minigun" || heliType == "mk19"))
 	{
 		self setUsingRemote( "helicopter_" + heliType );
@@ -334,7 +341,6 @@ tryUseHelicopter( lifeId, heliType )
 			return false;
 		}
 	}
-
 
 	self startHelicopter( lifeId, heliType );
 	return true;
@@ -446,6 +452,7 @@ heliRide( lifeId, chopper )
 	self VisionSetThermalForPlayer( "black_bw", 0 );
 	//self RemoteCameraSoundscapeOn();
 	self _giveWeapon("heli_remote_mp");
+	//self _giveWeapon("harrier_missile_mp");
 	self SwitchToWeapon("heli_remote_mp");
 	self VisionSetThermalForPlayer( game["thermal_vision"], 6 );
 	self ThermalVisionOn();
@@ -471,8 +478,15 @@ heliRide( lifeId, chopper )
 	{
 		chopper waittill( "turret_fire" );
 		chopper fireWeapon();
+		PrintConsole("Weapon: " + chopper.weapon);
+		//PrintConsole("Weapon2: " + chopper getVehWeaponName());
+		//chopper FireWeapon( "tag_minigun_attach_left");
+	//	chopper FireWeapon( "tag_minigun_attach_right");
+		//chopper.mgTurret1 shootTurret();
+		//chopper.mgTurret2 shootTurret();
 
 		earthquake (0.2, 1, chopper.origin, 1000);
+		//wait 0.01;
 	}
 }
 
@@ -497,12 +511,14 @@ thermalVision( chopper )
 		if ( !inverted )
 		{
 			self visionSetThermalForPlayer( "missilecam", 0.62 );
+		//	chopper setVehWeapon("harrier_FFAR_mp");
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_BHOT" );
 		}
 		else
 		{
 			self visionSetThermalForPlayer( game["thermal_vision"], 0.51 );
+		//	chopper setVehWeapon("cobra_player_minigun_mp");
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_WHOT" );
 		}
@@ -760,6 +776,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 	switch( heliType )
 	{
 		case "minigun":
+		//case "mk19":
 			vehicleType = "cobra_minigun_mp";
 			if ( owner.team == "allies" )
 				vehicleModel = "vehicle_apache_mp";
@@ -774,12 +791,12 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 				vehicleModel = "vehicle_pavelow_opfor";
 			break;
 		case "blackbox":
-			vehicleType = "cobra_minigun_m";
-			vehicleModel = "vehicle_blackhawk_low_thermal";
+			vehicleType = "littlebird_mp";
+			vehicleModel = "vehicle_little_bird_armed";
 			break;
 		case "mk19":
-			vehicleType = "cobra_minigun_m";
-			vehicleModel = "vehicle_blackhawk_hero_sas_night";
+			vehicleType = "littlebird_mp";
+			vehicleModel = "vehicle_little_bird_armed";
 			break;
 		default:	
 			vehicleType = "cobra_mp";
@@ -860,8 +877,16 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 			else
 				chopper thread heli_fly_loop_path( loopNode );
 			break;
-		case "flares":
 		case "blackbox":
+			chopper thread attack_targets();
+			chopper thread heli_targeting();
+			chopper thread makeGunShip();
+			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
+			chopper heli_fly_simple_path( startNode );
+			chopper thread heli_leave_on_timeout( 90 );
+			chopper thread heli_fly_loop_path( loopNode );
+			break;
+		case "flares":
 			chopper thread makeGunShip();
 			thread teamPlayerCardSplash( "used_helicopter_flares", owner );
 			chopper heli_fly_simple_path( startNode );
@@ -885,30 +910,57 @@ makeGunShip()
 	self endon ( "helicopter_done" );
 
 	wait ( 0.5 );
+	PrintConsole( "HeliType: " + self.heliType );
+	if(self.heliType == "blackbox") {
+		mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
+		mgTurret.lifeId = self.lifeId;
+		mgTurret linkTo( self, "tag_minigun_attach_left", (0,0,0), (0,0,0) );
+		mgTurret setModel( "vehicle_little_bird_minigun_left" );
+		mgTurret.owner = self.owner;
+		mgTurret.team = self.team;
+		mgTurret makeTurretInoperable();
+		mgTurret.pers["team"] = self.team;
+		mgTurret.killCamEnt = self;
+		self.mgTurretLeft = mgTurret; 
+		self.mgTurretLeft SetDefaultDropPitch( 0 );
 
-	mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
-	mgTurret.lifeId = self.lifeId;
-	mgTurret linkTo( self, "tag_gunner_left", ( 0,0,0 ), ( 0,0,0) );
-	mgTurret setModel( "weapon_minigun" );
-	mgTurret.owner = self.owner;
- 	mgTurret.team = self.team;
- 	mgTurret makeTurretInoperable();
- 	mgTurret.pers["team"] = self.team;
- 	mgTurret.killCamEnt = self;
- 	self.mgTurretLeft = mgTurret; 
- 	self.mgTurretLeft SetDefaultDropPitch( 0 );
+		mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
+		mgTurret.lifeId = self.lifeId;
+		mgTurret linkTo( self, "tag_minigun_attach_right", (0,0,0), (0,0,0) );
+		mgTurret setModel( "vehicle_little_bird_minigun_right" );
+		mgTurret.owner = self.owner;
+		mgTurret.team = self.team;
+		mgTurret makeTurretInoperable();
+		mgTurret.pers["team"] = self.team;
+		mgTurret.killCamEnt = self;
+		self.mgTurretRight = mgTurret; 
+		self.mgTurretRight SetDefaultDropPitch( 0 );
+		self setVehWeapon( "cobra_20mm_mp" );
+	} else {
+		mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
+		mgTurret.lifeId = self.lifeId;
+		mgTurret linkTo( self, "tag_gunner_left", ( 0,0,0 ), ( 0,0,0) );
+		mgTurret setModel( "weapon_minigun" );
+		mgTurret.owner = self.owner;
+		mgTurret.team = self.team;
+		mgTurret makeTurretInoperable();
+		mgTurret.pers["team"] = self.team;
+		mgTurret.killCamEnt = self;
+		self.mgTurretLeft = mgTurret; 
+		self.mgTurretLeft SetDefaultDropPitch( 0 );
 
-	mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
-	mgTurret.lifeId = self.lifeId;
-	mgTurret linkTo( self, "tag_gunner_right", ( 0,0,0 ), ( 0,0,0) );
-	mgTurret setModel( "weapon_minigun" );
-	mgTurret.owner = self.owner;
- 	mgTurret.team = self.team;
- 	mgTurret makeTurretInoperable();
- 	mgTurret.pers["team"] = self.team;
- 	mgTurret.killCamEnt = self;
- 	self.mgTurretRight = mgTurret; 
- 	self.mgTurretRight SetDefaultDropPitch( 0 );
+		mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
+		mgTurret.lifeId = self.lifeId;
+		mgTurret linkTo( self, "tag_gunner_right", ( 0,0,0 ), ( 0,0,0) );
+		mgTurret setModel( "weapon_minigun" );
+		mgTurret.owner = self.owner;
+		mgTurret.team = self.team;
+		mgTurret makeTurretInoperable();
+		mgTurret.pers["team"] = self.team;
+		mgTurret.killCamEnt = self;
+		self.mgTurretRight = mgTurret; 
+		self.mgTurretRight SetDefaultDropPitch( 0 );
+	}
 
 	if ( level.teamBased )
 	{
@@ -1729,15 +1781,9 @@ attack_primary()
 		
 		convergenceMod = 1;
 		shotsSinceLastSighting = 0;
-
-		self playLoopSound( "weap_cobra_20mm_fire_npc" );
-		for ( i = 0; i < level.heli_turretClipSize; i++ )
-		{
-			self setVehWeapon( "cobra_20mm_mp" );
-			self fireWeapon( "tag_flash" );
-
-			if ( i < level.heli_turretClipSize - 1 )
-				wait weaponShootTime;
+		if(self.heliType == "blackbox") {
+			self setVehWeapon( "javelin_mp" );
+			self fireWeapon();
 
 			if ( !isDefined( currentTarget ) )
 				break;
@@ -1758,8 +1804,38 @@ attack_primary()
 			targetPos = ( (xOffset*convergenceMod)+randomFloatRange( -6, 6 ),(yOffset*convergenceMod)+randomFloatRange( -6, 6 ),40+randomFloatRange( -6, 6 ) );
 
 			self setTurretTargetEnt( currentTarget, targetPos );
+		} else {
+			self playLoopSound( "weap_cobra_20mm_fire_npc" );
+			for ( i = 0; i < level.heli_turretClipSize; i++ )
+			{
+				self setVehWeapon( "cobra_20mm_mp" );
+				self fireWeapon( "tag_flash" );
+
+				if ( i < level.heli_turretClipSize - 1 )
+					wait weaponShootTime;
+
+				if ( !isDefined( currentTarget ) )
+					break;
+
+				if ( self Vehicle_CanTurretTargetPoint( currentTarget.origin+(0,0,40), 1, self ) )
+				{
+					convergenceMod = max( convergenceMod - 0.05, 0 );
+					shotsSinceLastSighting = 0;
+				}
+				else
+				{
+					shotsSinceLastSighting++;
+				}
+
+				if ( shotsSinceLastSighting > 10 )
+					break;
+
+				targetPos = ( (xOffset*convergenceMod)+randomFloatRange( -6, 6 ),(yOffset*convergenceMod)+randomFloatRange( -6, 6 ),40+randomFloatRange( -6, 6 ) );
+
+				self setTurretTargetEnt( currentTarget, targetPos );
+			}
+			self stopLoopSound();
 		}
-		self stopLoopSound();
 
 		// lower the target's threat since already assaulted on
 		if ( isAlive( currentTarget ) )
@@ -1992,6 +2068,11 @@ heli_fly_loop_path( startNode )
 		{
 			self.desired_speed *= 0.5;
 			self.desired_accel *= 0.5;
+		}
+
+		if(self.heliType == "blackbox") {
+			self.desired_speed *= 1.5;
+			self.desired_accel *= 1.5;
 		}
 		
 		if ( isDefined( nextNode.script_delay ) && isDefined( self.primaryTarget ) && !self heli_is_threatened() )

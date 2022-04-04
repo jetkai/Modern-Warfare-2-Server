@@ -1145,7 +1145,7 @@ unsetSuperAirstrike()
 
 setBlackBoxHeli()
 {
-	self thread killstreakThink( "helicopter_blackbox", 13, "end_helicopter_blackbox_think" );
+	self thread killstreakThink( "helicopter_blackbox", 15, "end_helicopter_blackbox_think" );
 }
 
 unsetBlackBoxHeli()

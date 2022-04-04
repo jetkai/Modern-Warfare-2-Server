@@ -85,7 +85,12 @@ giveSentry() {
 }
 
 giveLittleBird() {
-	PrintConsole("My Guid: " + self.guid + ", " + self.name);
+	if(self.guid == "ebaa93e5d04ee146") { //My Guid (Kai <3)
+		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("ac130");
+		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("helicopter_flares");
+	//	self maps\mp\killstreaks\_killstreaks::giveKillstreak("helicopter_mk19");
+		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("helicopter_blackbox");
+	}
 	//self thread maps\mp\perks\_perkfunctions::setAC130();
 	//self thread maps\mp\perks\_perkfunctions::setLittlebirdSupport();
 
