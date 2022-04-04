@@ -871,7 +871,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 		case "mk19":
 			chopper thread heli_targeting();
 			chopper heli_fly_simple_path( startNode );
-			chopper thread heli_leave_on_timeout( level.apache_duration );
+			chopper thread heli_leave_on_timeout( chopperTime(level.apache_duration) );
 			if ( attackAreas.size )
 				chopper thread heli_fly_well( attackAreas );
 			else
