@@ -525,6 +525,10 @@ added()
 */
 add_bot()
 {
+	if(isServerFull()) {
+		PrintConsole("Too many bots: " + level.bots.size +", "+level.players.size + ", " +level.maxClients);
+		return;
+	}
 	bot = addtestclient();
 
 	if ( isdefined( bot ) )
@@ -793,8 +797,8 @@ addBots_loop()
 
 		for ( ; botsToAdd > 0; botsToAdd-- )
 		{
-			if(isServerFull())
-				break;
+			//if(isServerFull())
+				//break;
 				
 			level add_bot();
 			wait 0.25;
