@@ -917,7 +917,7 @@ chopperTime(duration) {
 	if(duration > maxTime)
 		duration = maxTime;
 
-	self.owner iprintln( "Heli active for " + duration + " seconds", self.owner );
+	self.owner iPrintLnBold( "Heli active for " + duration + " seconds");
 
 	return duration;
 }
