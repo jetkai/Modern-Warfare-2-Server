@@ -129,7 +129,6 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	lb.lifeId = lifeId;
 	
 	lb thread watchDeath();
-	lb thread deleteTurretsWhenDone();
 	lb thread waitTillGone();
 	
 	lb endon( "death" );
@@ -206,8 +205,11 @@ waitTillGone()
 {
 	self waittill( "gone" );
 
-	self.mgTurret1 delete();
- 	self.mgTurret2 delete();
+	if ( isDefined( self.mgTurret1 ) )
+		self.mgTurret1 delete();
+	if ( isDefined( self.mgTurret2 ) )
+ 		self.mgTurret2 delete();
+		 
 	clearProgress( 0 );
 }
 
