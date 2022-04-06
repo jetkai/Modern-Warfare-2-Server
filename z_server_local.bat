@@ -6,7 +6,7 @@ set cfg=server-local.cfg
 ::Name of the server shown in the title of the cmd window. This will NOT bet shown ingame.
 set name=Localhost  Bot Warfare
 ::Port used by the server (default: 28964)
-set port=28960
+set port=28961
 ::What ip to bind too
 set ip=0.0.0.0
 ::Mod name (default "")
@@ -21,6 +21,6 @@ echo To shut down the server close this window first!
 echo (%date%)  -  (%time%) %name% server start.
 
 :server
-start /wait /abovenormal "%name%" "%~dp0iw4x.exe" -dedicated +set sv_lanonly "1" +set net_ip "%ip%" +set net_port "%port%" +set rcon_password "%rcon_password%" +set fs_game "%mod%" +exec "%cfg%" +map_rotate
+start /wait /abovenormal "%name%" "%~dp0iw4x.exe" -dedicated +set sv_lanonly "1" +set net_ip "%ip%" +set net_port "%port%" +set rcon_password "%rcon_password%" +set fs_game +set sv_cheats "1" "%mod%" +exec "%cfg%" +map_rotate
 echo (%date%)  -  (%time%) WARNING: %name% server closed or dropped... server restarts.
 goto Server

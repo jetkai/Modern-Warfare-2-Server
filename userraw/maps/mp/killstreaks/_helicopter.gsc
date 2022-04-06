@@ -55,8 +55,8 @@ init()
 	precacheHelicopter( "vehicle_cobra_helicopter_fly_low", "cobra" );
 	precacheHelicopter( "vehicle_mi24p_hind_mp", "hind" );
 	precacheHelicopter( "vehicle_mi-28_mp", "mi28" );
-	precacheHelicopter( "vehicle_blackhawk_hero_sas_night", "mk19" );
-	precacheHelicopter( "vehicle_blackhawk_low_thermal", "blackbox" );
+//self	precacheHelicopter( "vehicle_blackhawk_hero_sas_night", "mk19" );
+//	precacheHelicopter( "vehicle_blackhawk_low_thermal", "blackbox" );
 	precacheHelicopter( "vehicle_apache_mp", "apache" );
 	precacheHelicopter( "vehicle_pavelow", "pavelow" );
 	precacheHelicopter( "vehicle_pavelow_opfor", "pavelow" );
@@ -474,20 +474,91 @@ heliRide( lifeId, chopper )
 	
 	self thread weaponLockThink( chopper );
 
+	chopper.tags = [];			
+	chopper.tags[ 0 ] = "tag_store_L_2_a";
+	chopper.tags[ 1 ] = "tag_store_R_2_a";
+	chopper.tags[ 2 ] = "tag_store_L_2_b";
+	chopper.tags[ 3 ] = "tag_store_R_2_b";
+	chopper.tags[ 4 ] = "tag_store_L_2_c";
+	chopper.tags[ 5 ] = "tag_store_L_2_c";
+	chopper.tags[ 6 ] = "tag_store_L_2_d";
+	chopper.tags[ 7 ] = "tag_store_L_2_d";
+	chopper.tags[ 8 ] = "tag_missile_left";
+	chopper.tags[ 8 ] = "tag_missile_right";
+	chopper.tags[ 9 ] = "tag_missile1";
+	chopper.tags[ 10 ] = "tag_flash";
+
+	chopper.missilesLoaded = 16;
+
+	self thread missileReload(chopper);
+
 	while ( true )
 	{
 		chopper waittill( "turret_fire" );
-		chopper fireWeapon();
-		//PrintConsole("Weapon: " + chopper.weapon);
-		//PrintConsole("Weapon2: " + chopper getVehWeaponName());
-		//chopper FireWeapon( "tag_minigun_attach_left");
-	//	chopper FireWeapon( "tag_minigun_attach_right");
-		//chopper.mgTurret1 shootTurret();
-		//chopper.mgTurret2 shootTurret();
+		
+		if(isDefined( chopper.primaryWeapon ) && chopper.primaryWeapon == "harrier_FFAR_mp") {
+			//nextTag = chopper.tags[randomint(chopper.tags.size)];
+			//printText = "Attempting to fire the tag " + nextTag + ", max size: " + chopper.tags.size;
+			//PrintConsole( printText + "\n");
+			if(chopper.missilesLoaded > 0) {
+				chopper.missilesLoaded--;
 
-		earthquake (0.2, 1, chopper.origin, 1000);
+				missileTarget = getRandomTarget();
+				missile = chopper fireWeapon("tag_flash", missileTarget);
+				missile Missile_SetFlightmodeDirect();
+				missile Missile_SetTargetEnt( missileTarget );
+
+				earthquake (0.6, 1, chopper.origin, 1000);
+			}
+		} else {
+			chopper fireWeapon();
+
+			earthquake (0.2, 1, chopper.origin, 1000);
+		}
 		//wait 0.01;
 	}
+}
+
+missileReload(chopper) {
+	self endon ( "disconnect" );
+	self endon( "death" );
+	self endon( "crashing" );
+	self endon( "leaving" );	
+	chopper endon ( "helicopter_done" );
+
+	while(true) {
+		if(chopper.missilesLoaded == 0) {
+			self iprintlnbold("Reloading missiles...");
+			wait 8;
+			chopper.missilesLoaded = 16;
+			self iprintlnbold("Missiles reloaded, ready to fire!");
+			self playLocalSound( "emp_activate" );
+		}
+		wait 0.5;
+	}
+}
+
+getRandomTarget() {
+	enemiesToTarget = [];
+	if(self.team == "allies") {
+		for ( i = 0; i < level.bots.size; i++ ) {
+			bot = level.bots[i];
+			if(isAlive(bot)) {
+				enemiesToTarget[enemiesToTarget.size] = bot;
+			}
+		}
+	} else {
+		for ( i = 0; i < level.players.size; i++ ) {
+			player = level.players[i];
+			if(isAlive(player)) {
+				enemiesToTarget[enemiesToTarget.size] = player;
+			}
+		}
+	}
+	if(self.team == "allies") {
+		return enemiesToTarget[randomint(enemiesToTarget.size)];
+	}
+	return enemiesToTarget[randomint(enemiesToTarget.size)];
 }
 
 
@@ -511,14 +582,16 @@ thermalVision( chopper )
 		if ( !inverted )
 		{
 			self visionSetThermalForPlayer( "missilecam", 0.62 );
-			chopper setVehWeapon("harrier_FFAR_mp");
+			chopper.primaryWeapon = "harrier_FFAR_mp";
+			chopper setVehWeapon(chopper.primaryWeapon);
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_BHOT" );
 		}
 		else
 		{
 			self visionSetThermalForPlayer( game["thermal_vision"], 0.51 );
-			chopper setVehWeapon("cobra_player_minigun_mp");
+			chopper.primaryWeapon = "cobra_player_minigun_mp";
+			chopper setVehWeapon(chopper.primaryWeapon);
 			if ( isdefined( level.HUDItem[ "thermal_mode" ] ) )
 				level.HUDItem[ "thermal_mode" ] settext ( &"AC130_HUD_THERMAL_WHOT" );
 		}
@@ -906,7 +979,7 @@ heli_think( lifeId, owner, startnode, heli_team, heliType )
 chopperTime(duration) {
 	minTime = 30;
 	maxTime = 65;
-	division = (level.players.size * 0.6);
+	division = ((level.players.size - level.bots.size) * 0.6);
 	
 	if(division > 1)
 		duration = duration / division;
@@ -917,7 +990,7 @@ chopperTime(duration) {
 	if(duration > maxTime)
 		duration = maxTime;
 
-	self iPrintLnBold( "^6Heli active for " + duration + " seconds.");
+	self iPrintLnBold( "^3Chopper active for ^4" + duration + " ^3seconds.");
 
 	return duration;
 }
@@ -929,7 +1002,7 @@ makeGunShip()
 	self endon ( "helicopter_done" );
 
 	wait ( 0.5 );
-	PrintConsole( "HeliType: " + self.heliType );
+	//PrintConsole( "HeliType: " + self.heliType );
 	if(self.heliType == "blackbox") {
 		mgTurret = spawnTurret( "misc_turret", self.origin, "pavelow_minigun_mp" );
 		mgTurret.lifeId = self.lifeId;

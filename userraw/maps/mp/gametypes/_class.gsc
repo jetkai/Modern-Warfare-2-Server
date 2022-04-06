@@ -694,12 +694,21 @@ giveLoadout( team, class, allowCopycat )
 		self giveMaxAmmo( secondaryName );
 
 	//Add C4 Death
-	if (self _hasperk( "specialty_pistoldeath" ) )
+	if (self _hasperk( "specialty_pistoldeath" ) && self _hasperk("specialty_finalstand"))
 		self _setPerk("specialty_c4death");
 
-	self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
-	self maps\mp\perks\_perkfunctions::setSuperAirstrike();
-	self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
+	if(isDefined( self.cutKillstreaksEnabled))
+		self.cutKillstreaksEnabled = true;
+
+	if(self.cutKillstreaksEnabled) {
+		self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
+		self maps\mp\perks\_perkfunctions::setSuperAirstrike();
+		self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
+	} else {
+		self maps\mp\perks\_perkfunctions::unsetLittlebirdSupport();
+		self maps\mp\perks\_perkfunctions::unsetSuperAirstrike();
+		self maps\mp\perks\_perkfunctions::unsetBlackBoxHeli();
+	}
 	//self maps\mp\perks\_perkfunctions::setSentryGl();
 	//self maps\mp\perks\_perkfunctions::setHelicopterMk19();
 	//self maps\mp\perks\_perkfunctions::setPredator();

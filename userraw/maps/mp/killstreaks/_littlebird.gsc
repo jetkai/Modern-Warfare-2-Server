@@ -306,7 +306,7 @@ assignRandomTarget() {
 
 	for(;;) {
 		if(isAlive(self.nextTarget)) {
-			PrintConsole("Setting Enemy as: " + self.nextTarget);
+			//PrintConsole("Setting Enemy as: " + self.nextTarget);
 			self.mgTurret1 setTurretTargetEnt(self.nextTarget);
 			self.mgTurret1 SetTargetEntity(self.nextTarget);
 			self.mgTurret2 setTurretTargetEnt(self.nextTarget);

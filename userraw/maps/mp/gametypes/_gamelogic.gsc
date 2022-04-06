@@ -1825,7 +1825,8 @@ onPlayerSpawned()
 		if( !firstTime && level.allowPrintDamage )
 		{
 			firstTime = true;
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^3[{+actionslot 2}] ^7to toggle ^3Print Damage", 3000);		
+			self.cutKillstreaksEnabled = true;
+			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^3[{+actionslot 2}] ^7to toggle ^3Print Damage & Cut-Killstreaks!", 3000);		
 		}
 		self thread printDamage();
 	}
@@ -1846,13 +1847,15 @@ printDamage()
 		self playLocalSound( "semtex_warning" );
 		if(self.printDamage)
 		{
-			self iPrintlnBold("^7Print Damage ^1Disabled");
+			self iPrintlnBold("^7Print Damage & Cut-Killstreaks (Upon Respawn) ^1Disabled");
 			self.printDamage = false;
+			self.cutKillstreaksEnabled = false;
 		}
 		else
 		{
-			self iPrintlnBold("^7Print Damage ^1Enabled");
+			self iPrintlnBold("^7Print Damage & Cut-Killstreaks (Upon Respawn) ^1Enabled");
 			self.printDamage = true;
+			self.cutKillstreaksEnabled = true;
 		}
 	}
 }
