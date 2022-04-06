@@ -521,7 +521,6 @@ heliRide( lifeId, chopper )
 
 missileReload(chopper) {
 	self endon ( "disconnect" );
-	self endon( "death" );
 	self endon( "crashing" );
 	self endon( "leaving" );	
 	chopper endon ( "helicopter_done" );
