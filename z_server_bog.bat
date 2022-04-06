@@ -2,9 +2,9 @@
 ::RemoteCONtrol password, needed for most management tools like IW4MADMIN and B3. Do not skip if you installing IW4MADMIN.
 set rcon_password=No1syuppy$!!!
 ::Name of the config file the server should use.
-set cfg=server-rust-long.cfg
+set cfg=server-bog.cfg
 ::Name of the server shown in the title of the cmd window. This will NOT bet shown ingame.
-set name=Rust Long Bot Warfare
+set name=Bog Bot Warfare
 ::Port used by the server (default: 28960)
 set port=28961
 ::What ip to bind too
