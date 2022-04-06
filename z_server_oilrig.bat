@@ -2,11 +2,11 @@
 ::RemoteCONtrol password, needed for most management tools like IW4MADMIN and B3. Do not skip if you installing IW4MADMIN.
 set rcon_password=No1syuppy$!!!
 ::Name of the config file the server should use.
-set cfg=server-killhouse2.cfg
+set cfg=server-oilrig.cfg
 ::Name of the server shown in the title of the cmd window. This will NOT bet shown ingame.
-set name=Killhouse 2 Bot Warfare
+set name=Oilrig Bot Warfare
 ::Port used by the server (default: 28960)
-set port=28966
+set port=28967
 ::What ip to bind too
 set ip=0.0.0.0
 ::Mod name (default "")
