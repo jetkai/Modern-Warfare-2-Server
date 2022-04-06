@@ -292,7 +292,7 @@ tryUseHelicopter( lifeId, heliType )
 		return false;
 	}
 	
-	if ( (!isDefined( heliType ) || heliType == "flares" || heliType == "blackbox") && isDefined( level.chopper ) && level.helicopter_allowQueue )
+	if ( (!isDefined( heliType ) || heliType == "flares" || heliType == "blackbox" || heliType == "minigun") && isDefined( level.chopper ) && level.helicopter_allowQueue )
 	{
 		self iPrintLnBold( &"MP_HELI_IN_QUEUE" );
 		
