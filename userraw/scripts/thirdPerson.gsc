@@ -28,7 +28,7 @@ thirdPersonToggle() {
 	for ( ;; )
 	{
 		self waittill( "thirdperson" );
-		setDvar( "camera_thirdPerson", !getDvarInt( "camera_thirdPerson" ) );
+		self setDvar( "camera_thirdPerson", !getDvarInt( "camera_thirdPerson" ) );
 	}
 }
 
