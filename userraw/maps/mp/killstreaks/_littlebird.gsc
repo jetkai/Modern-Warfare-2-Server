@@ -491,7 +491,12 @@ callStrike( lifeId, owner, coord, yaw )
 	// Get starting and ending point for the plane
 	direction = ( 0, yaw, 0 );
 	planeHalfDistance = 24000;
-	planeFlyHeight = 850;
+	
+	if(getDvar("sv_maprotation") == "map oilrig")
+		planeFlyHeight = 2200;
+	else
+		planeFlyHeight = 850;
+
 	planeFlySpeed = 7000;
 	
 	if ( isdefined( level.airstrikeHeightScale ) )

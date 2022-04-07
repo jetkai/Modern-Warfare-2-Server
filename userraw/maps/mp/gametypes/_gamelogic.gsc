@@ -1682,8 +1682,8 @@ Callback_StartGameType()
 		
 	thread maps\mp\gametypes\_hud_message::init();
 
-	if ( !level.console )
-		thread maps\mp\gametypes\_quickmessages::init();
+	//if ( !level.console )
+	//	thread maps\mp\gametypes\_quickmessages::init();
 
 	foreach ( locString in game["strings"] )
 		precacheString( locString );

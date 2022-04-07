@@ -271,12 +271,12 @@ onMenuResponse()
 		}
 		else if ( !level.console )
 		{
-			if(menu == game["menu_quickcommands"])
+			/*if(menu == game["menu_quickcommands"])
 				maps\mp\gametypes\_quickmessages::quickcommands(response);
 			else if(menu == game["menu_quickstatements"])
 				maps\mp\gametypes\_quickmessages::quickstatements(response);
 			else if(menu == game["menu_quickresponses"])
-				maps\mp\gametypes\_quickmessages::quickresponses(response);
+				maps\mp\gametypes\_quickmessages::quickresponses(response);*/
 		}
 	}
 }
