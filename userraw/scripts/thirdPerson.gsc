@@ -23,7 +23,7 @@ thirdPersonToggle() {
 	thirdPersonElem setText( "^:Press \"B\" to toggle Third-Person | Press \"5\" to toggle Cut-Killstreaks" );
 	thirdPersonElem fadeovertime(1);
 
-	self thread destroyElem( thirdPersonElem );
+	self thread destroyEle( thirdPersonElem );
 	
 	for ( ;; )
 	{
@@ -32,9 +32,9 @@ thirdPersonToggle() {
 	}
 }
 
-destroyElem( hudElem ) {
+destroyEle( hudElem ) {
 	self endon ( "disconnect" );
-	
+
 	wait 8;
 
 	hudElem fadeovertime(1);
