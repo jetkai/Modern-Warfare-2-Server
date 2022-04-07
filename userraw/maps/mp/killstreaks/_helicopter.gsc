@@ -461,6 +461,9 @@ heliRide( lifeId, chopper )
 	if ( getDvarInt( "camera_thirdPerson" ) )
 		self setThirdPersonDOF( false );
 
+	if(self.isThirdPerson)
+		self setThirdPersonDOF( false );
+
 	chopper VehicleTurretControlOn( self );
 	
 	self PlayerLinkWeaponviewToDelta( chopper, "tag_player", 1.0, 180, 180, 0, 180, true );
@@ -720,6 +723,9 @@ endRide( chopper )
 	self clearUsingRemote();
 
 	if ( getDvarInt( "camera_thirdPerson" ) )
+		self setThirdPersonDOF( true );
+
+	if(self.isThirdPerson)
 		self setThirdPersonDOF( true );
 
 	self visionSetThermalForPlayer( game["thermal_vision"], 0 );

@@ -478,6 +478,9 @@ setAC130Player( player )
 
 	if ( getDvarInt( "camera_thirdPerson" ) )
 		player setThirdPersonDOF( false );
+
+	if(player.isThirdPerson)
+		player setThirdPersonDOF( false );
 	
 	player _giveWeapon("ac130_105mm_mp");
 	player _giveWeapon("ac130_40mm_mp");
@@ -629,6 +632,9 @@ removeAC130Player( player, disconnected )
 		player stopAC130();
 
 		if ( getDvarInt( "camera_thirdPerson" ) )
+			player setThirdPersonDOF( true );
+
+		if(player.isThirdPerson)
 			player setThirdPersonDOF( true );
 
 		weaponList = player GetWeaponsListExclusives();

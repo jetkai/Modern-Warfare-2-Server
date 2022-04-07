@@ -570,6 +570,7 @@ spawnPlayer()
 
 	self.health = self.maxhealth;
 	
+	self.isThirdPerson = false;
 	self.friendlydamage = undefined;
 	self.hasSpawned = true;
 	self.spawnTime = getTime();
@@ -617,8 +618,12 @@ spawnPlayer()
 			self.wasAliveAtMatchStart = true;
 	}
 	
-	self setClientDvar( "cg_thirdPerson", "0" );
-	self setDepthOfField( 0, 0, 512, 512, 4, 0 );
+	self setClientDvar( "cg_thirdPerson", self.isThirdPerson );
+	if(self.isThirdPerson) {
+		self setDepthOfField( 0, 110, 512, 4096, 6, 1.8 );
+	} else {
+		self setDepthOfField( 0, 0, 512, 512, 4, 0 );
+	}
 	//self setClientDvar( "cg_fov", "65" );
 
 	// Don't do this stuff for TI spawn points	
@@ -653,6 +658,9 @@ spawnPlayer()
 	self maps\mp\gametypes\_class::giveLoadout( self.team, self.class );
 
 	if ( getDvarInt( "camera_thirdPerson" ) )
+		self setThirdPersonDOF( true );
+
+	if(self.isThirdPerson)
 		self setThirdPersonDOF( true );
 
 	if ( !gameFlag( "prematch_done" ) )

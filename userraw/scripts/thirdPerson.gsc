@@ -25,12 +25,22 @@ thirdPersonToggle() {
 
 	self thread destroyEle( thirdPersonElem );
 	
-	isThirdPerson = false;
 	for ( ;; )
 	{
 		self waittill( "thirdperson" );
-		isThirdPerson = !isThirdPerson;
-		self setClientDvar( "camera_thirdPerson", isThirdPerson );
+		self.isThirdPerson = !self.isThirdPerson;
+	//	self iprintlnbold(self.isThirdPerson + ".");
+		//self setClientDvar( "camera_thirdPerson", self.isThirdPerson);
+		//self setClientDvar( "camera_thirdPersonAdsTransSc", "2");
+		//self setClientDvar( "camera_thirdPersonFovScale", "0.9");
+		//self setClientDvar( "camera_thirdPersonOffset", "-120 0 14");
+		//self setClientDvar( "camera_thirdPersonOffsetAds", "-60 -20 4");
+		//self setClientDvar( "camera_thirdPersonOffsetTurr", "-80 0 14");
+		//self setClientDvar( "scr_thirdperson", self.isThirdPerson);
+		//self setClientDvar("cg_thirdPerson", self.isThirdPerson);
+		//self setClientDvar("cg_thirdPersonMode", "Free"); 
+		self setClientDvar( "cg_thirdPerson", self.isThirdPerson );
+		self setThirdPersonDOF( self.isThirdPerson );
 	}
 }
 

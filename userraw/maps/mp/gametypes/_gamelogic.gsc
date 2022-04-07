@@ -1826,7 +1826,7 @@ onPlayerSpawned()
 		{
 			firstTime = true;
 			self.cutKillstreaksEnabled = true;
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^3[{+actionslot 2}] ^7to toggle ^3Print Damage & Cut-Killstreaks!", 3000);		
+			//self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^3[{+actionslot 2}] ^7to toggle ^3Print Damage & Cut-Killstreaks!", 3000);		
 		}
 		self thread printDamage();
 	}
