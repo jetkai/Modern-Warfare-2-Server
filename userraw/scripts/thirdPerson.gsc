@@ -25,10 +25,12 @@ thirdPersonToggle() {
 
 	self thread destroyEle( thirdPersonElem );
 	
+	isThirdPerson = false;
 	for ( ;; )
 	{
 		self waittill( "thirdperson" );
-		self setDvar( "camera_thirdPerson", !getDvarInt( "camera_thirdPerson" ) );
+		isThirdPerson = !isThirdPerson;
+		self setClientDvar( "camera_thirdPerson", isThirdPerson );
 	}
 }
 
