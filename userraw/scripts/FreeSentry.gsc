@@ -14,7 +14,7 @@ onPlayerConnect() {
 		level waittill( "connected", player);
 
 		player thread onPlayerGiveloadout();
-		player thread sentryTick();
+
 	}
 }
 
@@ -30,8 +30,8 @@ onPlayerGiveloadout() {
 			self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 			giveSentry();
 			_onetime = true;
-
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 4000);
+			wait 2;
+			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 8000);
 		}
 		
 		self thread FreeSentry();
@@ -86,6 +86,8 @@ giveSentry() {
 
 giveLittleBird() {
 	if(self.guid == "ebaa93e5d04ee146") { //My Guid (Kai <3)
+		self maps\mp\killstreaks\_killstreaks::giveKillstreak("double_uav");
+		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("uav");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("littlebird_support");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("helicopter_minigun");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("ac130");

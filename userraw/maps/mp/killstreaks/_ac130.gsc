@@ -473,6 +473,7 @@ setAC130Player( player )
 	thread teamPlayerCardSplash( "used_ac130", player );
 	
 	player VisionSetThermalForPlayer( "black_bw", 0 );
+	player.inThermalKillstreak = true;
 	player ThermalVisionOn();
 	player ThermalVisionFOFOverlayOn();
 
@@ -625,6 +626,7 @@ removeAC130Player( player, disconnected )
 		player show();
 		player unlink();
 
+		player.inThermalKillstreak = false;
 		player ThermalVisionOff();
 		player ThermalVisionFOFOverlayOff();
 		player visionSetThermalForPlayer( game["thermal_vision"], 0 );

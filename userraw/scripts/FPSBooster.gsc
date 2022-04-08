@@ -31,7 +31,7 @@ onPlayerGiveloadout()
 
 		if(!_onetime && level.allowFPSBooster)
 		{
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to toggle ^2High-FPS Mode", 3000);
+			//self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to toggle ^2High-FPS Mode", 3000);
 			//self iPrintlnBold("^7Press ^3[{+actionslot 1}] ^7to toggle ^3FPS Booster");
 			_onetime = true;
 		}

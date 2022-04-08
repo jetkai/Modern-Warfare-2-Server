@@ -72,6 +72,8 @@ init()
 	{
 		level.radarMode["allies"] = "normal_radar";
 		level.radarMode["axis"] = "normal_radar";
+		level.uavType["allies"] = "uav";
+		level.uavType["axis"] = "uav";
 		level.activeUAVs["allies"] = 0;
 		level.activeUAVs["axis"] = 0;
 		level.activeCounterUAVs["allies"] = 0;
@@ -121,6 +123,9 @@ onPlayerSpawned()
 
 		if ( level.forceUAV )
 			self thread forceRadarOn();
+
+		if(level.uavType[self.team] == "double_uav" && level.activeUAVs[self.team] > 0 )
+			self ThermalVisionFOFOverlayOn();
 	}
 }
 
@@ -143,7 +148,7 @@ rotateUAVRig()
 }
 
 
-launchUAV( owner, team, duration, isCounter )
+launchUAV( owner, team, duration, isCounter)
 {
 	UAVModel = spawn( "script_model", level.UAVRig getTagOrigin( "tag_origin" ) );
 
@@ -320,6 +325,12 @@ useUAV( uavType )
 
 	team = self.pers["team"];		
 	useTime = level.radarViewTime;
+	level.uavType[team] = uavType;
+
+	if(uavType == "uav" && level.uavType[team] != "double_uav")
+		level.uavType[team] = uavType;
+	else
+		level.uavType[team] = "double_uav";
 
 	level thread launchUAV( self, team, useTime, uavType == "counter_uav" );
 
@@ -406,7 +417,7 @@ updatePlayersUAVStatus()
 			player.radarMode = "fast_radar";
 		else
 			player.radarMode = "normal_radar";
-			
+		
 		player.hasRadar = true;
 	}
 	
@@ -473,7 +484,7 @@ usePlayerUAV( doubleUAV, useTime )
 	self.hasRadar = true;
 	
 	wait ( useTime );
-	
+
 	self.hasRadar = false;
 	
 	if (level.uavDoesPrint)
@@ -605,9 +616,12 @@ addActiveUAV()
 		{
 			foreach ( player in level.players )
 			{
-				if ( player.team == self.team )
+				if ( player.team == self.team ) {
 					player iPrintLn( &"MP_WAR_RADAR_ACQUIRED", self.owner, level.radarViewTime );
-				else if ( player.team == level.otherTeam[self.team] )
+					player iprintlnbold( level.activeUAVs["allies"] + ".");
+					if(level.uavType[player.team] == "double_uav" )
+						player ThermalVisionFOFOverlayOn();
+				} else if ( player.team == level.otherTeam[self.team] )
 					player iPrintLn( &"MP_WAR_RADAR_ACQUIRED_ENEMY", level.radarViewTime  );
 			}
 		}	
@@ -615,9 +629,11 @@ addActiveUAV()
 		{
 			foreach ( player in level.players )
 			{
-				if ( player == self.owner )
+				if ( player == self.owner ) {
 					player iPrintLn( &"MP_WAR_RADAR_ACQUIRED", self.owner, level.radarViewTime );
-				else
+					if(level.uavType[player.team] == "double_uav" )
+						player ThermalVisionFOFOverlayOn();
+				} else
 					player iPrintLn( &"MP_WAR_RADAR_ACQUIRED_ENEMY", level.radarViewTime );
 			}
 		}
@@ -640,8 +656,11 @@ addActiveCounterUAV()
 			{
 				if ( player.team == self.team )
 					player iPrintLn( &"MP_WAR_COUNTER_RADAR_ACQUIRED", self.owner, level.uavBlockTime );
-				else if ( player.team == level.otherTeam[self.team] )
+				else if ( player.team == level.otherTeam[self.team] ) {
 					player iPrintLn( &"MP_WAR_COUNTER_RADAR_ACQUIRED_ENEMY", level.uavBlockTime );
+					if(!player.inThermalKillstreak)
+						player ThermalVisionFOFOverlayOff();
+				}
 			}
 		}	
 		else
@@ -650,8 +669,11 @@ addActiveCounterUAV()
 			{
 				if ( player == self.owner )
 					player iPrintLn( &"MP_WAR_COUNTER_RADAR_ACQUIRED", self.owner, level.uavBlockTime );
-				else
+				else {
 					player iPrintLn( &"MP_WAR_COUNTER_RADAR_ACQUIRED_ENEMY", level.uavBlockTime );
+					if(!player.inThermalKillstreak)
+						player ThermalVisionFOFOverlayOff();
+				}
 			}
 		}
 	}
@@ -663,11 +685,17 @@ removeActiveUAV()
 	if ( level.teamBased )
 	{
 		level.activeUAVs[self.team]--;
+		level.uavType[self.team] = "uav";
 		
 		if ( !level.activeUAVs[self.team] )
 		{
 			if (level.uavDoesPrint)
 			{
+				foreach ( player in level.players ) {
+					if ( player.team == self.team && !player.inThermalKillstreak)
+						player ThermalVisionFOFOverlayOff();
+				}
+
 				printOnTeam( &"MP_WAR_RADAR_EXPIRED", self.team );
 				printOnTeam( &"MP_WAR_RADAR_EXPIRED_ENEMY", level.otherTeam[self.team] );
 			}

@@ -455,6 +455,7 @@ heliRide( lifeId, chopper )
 	//self _giveWeapon("harrier_missile_mp");
 	self SwitchToWeapon("heli_remote_mp");
 	self VisionSetThermalForPlayer( game["thermal_vision"], 6 );
+	self.inThermalKillstreak = true;
 	self ThermalVisionOn();
 	self ThermalVisionFOFOverlayOn();
 	self thread thermalVision( chopper );
@@ -716,6 +717,7 @@ heliDialog( dialogGroup )
 endRide( chopper )
 {
 	self RemoteCameraSoundscapeOff();
+	self.inThermalKillstreak = false;
 	self ThermalVisionOff();
 	self ThermalVisionFOFOverlayOff();
 	self unlink();

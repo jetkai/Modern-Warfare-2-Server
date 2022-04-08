@@ -702,11 +702,11 @@ giveLoadout( team, class, allowCopycat )
 
 	if(self.cutKillstreaksEnabled) {
 		self maps\mp\perks\_perkfunctions::setLittlebirdSupport();
-		self maps\mp\perks\_perkfunctions::setSuperAirstrike();
+		//self maps\mp\perks\_perkfunctions::setSuperAirstrike();
 		self maps\mp\perks\_perkfunctions::setBlackBoxHeli();
 	} else {
 		self maps\mp\perks\_perkfunctions::unsetLittlebirdSupport();
-		self maps\mp\perks\_perkfunctions::unsetSuperAirstrike();
+		//self maps\mp\perks\_perkfunctions::unsetSuperAirstrike();
 		self maps\mp\perks\_perkfunctions::unsetBlackBoxHeli();
 	}
 	//self maps\mp\perks\_perkfunctions::setSentryGl();

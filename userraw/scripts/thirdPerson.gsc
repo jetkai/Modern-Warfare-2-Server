@@ -25,11 +25,10 @@ thirdPersonToggle() {
 
 	self thread destroyEle( thirdPersonElem );
 	
-	for ( ;; )
-	{
+	for ( ;; )	{
 		self waittill( "thirdperson" );
 		self.isThirdPerson = !self.isThirdPerson;
-	//	self iprintlnbold(self.isThirdPerson + ".");
+		//self iprintlnbold(self.isThirdPerson + ".");
 		//self setClientDvar( "camera_thirdPerson", self.isThirdPerson);
 		//self setClientDvar( "camera_thirdPersonAdsTransSc", "2");
 		//self setClientDvar( "camera_thirdPersonFovScale", "0.9");

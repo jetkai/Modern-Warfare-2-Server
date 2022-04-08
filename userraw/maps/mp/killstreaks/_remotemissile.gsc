@@ -285,6 +285,7 @@ MissileEyes( player, rocket )
 
 		wait ( 0.5 );
 		
+		self.inThermalKillstreak = false;
 		player ThermalVisionFOFOverlayOff();
 		
 		player CameraUnlink();
@@ -309,6 +310,7 @@ delayedFOFOverlay()
 	
 	wait ( 0.15 );
 	
+	self.inThermalKillstreak = true;
 	self ThermalVisionFOFOverlayOn();
 }
 
@@ -346,6 +348,7 @@ Player_CleanupOnTeamChange( rocket )
 
 	if ( self.team != "spectator" )
 	{
+		self.inThermalKillstreak = false;
 		self ThermalVisionFOFOverlayOff();
 		self ControlsUnlink();
 		self CameraUnlink();	
@@ -379,6 +382,7 @@ Player_CleanupOnGameEnded( rocket )
 	
 	level waittill ( "game_ended" );
 	
+	self.inThermalKillstreak = false;
 	self ThermalVisionFOFOverlayOff();
 	self ControlsUnlink();
 	self CameraUnlink();	
