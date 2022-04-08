@@ -92,6 +92,7 @@ init()
 	level.scriptPerks["specialty_carepackage"] = true;
 	level.scriptPerks["specialty_onemanarmy"] = true;
 	level.scriptPerks["specialty_littlebird_support"] = true;
+	level.scriptPerks["specialty_double_uav"] = true;
 	level.scriptPerks["specialty_primarydeath"] = true;
 	level.scriptPerks["specialty_secondarybling"] = true;	
 	level.scriptPerks["specialty_combathigh"] = true;
