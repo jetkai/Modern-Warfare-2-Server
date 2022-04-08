@@ -1153,6 +1153,16 @@ unsetBlackBoxHeli()
 		self notify ( "end_helicopter_blackbox_think" );
 }
 
+setDoubleUAV()
+{
+	self thread killstreakThink( "double_uav", 11, "end_double_uav_think" );
+}
+
+unsetDoubleUAV()
+{
+		self notify ( "end_double_uav_think" );
+}
+
 setC4Death()
 {
 	if ( ! self _hasperk( "specialty_pistoldeath" ) )

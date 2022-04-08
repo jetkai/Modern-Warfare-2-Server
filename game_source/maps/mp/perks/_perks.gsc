@@ -178,6 +178,9 @@ init()
 	level.perkSetFuncs["specialty_blackbox_heli"] = ::setBlackBoxHeli;
 	level.perkUnsetFuncs["specialty_blackbox_heli"] = ::unsetBlackBoxHeli;
 
+	level.perkSetFuncs["specialty_double_uav"] = ::setDoubleUAV;
+	level.perkUnsetFuncs["specialty_double_uav"] = ::unsetDoubleUAV;
+
 	level.perkSetFuncs["specialty_helicoptor_mk19"] = ::setHelicopterMk19;
 	level.perkUnsetFuncs["specialty_helicoptor_mk19"] = ::unsetHelicopterMk19;
 
