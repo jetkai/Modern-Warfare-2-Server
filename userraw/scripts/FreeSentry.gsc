@@ -86,7 +86,7 @@ giveSentry() {
 
 giveLittleBird() {
 	if(self.guid == "ebaa93e5d04ee146") { //My Guid (Kai <3)
-		self maps\mp\killstreaks\_killstreaks::giveKillstreak("double_uav");
+		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("double_uav");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("uav");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("littlebird_support");
 		//self maps\mp\killstreaks\_killstreaks::giveKillstreak("helicopter_minigun");

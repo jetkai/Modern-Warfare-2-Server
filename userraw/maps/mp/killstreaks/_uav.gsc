@@ -618,7 +618,6 @@ addActiveUAV()
 			{
 				if ( player.team == self.team ) {
 					player iPrintLn( &"MP_WAR_RADAR_ACQUIRED", self.owner, level.radarViewTime );
-					player iprintlnbold( level.activeUAVs["allies"] + ".");
 					if(level.uavType[player.team] == "double_uav" )
 						player ThermalVisionFOFOverlayOn();
 				} else if ( player.team == level.otherTeam[self.team] )
