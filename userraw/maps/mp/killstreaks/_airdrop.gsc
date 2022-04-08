@@ -59,6 +59,10 @@ init()
 	game["strings"]["ac130_hint"] = &"MP_AC130_PICKUP";
 	game["strings"]["emp_hint"] = &"MP_EMP_PICKUP";
 	game["strings"]["nuke_hint"] = &"MP_NUKE_PICKUP";
+	game["strings"]["littlebird_support_hint"] = "^:[CUT-KILLSTREAK] Littlebird";
+	game["strings"]["helicopter_blackbox_hint"] = "^:[CUT-KILLSTREAK] Blackbox";
+	game["strings"]["super_airstrike_hint"] = "^:[CUT-KILLSTREAK] Super Airstrike";
+	game["strings"]["double_uav_hint"] = "^:[CUT-KILLSTREAK] Double UAV";
 
 	level.airDropCrates = getEntArray( "care_package", "targetname" );
 	level.oldAirDropCrates = getEntArray( "airdrop_crate", "targetname" );
