@@ -697,7 +697,7 @@ giveLoadout( team, class, allowCopycat )
 	if (self _hasperk( "specialty_pistoldeath" ) && self _hasperk("specialty_finalstand"))
 		self _setPerk("specialty_c4death");
 
-	if(isDefined( self.cutKillstreaksEnabled))
+	if(!isDefined(self.cutKillstreaksEnabled))
 		self.cutKillstreaksEnabled = true;
 
 	if(self.cutKillstreaksEnabled) {
