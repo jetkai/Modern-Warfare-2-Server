@@ -14,6 +14,7 @@ onPlayerConnect() {
 		level waittill( "connected", player);
 
 		player thread onPlayerGiveloadout();
+		player thread sentryTick();
 
 	}
 }
