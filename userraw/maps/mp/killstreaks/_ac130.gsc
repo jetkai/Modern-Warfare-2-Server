@@ -91,7 +91,7 @@ init()
 	
 	level.weaponReloadTime[ "ac130_25mm_mp" ] = 1.5;
 	level.weaponReloadTime[ "ac130_40mm_mp" ] = 3.0;
-	level.weaponReloadTime[ "ac130_105mm_mp" ] = 2.0;
+	level.weaponReloadTime[ "ac130_105mm_mp" ] = 2.5;
 	
 	level.ac130_Speed[ "move" ] = 250;
 	level.ac130_Speed[ "rotate" ] = 70;
