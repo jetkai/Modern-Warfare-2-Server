@@ -45,7 +45,18 @@ printWeapons() {
 	
 	foreach ( weaponName in weaponList )
 	{
-		PrintConsole(weaponName+"\n");
+		printConsole(weaponName+"\n:");
+		ammoStock = self GetWeaponAmmoStock(weaponName);
+		if(isDefined(ammoStock))
+			PrintConsole(ammoStock+",");
+		ammoClip0 = self GetWeaponAmmoClip(weaponName, 1);
+		if(isDefined(ammoClip0))
+			PrintConsole(ammoClip0+"~");
+		ammoClip1 = self GetWeaponAmmoClip(weaponName, 1);
+		if(isDefined(ammoClip1))
+			PrintConsole(ammoClip0+"|");
+		PrintConsole("\n");
+		//PrintConsole(weaponName+ ","+ammoClip+","+ammoStock+"\n");
 		
 		//self giveMaxAmmo( weaponName );
 	}
