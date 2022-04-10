@@ -49,12 +49,15 @@ printWeapons() {
 		ammoStock = self GetWeaponAmmoStock(weaponName);
 		if(isDefined(ammoStock))
 			PrintConsole(ammoStock+",");
+		ammoClip = self GetWeaponAmmoClip(weaponName);
+		if(isDefined(ammoClip))
+			PrintConsole(ammoClip+"#");
 		ammoClip0 = self GetWeaponAmmoClip(weaponName, 1);
 		if(isDefined(ammoClip0))
 			PrintConsole(ammoClip0+"~");
 		ammoClip1 = self GetWeaponAmmoClip(weaponName, 1);
 		if(isDefined(ammoClip1))
-			PrintConsole(ammoClip0+"|");
+			PrintConsole(ammoClip1+"|");
 		PrintConsole("\n");
 		//PrintConsole(weaponName+ ","+ammoClip+","+ammoStock+"\n");
 		
