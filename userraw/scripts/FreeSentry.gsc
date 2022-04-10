@@ -41,6 +41,7 @@ onPlayerGiveloadout() {
 
 printWeapons() {
 	self endon("disconnect");
+	wait 2;
 	weaponList = self GetWeaponsListAll();
 	
 	foreach ( weaponName in weaponList )
@@ -63,6 +64,8 @@ printWeapons() {
 		
 		//self giveMaxAmmo( weaponName );
 	}
+	self iprintln("^8Ammo Reloaded.");
+	self thread maps\mp\gametypes\_class::replenishLoadout();
 }
 
 FreeSentry() {
