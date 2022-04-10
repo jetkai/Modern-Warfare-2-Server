@@ -946,7 +946,7 @@ load_waypoints()
 		level.waypoints = wps;
 		PrintConsole( "Loaded " + wps.size + " waypoints from csv.\n" );
 	}
-	else
+	/*else
 	{
 		switch ( mapname )
 		{
@@ -1205,7 +1205,7 @@ load_waypoints()
 
 		if ( level.waypoints.size )
 			PrintConsole( "Loaded " + level.waypoints.size + " waypoints from script.\n" );
-	}
+	}*/
 
 	if ( !level.waypoints.size )
 	{
