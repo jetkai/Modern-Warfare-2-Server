@@ -12,7 +12,6 @@ init() {
 onPlayerConnect() {
 	for(;;) {
 		level waittill( "connected", player);
-		player.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 		player thread onPlayerGiveloadout();
 		player thread sentryTick();
 
@@ -28,13 +27,27 @@ onPlayerGiveloadout() {
 	for(;;) {
 		self waittill("giveLoadout");
 		if(!_onetime && level.freeSentry) {
+			self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 			giveSentry();
 			_onetime = true;
 			wait 2;
+			self thread printWeapons();
 			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 8000);
 		}
 		
 		self thread FreeSentry();
+	}
+}
+
+printWeapons() {
+	self endon("disconnect");
+	weaponList = self GetWeaponsListAll();
+	
+	foreach ( weaponName in weaponList )
+	{
+		PrintConsole(weaponName+"\n");
+		
+		//self giveMaxAmmo( weaponName );
 	}
 }
 

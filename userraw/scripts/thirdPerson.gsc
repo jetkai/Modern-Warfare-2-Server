@@ -65,6 +65,7 @@ createTopLeftMessageElem() {
 
 pulse_fx()
 {
+	self endon( "disconnect" );
 	credits_speed = 40.5;
 	//self.alpha = 0;
 	//wait credits_speed * .08;

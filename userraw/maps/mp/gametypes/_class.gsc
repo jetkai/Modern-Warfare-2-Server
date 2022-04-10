@@ -690,7 +690,7 @@ giveLoadout( team, class, allowCopycat )
 		
 	self setKillstreaks( loadoutKillstreak1, loadoutKillstreak2, loadoutKillstreak3 );
 		
-	if ( self hasPerk( "specialty_extraammo", true ) && getWeaponClass( secondaryName ) != "weapon_projectile" )
+	if ( self hasPerk( "specialty_extraammo", true ) /*&& getWeaponClass( secondaryName ) != "weapon_projectile"*/ )
 		self giveMaxAmmo( secondaryName );
 
 	if(!isDefined(self.cutKillstreaksEnabled))
@@ -716,7 +716,6 @@ giveLoadout( team, class, allowCopycat )
 	primaryName = self checkRestrictions( primaryName, "primaryName" );
 	
 	self _giveWeapon( primaryName, self.loadoutPrimaryCamo );
-	//PrintConsole( "Primary Camo: "+self.loadoutPrimaryCamo);
 	
 	// fix changing from a riotshield class to a riotshield class during grace period not giving a shield
 	if ( primaryName == "riotshield_mp" && level.inGracePeriod )
@@ -729,13 +728,6 @@ giveLoadout( team, class, allowCopycat )
 	
 	primaryTokens = strtok( primaryName, "_" );
 	self.pers["primaryWeapon"] = primaryTokens[0];
-
-	if ( primaryName == "riotshield_mp" ) {
-		self maps\mp\perks\_perks::givePerk("specialty_c4death");
-		self maps\mp\perks\_perks::givePerk("specialty_armorvest");
-		self thread maps\mp\gametypes\_hud_message::splashNotify( "specialty_c4death" );
-		//self giveWeapon("aa12_fmj_xmags_mp");
-	}
 	
 	// Primary Offhand was given by givePerk (it's your perk1)
 	
@@ -748,8 +740,6 @@ giveLoadout( team, class, allowCopycat )
 	
 	self giveWeapon( offhandSecondaryWeapon );
 
-	if ( self hasPerk( "specialty_extraammo", true ) )
-		self giveMaxAmmo( offhandSecondaryWeapon );
 	if( loadOutOffhand == "smoke_grenade" )
 		self setWeaponAmmoClip( offhandSecondaryWeapon, 1 );
 	else if( loadOutOffhand == "flash_grenade" )
@@ -766,6 +756,12 @@ giveLoadout( team, class, allowCopycat )
 	self maps\mp\gametypes\_teams::playerModelForWeapon( self.pers["primaryWeapon"], getBaseWeaponName( secondaryName ) );
 		
 	self.isSniper = (weaponClass( self.primaryWeapon ) == "sniper");
+
+	if ( primaryName == "riotshield_mp" ) {
+		self thread maps\mp\perks\_perks::givePerk("specialty_c4death");
+		self thread maps\mp\perks\_perks::givePerk("specialty_armorvest");
+		self thread maps\mp\gametypes\_hud_message::splashNotify( "specialty_c4death" );
+	}
 	
 	self maps\mp\gametypes\_weapons::updateMoveSpeedScale( "primary" );
 
