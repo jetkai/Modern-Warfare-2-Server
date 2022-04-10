@@ -722,8 +722,8 @@ giveLoadout( team, class, allowCopycat )
 	if ( primaryName == "riotshield_mp" && level.inGracePeriod )
 		self notify ( "weapon_change", "riotshield_mp" );
 
-	//if ( self hasPerk( "specialty_extraammo", true ) )
-	self giveMaxAmmo( primaryName );
+	if ( self hasPerk( "specialty_extraammo", true ) )
+		self giveMaxAmmo( primaryName );
 
 	self setSpawnWeapon( primaryName );
 	
