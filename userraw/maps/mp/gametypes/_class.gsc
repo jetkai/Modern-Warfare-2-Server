@@ -747,6 +747,9 @@ giveLoadout( team, class, allowCopycat )
 		self SetOffhandSecondaryClass( "smoke" );
 	
 	self giveWeapon( offhandSecondaryWeapon );
+
+	if ( self hasPerk( "specialty_extraammo", true ) )
+		self giveMaxAmmo( offhandSecondaryWeapon );
 	if( loadOutOffhand == "smoke_grenade" )
 		self setWeaponAmmoClip( offhandSecondaryWeapon, 1 );
 	else if( loadOutOffhand == "flash_grenade" )
