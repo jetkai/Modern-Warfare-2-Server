@@ -1125,7 +1125,7 @@ GlowStickEnemyUseListener( owner )
 
 setLittlebirdSupport()
 {
-	self thread killstreakThink( "littlebird_support", 8, "end_littlebird_support_think" );
+	self thread killstreakThink( "littlebird_support", 10, "end_littlebird_support_think" );
 }
 
 unsetLittlebirdSupport()
@@ -1145,12 +1145,12 @@ unsetSuperAirstrike()
 
 setBlackBoxHeli()
 {
-	self thread killstreakThink( "helicopter_blackbox", 15, "end_helicopter_blackbox_think" );
+	self thread killstreakThink( "helicopter_blackbox", 17, "end_helicopter_blackbox_think" );
 }
 
 unsetBlackBoxHeli()
 {
-		self notify ( "end_helicopter_blackbox_think" );
+	self notify ( "end_helicopter_blackbox_think" );
 }
 
 setDoubleUAV()

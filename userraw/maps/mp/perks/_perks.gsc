@@ -310,6 +310,11 @@ cac_modified_damage( victim, attacker, damage, meansofdeath, weapon, impactPoint
 {
 	assert( isPlayer( victim ) );
 	assert( isDefined( victim.team ) );
+
+	/*victimName = victim.name;
+	attackerName = attacker.name;
+
+	PrintConsole(victimName + ", " + attackerName+"\n");*/
 	
 	damageAdd = 0;
 
@@ -321,7 +326,8 @@ cac_modified_damage( victim, attacker, damage, meansofdeath, weapon, impactPoint
 			damageAdd += 0;
 		else if ( isPlayer( attacker ) && weaponInheritsPerks( weapon ) && attacker _hasPerk( "specialty_bulletdamage" ) )
 			damageAdd += damage*level.bulletDamageMod;
-		else if ( victim _hasPerk( "specialty_armorvest" ) )
+		
+		if ( victim _hasPerk( "specialty_armorvest" ) )
 			damageAdd -= damage*(1-level.armorVestMod);
 
 		if ( isPlayer( attacker ) && attacker _hasPerk( "specialty_fmj" ) && victim _hasPerk ( "specialty_armorvest" ) )

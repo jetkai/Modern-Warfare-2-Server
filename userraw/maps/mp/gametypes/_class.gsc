@@ -693,10 +693,6 @@ giveLoadout( team, class, allowCopycat )
 	if ( self hasPerk( "specialty_extraammo", true ) && getWeaponClass( secondaryName ) != "weapon_projectile" )
 		self giveMaxAmmo( secondaryName );
 
-	//Add C4 Death
-	if (self _hasperk( "specialty_pistoldeath" ) && self _hasperk("specialty_finalstand"))
-		self _setPerk("specialty_c4death");
-
 	if(!isDefined(self.cutKillstreaksEnabled))
 		self.cutKillstreaksEnabled = true;
 
@@ -733,6 +729,13 @@ giveLoadout( team, class, allowCopycat )
 	
 	primaryTokens = strtok( primaryName, "_" );
 	self.pers["primaryWeapon"] = primaryTokens[0];
+
+	if ( primaryName == "riotshield_mp" ) {
+		self maps\mp\perks\_perks::givePerk("specialty_c4death");
+		self maps\mp\perks\_perks::givePerk("specialty_armorvest");
+		self thread maps\mp\gametypes\_hud_message::splashNotify( "specialty_c4death" );
+		//self giveWeapon("aa12_fmj_xmags_mp");
+	}
 	
 	// Primary Offhand was given by givePerk (it's your perk1)
 	
@@ -1262,6 +1265,7 @@ isValidPrimary( refString )
 		case "ak74u":
 		case "m40a3":
 		case "dragunov":
+		case "g36c":
 			return true;
 		default:
 			assertMsg( "Replacing invalid primary weapon: " + refString );
@@ -1361,6 +1365,7 @@ isValidEquipment( refString )
 		case "specialty_blastshield":
 		case "claymore_mp":
 		case "c4_mp":
+		case "c4death_mp":
 			return true;
 		default:
 			assertMsg( "Replacing invalid equipment: " + refString );
@@ -1425,6 +1430,7 @@ isValidPerk3( refString )
 		case "specialty_heartbreaker":
 		case "specialty_detectexplosive":
 		case "specialty_pistoldeath":
+		case "specialty_armorvest":
 			return true;
 		default:
 			assertMsg( "Replacing invalid perk3: " + refString );

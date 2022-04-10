@@ -12,7 +12,7 @@ init() {
 onPlayerConnect() {
 	for(;;) {
 		level waittill( "connected", player);
-
+		player.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 		player thread onPlayerGiveloadout();
 		player thread sentryTick();
 
@@ -28,7 +28,6 @@ onPlayerGiveloadout() {
 	for(;;) {
 		self waittill("giveLoadout");
 		if(!_onetime && level.freeSentry) {
-			self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 			giveSentry();
 			_onetime = true;
 			wait 2;
