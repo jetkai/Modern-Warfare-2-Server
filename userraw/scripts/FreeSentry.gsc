@@ -31,7 +31,7 @@ onPlayerGiveloadout() {
 			giveSentry();
 			_onetime = true;
 			wait 2;
-			self thread printWeapons();
+			//self thread printWeapons();
 			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 8000);
 		}
 		
@@ -39,7 +39,7 @@ onPlayerGiveloadout() {
 	}
 }
 
-printWeapons() {
+/*printWeapons() {
 	self endon("disconnect");
 	wait 2;
 	weaponList = self GetWeaponsListAll();
@@ -66,7 +66,7 @@ printWeapons() {
 	}
 	self iprintln("^8Ammo Reloaded.");
 	self thread maps\mp\gametypes\_class::replenishLoadout();
-}
+}*/
 
 FreeSentry() {
 	self endon("disconnect");
