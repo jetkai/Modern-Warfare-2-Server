@@ -9,6 +9,8 @@ init() {
 onPlayerConnect() {
 	for(;;) {
 		level waittill( "connected", player);
+		if(isDefined(player.pers["isBot"]) && player.pers["isBot"] == true)
+			continue;
 
 		player thread thirdPersonToggle();
 	}
@@ -65,6 +67,7 @@ createTopLeftMessageElem() {
 
 pulse_fx()
 {
+	self endon( "death" );
 	self endon( "disconnect" );
 	credits_speed = 40.5;
 	//self.alpha = 0;

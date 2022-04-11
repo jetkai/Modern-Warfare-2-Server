@@ -558,9 +558,9 @@ getRandomTarget() {
 			}
 		}
 	}
-	if(self.team == "allies") {
+	if(self.team == "allies")
 		return enemiesToTarget[randomint(enemiesToTarget.size)];
-	}
+
 	return enemiesToTarget[randomint(enemiesToTarget.size)];
 }
 

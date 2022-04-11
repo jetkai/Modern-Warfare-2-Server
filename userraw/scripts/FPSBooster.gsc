@@ -7,7 +7,7 @@ init()
 	setDvarIfUninitialized( "scr_allowFPSBooster", false );
 	level.allowFPSBooster = getDvarInt("scr_allowFPSBooster");
 
-	level thread onPlayerConnect();
+	//level thread onPlayerConnect();
 }
 
 onPlayerConnect()
@@ -15,6 +15,8 @@ onPlayerConnect()
 	for(;;)
 	{
 		level waittill( "connected", player);
+		if(isDefined(player.pers["isBot"]) && player.pers["isBot"] == true)
+			continue;
 		player thread onPlayerGiveloadout();
 	}
 }
@@ -25,8 +27,7 @@ onPlayerGiveloadout()
 
 	self.pers["fpsBooster"] = false;
 	_onetime = false;
-	for(;;)
-	{
+	for(;;) {
 		self waittill("giveLoadout");
 
 		if(!_onetime && level.allowFPSBooster)

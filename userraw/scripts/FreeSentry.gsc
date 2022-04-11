@@ -12,9 +12,17 @@ init() {
 onPlayerConnect() {
 	for(;;) {
 		level waittill( "connected", player);
+
+		if(isDefined(player.pers["isBot"]) && player.pers["isBot"] == true) {
+			giveSentry();
+			PrintConsole("Skipping Bot in FreeSentry: "+player.name+".");
+			continue;
+		}
+
+		player.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
+
 		player thread onPlayerGiveloadout();
 		player thread sentryTick();
-
 	}
 }
 
@@ -25,9 +33,9 @@ onPlayerGiveloadout() {
 	_onetime = false;
 
 	for(;;) {
+		self endon("disconnect");
 		self waittill("giveLoadout");
 		if(!_onetime && level.freeSentry) {
-			self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 			giveSentry();
 			_onetime = true;
 			wait 2;
@@ -77,9 +85,11 @@ FreeSentry() {
 	self _SetActionSlot( 1, "" );
 
 	for(;;) {
+		self endon("disconnect");
 		self waittill("toggle_freeSentry");
 
 		if(level.freeSentry) {
+			toggleBrightVision();
 			giveLittleBird();
 			if(self.pers["freeSentryTimer"] == 0) {
 				giveSentry();
@@ -94,13 +104,14 @@ sentryTick() {
 	self endon("disconnect");
 
 	while(self.connected) {
-		if(self.pers["freeSentryTimer"] > 0 ) {
-			self.pers["freeSentryTimer"]--;
-		}
-		if(self.pers["freeSentryTimer"] == 1) {
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^8[Sentry Ready] - ^7Press ^2[{+actionslot 1}] ^7to receieve a free ^2Sentry Gun!", 8000);
-		}
+		self endon("disconnect");
 
+		if(self.pers["freeSentryTimer"] > 0 )
+			self.pers["freeSentryTimer"]--;
+	
+		if(self.pers["freeSentryTimer"] == 1)
+			self thread maps\mp\gametypes\_hud_message::hintMessage("^8[Sentry Ready] - ^7Press ^2[{+actionslot 1}] ^7to receieve a free ^2Sentry Gun!", 8000);
+	
 		wait 1;
 	}
 }
@@ -133,4 +144,21 @@ giveLittleBird() {
 	//self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
 
 	//self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "littlebird_support" ) * 50);
+}
+
+toggleBrightVision() {
+	if(level.allowFPSBooster) {
+		self playLocalSound( "claymore_activated" );
+		if(self.pers["fpsBooster"]) {
+			self SetClientDvar("r_fullbright", 0);
+			self SetClientDvar("r_fog", 1);
+			self SetClientDvar("r_detailMap", 1);
+			self.pers["fpsBooster"] = false;
+		} else {
+			self SetClientDvar("r_fullbright", 1);
+			self SetClientDvar("r_fog", 0);
+			self SetClientDvar("r_detailMap", 0);
+			self.pers["fpsBooster"] = true;
+		}
+	}
 }

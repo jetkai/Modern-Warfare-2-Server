@@ -7,7 +7,7 @@ init()
 	setDvarIfUninitialized( "scr_showHP", false );
 	level.showHP = getDvarInt( "scr_showHP" );
 
-	level thread onPlayerConnect();
+	//level thread onPlayerConnect();
 }
 
 onPlayerConnect()
