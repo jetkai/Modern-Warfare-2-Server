@@ -20,8 +20,8 @@ thirdPersonToggle() {
 	self endon ( "disconnect" );
 	self notifyOnPlayerCommand( "thirdperson", "mp_quickmessage" );
 
-	createBottomCenterMessageElem();
-	createTopLeftMessageElem();
+	self createBottomCenterMessageElem();
+	self createTopLeftMessageElem();
 	
 	for ( ;; )	{
 		self waittill( "thirdperson" );
