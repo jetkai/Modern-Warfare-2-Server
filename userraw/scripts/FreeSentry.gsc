@@ -14,7 +14,6 @@ onPlayerConnect() {
 		level waittill( "connected", player);
 
 		if(isDefined(player.pers["isBot"]) && player.pers["isBot"] == true) {
-			giveSentry();
 			PrintConsole("Skipping Bot in FreeSentry: "+player.name+".");
 			continue;
 		}
@@ -36,11 +35,10 @@ onPlayerGiveloadout() {
 		self endon("disconnect");
 		self waittill("giveLoadout");
 		if(!_onetime && level.freeSentry) {
-			giveSentry();
+			self giveSentry();
 			_onetime = true;
-			wait 2;
 			//self thread printWeapons();
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 8000);
+			self maps\mp\gametypes\_hud_message::hintMessage("^7Press ^2[{+actionslot 1}] ^7to receive a free ^2Sentry Gun!", 8000);
 		}
 		
 		self thread FreeSentry();
@@ -89,10 +87,10 @@ FreeSentry() {
 		self waittill("toggle_freeSentry");
 
 		if(level.freeSentry) {
-			toggleBrightVision();
-			giveLittleBird();
+			self toggleBrightVision();
+			self giveLittleBird();
 			if(self.pers["freeSentryTimer"] == 0) {
-				giveSentry();
+				self thread giveSentry();
 			} else {
 				self iPrintlnBold("You must wait " + self.pers["freeSentryTimer"] + " seconds to spawn another free ^2Sentry Gun.");
 			}
@@ -110,19 +108,24 @@ sentryTick() {
 			self.pers["freeSentryTimer"]--;
 	
 		if(self.pers["freeSentryTimer"] == 1)
-			self thread maps\mp\gametypes\_hud_message::hintMessage("^8[Sentry Ready] - ^7Press ^2[{+actionslot 1}] ^7to receieve a free ^2Sentry Gun!", 8000);
+			self maps\mp\gametypes\_hud_message::hintMessage("^8[Sentry Ready] - ^7Press ^2[{+actionslot 1}] ^7to receieve a free ^2Sentry Gun!", 8000);
 	
 		wait 1;
 	}
 }
 
 giveSentry() {
-	self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
+	self endon("disconnect");
+	self endon("death");
+	
+	if(isDefined(self)) {
+		self.pers["freeSentryTimer"] = 40 + (level.aliveCount["allies"] * 20);
 
-	self maps\mp\killstreaks\_killstreaks::giveKillstreak("sentry");
-	self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
+		self thread maps\mp\killstreaks\_killstreaks::giveKillstreak("sentry");
+		self maps\mp\gametypes\_hud_message::playerCardSplashNotify("giveaway_sentry", self);
 
-	self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "sentry" ) * 50);
+		self thread maps\mp\gametypes\_rank::giveRankXP("killstreak_giveaway", maps\mp\killstreaks\_killstreaks::getStreakCost( "sentry" ) * 50);
+	}
 }
 
 giveLittleBird() {
