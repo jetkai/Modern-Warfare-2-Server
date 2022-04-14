@@ -458,8 +458,8 @@ airDropMarkerActivate( dropType )
 	
 	if ( dropType != "airdrop_mega" )
 		level doFlyBy( owner, position, randomFloat( 360 ), dropType );
-	else if(dropType == "airdrop_mega" && self.guid == "ebaa93e5d04ee146")
-		level doB2BomberFlyBy( owner, position, randomFloat( 360 ), dropType ); // Custom Content
+	//else if(dropType == "airdrop_mega" && self.guid == "ebaa93e5d04ee146")
+	//	level doB2BomberFlyBy( owner, position, randomFloat( 360 ), dropType ); // Custom Content
 	else
 		level doC130FlyBy( owner, position, randomFloat( 360 ), dropType );
 		//level doMegaFlyBy( owner, position, randomFloat( 360 ), dropType ); // Cut Content
