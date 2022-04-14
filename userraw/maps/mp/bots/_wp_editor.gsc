@@ -12,7 +12,7 @@
 
 init()
 {
-	if ( getDvar( "bots_main_debug" ) == "" )
+	/*if ( getDvar( "bots_main_debug" ) == "" )
 		setDvar( "bots_main_debug", 0 );
 
 	if ( !getDVarint( "bots_main_debug" ) )
@@ -53,7 +53,7 @@ init()
 	level.waypointCount = 0;
 
 	level waittill( "connected", player );
-	player thread onPlayerSpawned();
+	player thread onPlayerSpawned();*/
 }
 
 onPlayerSpawned()

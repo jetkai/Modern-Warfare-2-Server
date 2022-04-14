@@ -12,13 +12,13 @@
 
 init()
 {
-	if ( getDvar( "bots_main_menu" ) == "" )
+	/*if ( getDvar( "bots_main_menu" ) == "" )
 		setDvar( "bots_main_menu", true );
 
 	if ( !getDvarInt( "bots_main_menu" ) )
 		return;
 
-	thread watchPlayers();
+	thread watchPlayers();*/
 }
 
 watchPlayers()

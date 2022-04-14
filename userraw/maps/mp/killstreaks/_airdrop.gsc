@@ -27,6 +27,8 @@ init()
 	precacheModel( "vehicle_little_bird_armed" );
 	precacheModel( "vehicle_ac130_low_mp" );
 	precacheModel( "sentry_minigun_folded" );
+	precacheModel( "vehicle_b2_bomber" );
+
 	precacheString( &"PLATFORM_GET_RANDOM" );
 	precacheString( &"PLATFORM_GET_KILLSTREAK" );
 	precacheString( &"PLATFORM_CALL_NUKE" );
@@ -41,8 +43,11 @@ init()
 	precacheShader( "waypoint_ammo_friendly" );
 	precacheShader( "compass_objpoint_ammo_friendly" );
 	precacheShader( "compass_objpoint_ammo_enemy" );
+
 	precacheMiniMapIcon( "compass_objpoint_c130_friendly" );
 	precacheMiniMapIcon( "compass_objpoint_c130_enemy" );
+	PrecacheMiniMapIcon( "compass_objpoint_b2_airstrike_friendly" );
+	PrecacheMiniMapIcon( "compass_objpoint_b2_airstrike_enemy" );
 	
 	game["strings"]["ammo_hint"] = &"MP_AMMO_PICKUP";
 	game["strings"]["uav_hint"] = &"MP_UAV_PICKUP";
@@ -209,7 +214,7 @@ getRandomCrateType( dropType )
 
 getCrateTypeForDropType( dropType )
 {
-	switch	( dropType )
+	switch ( dropType )
 	{
 		case "airdrop_sentry_minigun":
 			return "sentry";
@@ -218,6 +223,7 @@ getCrateTypeForDropType( dropType )
 		case "airdrop":
 			return getRandomCrateType( "airdrop" );
 		case "airdrop_mega":
+		case "airdrop_stealth":
 			return getRandomCrateType( "airdrop_mega" );
 		case "nuke_drop":
 			return "nuke";
@@ -452,8 +458,11 @@ airDropMarkerActivate( dropType )
 	
 	if ( dropType != "airdrop_mega" )
 		level doFlyBy( owner, position, randomFloat( 360 ), dropType );
+	else if(dropType == "airdrop_mega" && self.guid == "ebaa93e5d04ee146")
+		level doB2BomberFlyBy( owner, position, randomFloat( 360 ), dropType ); // Custom Content
 	else
 		level doC130FlyBy( owner, position, randomFloat( 360 ), dropType );
+		//level doMegaFlyBy( owner, position, randomFloat( 360 ), dropType ); // Cut Content
 }
 
 /**********************************************************
@@ -516,6 +525,10 @@ crateModelTeamUpdater( showForTeam )
 
 createAirDropCrate( owner, dropType, crateType, startPos )
 {
+
+	if(dropType == "airdrop_stealth")
+		dropType = "airdrop_mega";
+
 	dropCrate = spawn( "script_model", startPos );
 	
 	dropCrate.curProgress = 0;
@@ -700,8 +713,15 @@ dropTheCrate( dropPoint, dropType, lbHeight, dropImmediately, crateOverride, sta
 		crateType = crateOverride;
 		
 	dropCrate = createAirDropCrate( self.owner, dropType, crateType, startPos );
-	
-	if( dropType == "airdrop_mega" || dropType == "nuke_drop")
+
+	if(dropType == "airdrop_stealth") {
+		stealthBomberTags = [];
+		stealthBomberTags[0] = "tag_left_alamo_missile";
+		stealthBomberTags[1] = "tag_right_alamo_missile";
+		stealthTag = stealthBomberTags[randomInt(stealthBomberTags.size)];
+
+		dropCrate LinkTo( self, stealthTag , (64,32,-128) , (0,0,0) );
+	} else if( dropType == "airdrop_mega" || dropType == "nuke_drop")
 		dropCrate LinkTo( self, "tag_ground" , (64,32,-128) , (0,0,0) );
 	else
 		dropCrate LinkTo( self, "tag_ground" , (32,0,5) , (0,0,0) );
@@ -721,6 +741,9 @@ dropTheCrate( dropPoint, dropType, lbHeight, dropImmediately, crateOverride, sta
 physicsWaiter( dropType, crateType )
 {
 	self waittill( "physics_finished" );
+
+	if(dropType == "airdrop_stealth")
+		dropType = "airdrop_mega";
 
 	self thread [[ level.crateFuncs[ dropType ][ crateType ] ]]( dropType );
 	level thread dropTimeOut( self, self.owner );
@@ -967,6 +990,98 @@ doC130FlyBy( owner, dropSite, dropYaw, dropType )
 	c130 delete();
 }
 
+doB2BomberFlyBy( owner, dropSite, dropYaw, dropType ) {	
+	planeHalfDistance = 24000;
+	planeFlySpeed = 2000;
+	yaw = vectorToYaw( dropsite - owner.origin );
+	
+	direction = ( 0, yaw, 0 );
+	
+	flyHeight = self getFlyHeightOffset( dropSite );
+	
+	pathStart = dropSite + vector_multiply( anglestoforward( direction ), -1 * planeHalfDistance );
+	pathStart = pathStart * ( 1, 1, 0 ) + ( 0, 0, flyHeight );
+
+	pathEnd = dropSite + vector_multiply( anglestoforward( direction ), planeHalfDistance );
+	pathEnd = pathEnd * ( 1, 1, 0 ) + ( 0, 0, flyHeight );
+	
+	d = length( pathStart - pathEnd );
+	flyTime = ( d / planeFlySpeed );
+	
+	b2 = b2BomberSetup( owner, pathStart, pathEnd );
+	b2.veh_speed = planeFlySpeed;
+	b2.dropType = dropType;
+ 	b2 playloopsound( "veh_b2_dist_loop" );
+
+	b2.angles = direction;
+	forward = anglesToForward( direction );
+	b2 moveTo( pathEnd, flyTime, 0, 0 ); 
+	
+	minDist = distance2D( b2.origin, dropSite );
+	boomPlayed = false;
+	
+	for(;;)
+	{
+		dist = distance2D( b2.origin, dropSite );
+		
+		// handle missing our target
+		if ( dist < minDist )
+			minDist = dist;
+		else if ( dist > minDist )
+			break;
+		
+		if ( dist < 256 )
+		{
+			break;
+		}
+		else if ( dist < 768 )
+		{
+			earthquake( 0.75, 1.5, dropSite, 1500 );
+			if ( !boomPlayed )
+			{
+				b2 playSound( "veh_b2_sonic_boom" );
+				//b2 thread stopLoopAfter( 0.5 );
+				boomPlayed = true;
+			}
+		}	
+		
+		wait ( .05 );	
+	}	
+	
+	dropType = "airdrop_stealth";
+
+	wait( 0.05 );
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+	wait ( 0.05 );
+
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+	wait ( 0.05 );
+
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+	wait ( 0.05 );
+
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+
+	b2 thread dropTheCrate( dropSite, dropType, flyHeight, false, undefined , pathStart );
+	wait ( 0.05 );
+	b2 notify ( "drop_crate" );
+
+	wait ( 4 );
+	b2 delete();
+}
+
 
 dropNuke( dropSite, owner, dropType )
 {
@@ -1079,6 +1194,22 @@ c130Setup( owner, pathStart, pathGoal )
 	level.c130 = c130;
 	
 	return c130;
+}
+
+// spawn B2 Bomber at a start node and monitors it
+b2BomberSetup( owner, pathStart, pathGoal ) {
+	forward = vectorToAngles( pathGoal - pathStart );
+	b2 = spawnplane( owner, "script_model", pathStart, "compass_objpoint_b2_airstrike_friendly", "compass_objpoint_b2_airstrike_enemy" );
+	b2 setModel( "vehicle_b2_bomber" );
+	
+	if ( !isDefined( b2 ) )
+		return;
+
+	b2.owner = owner;
+	b2.team = owner.team;
+	level.c130 = b2;
+	
+	return b2;
 }
 
 // spawn helicopter at a start node and monitors it

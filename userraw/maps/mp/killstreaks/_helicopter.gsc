@@ -474,6 +474,8 @@ heliRide( lifeId, chopper )
 
 	self.heliRideLifeId = lifeId;
 
+	self thread getChopperMissileTarget( chopper );
+
 	self thread endRideOnHelicopterDone( chopper );
 	
 	self thread weaponLockThink( chopper );
@@ -506,11 +508,9 @@ heliRide( lifeId, chopper )
 			//PrintConsole( printText + "\n");
 			if(chopper.missilesLoaded > 0) {
 				chopper.missilesLoaded--;
-
-				missileTarget = getRandomTarget();
-				missile = chopper fireWeapon("tag_flash", missileTarget);
+				missile = chopper fireWeapon("tag_flash", self.missileTarget);
 				missile Missile_SetFlightmodeDirect();
-				missile Missile_SetTargetEnt( missileTarget );
+				missile Missile_SetTargetEnt( self.missileTarget );
 
 				earthquake (0.6, 1, chopper.origin, 1000);
 			}
@@ -541,27 +541,29 @@ missileReload(chopper) {
 	}
 }
 
-getRandomTarget() {
-	enemiesToTarget = [];
-	if(self.team == "allies") {
-		for ( i = 0; i < level.bots.size; i++ ) {
-			bot = level.bots[i];
-			if(isAlive(bot)) {
-				enemiesToTarget[enemiesToTarget.size] = bot;
-			}
-		}
-	} else {
-		for ( i = 0; i < level.players.size; i++ ) {
-			player = level.players[i];
-			if(isAlive(player)) {
-				enemiesToTarget[enemiesToTarget.size] = player;
-			}
-		}
-	}
-	if(self.team == "allies")
-		return enemiesToTarget[randomint(enemiesToTarget.size)];
+getChopperMissileTarget(chopper) {
+	self endon ( "disconnect" );
+	self endon( "crashing" );
+	self endon( "leaving" );	
+	chopper endon ( "helicopter_done" );
 
-	return enemiesToTarget[randomint(enemiesToTarget.size)];
+	for(;;) {
+
+		enemiesToTarget = [];
+		if(self.team == "allies") {
+			for ( i = 0; i < level.bots.size; i++ ) {
+				bot = level.bots[i];
+				if(isAlive(bot)) {
+					enemiesToTarget[enemiesToTarget.size] = bot;
+				}
+			}
+		}
+
+		nextTarget = enemiesToTarget[randomint(enemiesToTarget.size)];
+		self.missileTarget = nextTarget;
+
+		wait 0.2;
+	}
 }
 
 

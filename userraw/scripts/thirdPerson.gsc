@@ -51,7 +51,7 @@ createTopLeftMessageElem() {
 	
 	messageElem setText( 
 		
-		"^9 Updates (April 10th, 2022)\n\n^7" +
+		"^9 Recent Updates (April 10th, 2022)\n\n" +
 		"  * Riot shield classes receive 2 Cut-Perks:\n" + 
 		"    > Deadmans Hand (C4 Death)\n" + 
 		"    > Armour Vest (Jugg)\n" + 

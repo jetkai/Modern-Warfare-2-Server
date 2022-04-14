@@ -120,6 +120,8 @@ clearProgress( delay )
 
 doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, direction )
 {
+	self endon ( "disconnect" );
+	self endon( "gone" );
 	self endon( "death" );
 
 	if ( !isDefined( owner ) ) 
@@ -127,10 +129,14 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 
 	lb = spawnAttackLittleBird( owner, startPoint, endPoint, coord );
 	lb.lifeId = lifeId;
-	
+
 	lb thread watchDeath();
 	lb thread waitTillGone();
+
+	lb thread getRandomTarget(self.turretTarget, true);
+	lb thread getRandomTarget(self.missileTarget, false);
 	
+	lb endon( "gone" );
 	lb endon( "death" );
 	
 	totalDist = Distance2d( startPoint, coord );
@@ -171,7 +177,7 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	wait ( 6 );
 
 	//stops firing and turns around one last time
-		lb notify ( "stopFiring" );
+	lb notify ( "stopFiring" );
 	lb Vehicle_SetSpeed( 75, 60 );
 	lb SetMaxPitchRoll( 65, 65 );
 	wait(2.5);
@@ -210,7 +216,7 @@ waitTillGone()
 	if ( isDefined( self.mgTurret2 ) )
  		self.mgTurret2 delete();
 		 
-	clearProgress( 0 );
+	self clearProgress( 0 );
 }
 
 
@@ -274,19 +280,13 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 
 startLbFiring( )
 {
+	self endon ( "disconnect" );
 	self endon( "gone" );
 	self endon( "death" );
 	self endon( "stopFiring" );
-
-	//PrintConsole("Attempting to fire the gun.");
-	
-	i = 0;
 	
 	for( ;; )
 	{
-		//self FireWeapon();
-
-		//self shootTurret();
 		targetEnt = self.mgTurret1 getTurretTarget( false );
 		if(isDefined( targetEnt ) && isAlive(targetEnt)) {
 			self.mgTurret1 shootTurret();
@@ -302,43 +302,38 @@ assignRandomTarget() {
 	self endon( "death" );
 	self endon( "stopFiring" );
 
-	self.nextTarget = getRandomTarget();
-
 	for(;;) {
-		if(isAlive(self.nextTarget)) {
-			//PrintConsole("Setting Enemy as: " + self.nextTarget);
-			self.mgTurret1 setTurretTargetEnt(self.nextTarget);
-			self.mgTurret1 SetTargetEntity(self.nextTarget);
-			self.mgTurret2 setTurretTargetEnt(self.nextTarget);
-			self.mgTurret2 SetTargetEntity(self.nextTarget);
-		} else {
-			self.nextTarget = getRandomTarget();
-			//PrintConsole("Unable to set Enemy, not defined or alive.");
-		}
-		wait(0.2);
+
+		self.mgTurret1 SetTurretTargetEnt(self.turretTarget);
+		self.mgTurret1 SetTargetEntity(self.turretTarget);
+		self.mgTurret2 setTurretTargetEnt(self.turretTarget);
+		self.mgTurret2 SetTargetEntity(self.turretTarget);
+
+		wait(0.33);
 	}
 }
 
 startLbMissileFiring( )
 {
+	self endon ( "disconnect" );
 	self endon( "gone" );
 	self endon( "death" );
 	self endon( "stopFiring" );
 	
-	i = 0;
+	weaponAttackSpeed = weaponAttackSpeed(self.defaultWeapon);
+
 	for( ;; ) {
 
-		target = getRandomTarget();
-		if(isDefined(target)) {
+		if(isDefined(self.missileTarget)) {
 			//PrintConsole("Attempting to attack " +target.name+ " .\n");
-			self SetTurretTargetEnt(target);
+			self SetTurretTargetEnt(self.missileTarget);
 			eMissile = self FireWeapon();
 			eMissile Missile_SetFlightmodeDirect();
-			eMissile Missile_SetTargetEnt(target);
+			eMissile Missile_SetTargetEnt(self.missileTarget);
 		} else {
 			//PrintConsole("Target not defined.");
 		}
-		wait ( randomVehicleWeaponAttackSpeed(self.defaultWeapon) );	
+		wait ( weaponAttackSpeed );	
 	}	
 }
 
@@ -353,38 +348,56 @@ startLbMissileFiring( )
 }*/
 
 isEnemyInfront( target ) {
-		vec2 = VectorNormalize( ( target.origin - self.origin) );
+	vec2 = VectorNormalize( ( target.origin - self.origin) );
 		
-		vec = anglestoforward( self.angles );
-		vecdot = vectordot( vec, vec2 );//dot of my angle vs player position
+	vec = anglestoforward( self.angles );
+	vecdot = vectordot( vec, vec2 );//dot of my angle vs player position
 		
 		//vecdot > 0 means in 180 in front
-		if( vecdot < 0 )// player is behind my goal dir
-			return false;
-		return true;
+	if( vecdot < 0 )// player is behind my goal dir
+		return false;
+	return true;
 }
 
-getRandomTarget() {
-	enemiesToTarget = [];
-	if(self.team == "allies") {
-		for ( i = 0; i < level.bots.size; i++ ) {
-			bot = level.bots[i];
-			if(isEnemyInfront(bot) && isAlive(bot)) {
-				enemiesToTarget[enemiesToTarget.size] = bot;
+
+getRandomTarget(lastTarget, isTurretTarget) {
+	self endon ( "disconnect" );
+	self endon( "gone" );
+	self endon( "death" );
+
+	for(;;) {
+
+		if(isTurretTarget && isAlive(lastTarget)) {
+			self.turretTarget = lastTarget;
+			return;
+		}
+
+		enemiesToTarget = [];
+		if(self.team == "allies") {
+			for ( i = 0; i < level.bots.size; i++ ) {
+				bot = level.bots[i];
+				if(isEnemyInfront(bot) && isAlive(bot)) {
+					enemiesToTarget[enemiesToTarget.size] = bot;
+				}
+			}
+		} else {
+			for ( i = 0; i < level.players.size; i++ ) {
+				player = level.players[i];
+				if(isEnemyInfront(player) && isAlive(player)) {
+					enemiesToTarget[enemiesToTarget.size] = player;
+				}
 			}
 		}
-	} else {
-		for ( i = 0; i < level.players.size; i++ ) {
-			player = level.players[i];
-			if(isEnemyInfront(player) && isAlive(player)) {
-				enemiesToTarget[enemiesToTarget.size] = player;
-			}
-		}
+
+		nextTarget = enemiesToTarget[randomint(enemiesToTarget.size)];
+
+		if(isTurretTarget)
+			self.turretTarget = nextTarget;
+		else
+			self.missileTarget = nextTarget;
+		
+		wait 0.33;
 	}
-	if(self.team == "allies") {
-		return enemiesToTarget[randomint(enemiesToTarget.size)];
-	}
-	return enemiesToTarget[randomint(enemiesToTarget.size)];
 }
 
 getBestLbDirection( hitpos )
@@ -454,7 +467,7 @@ randomVehicleWeapon() {
 	return "javelin_mp";
 }
 
-randomVehicleWeaponAttackSpeed(weapon) {
+weaponAttackSpeed(weapon) {
 	switch(weapon) {
 		case "javelin_mp":
 			return 1.12;
@@ -493,7 +506,7 @@ callStrike( lifeId, owner, coord, yaw )
 	planeHalfDistance = 24000;
 	
 	if(getDvar("sv_maprotation") == "map oilrig")
-		planeFlyHeight = 2200;
+		planeFlyHeight = 2400;
 	else
 		planeFlyHeight = 850;
 
@@ -614,7 +627,7 @@ watchDeath()
 	self thread heliDestroyed();
 	
 	level.littleBirds--;
-	clearProgress( 0.05 );
+	self clearProgress( 0.05 );
 	
 	return;
 }
@@ -632,7 +645,7 @@ heliDestroyed()
 	
 	wait( RandomFloatRange( .5, 1.5 ) );
 	
-	lbExplode();
+	self lbExplode();
 }
 
 lbExplode()
