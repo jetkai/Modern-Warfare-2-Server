@@ -45,7 +45,7 @@ tryUseLbStrike( lifeId )
 		return false;
 	}
 	
-	if ( level.lbStrike >= 1 )
+	if ( level.lbStrike >= 1 || level.littleBirds >= 3 )
 	{
 		self iPrintLnBold( &"MP_AIR_SPACE_TOO_CROWDED" );
 		return false;	
@@ -62,7 +62,13 @@ tryUseLbStrike( lifeId )
 
 
 startLBStrike( lifeId, origin, owner, team, yawDir )
-{	
+{
+
+	if ( level.lbStrike >= 1 || level.littleBirds >= 3 ) {
+		self iPrintLnBold( &"MP_AIR_SPACE_TOO_CROWDED" );
+		return;	
+	}
+
 	while ( isDefined( level.airstrikeInProgress ) )
 	{
 		level waittill ( "begin_airstrike" );
@@ -123,6 +129,11 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	self endon ( "disconnect" );
 	self endon( "gone" );
 	self endon( "death" );
+
+	if ( level.lbStrike >= 1 || level.littleBirds >= 3 ) {
+		self iPrintLnBold( &"MP_AIR_SPACE_TOO_CROWDED" );
+		return;	
+	}
 
 	if ( !isDefined( owner ) ) 
 		return;
@@ -201,10 +212,10 @@ doLbStrike( lifeId, owner, requiredDeathCount, coord, startPoint, endPoint, dire
 	
 	lb waittill ( "goal" );
 	lb notify( "gone" );
+
 	lb.mgTurret1 delete();
 	lb.mgTurret2 delete();
 	lb delete();
-
 }
 
 waitTillGone()
@@ -216,7 +227,7 @@ waitTillGone()
 	if ( isDefined( self.mgTurret2 ) )
  		self.mgTurret2 delete();
 		 
-	self clearProgress( 0 );
+	clearProgress( 0 );
 }
 
 
@@ -237,13 +248,8 @@ spawnAttackLittleBird( owner, pathStart, pathGoal, coord )
 	lb SetMaxPitchRoll( 45, 45 );	
 	lb Vehicle_SetSpeed( lb.speed, 60 );
 
-	//lb.pers["randomVehicleWeapon"] = randomVehicleWeapon();
-	//lb.defaultWeapon = "remotemissile_projectile_mp";
 	lb.defaultWeapon = randomVehicleWeapon();
 	lb setVehWeapon( lb.defaultWeapon );
-
-	//PrintConsole("Attempting to use " +lb.defaultWeapon);
-	
 	
 	lb.damageCallback = ::Callback_VehicleDamage;
 	
@@ -627,7 +633,8 @@ watchDeath()
 	self thread heliDestroyed();
 	
 	level.littleBirds--;
-	self clearProgress( 0.05 );
+	
+	clearProgress( 0.05 );
 	
 	return;
 }
@@ -665,7 +672,7 @@ lbExplode()
 	if ( isDefined( self.mgTurret2 ) )
 		self.mgTurret2 delete();
 	
-	self clearProgress( 0 );
+	clearProgress( 0 );
 
 	self delete();
 }
